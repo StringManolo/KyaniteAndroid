@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
@@ -58,7 +58,7 @@ private fun unb64(s: String) = Base64.decode(s, Base64.NO_WRAP)
  * Changing the wrapping is instant (re-wrap); rotating the DEK re-encrypts every archive.
  */
 object KeyManager {
-    private const val ALIAS = "dlc_kek_v1"
+    private const val ALIAS = "kya_kek_v1"
     private val file get() = File(App.instance.filesDir, "keys/dek.json")
     @Volatile private var cached: ByteArray? = null
 
@@ -272,14 +272,14 @@ class GcmChunkIn(private val inp: InputStream, dek: ByteArray, private val prefi
 }
 
 /**
- * Container format "DLC1": [magic 4][version 1][flags 1][if encrypted: nonce prefix 8, key id 4][body]
+ * Container format "KYA1": [magic 4][version 1][flags 1][if encrypted: nonce prefix 8, key id 4][body]
  * flags: bit0 = encrypted, bits1-2 = compression (0 none, 1 gzip, 2 xz). Body = tar -> compress -> encrypt.
  * Also reads plain tar / tar.gz / tar.xz (sniffed by magic), used for imports.
  */
 object Archive {
-    private val MAGIC = byteArrayOf('D'.code.toByte(), 'L'.code.toByte(), 'C'.code.toByte(), '1'.code.toByte())
+    private val MAGIC = byteArrayOf('K'.code.toByte(), 'Y'.code.toByte(), 'A'.code.toByte(), '1'.code.toByte())
 
-    fun isDlc(f: File): Boolean = try {
+    fun isKya(f: File): Boolean = try {
         FileInputStream(f).use { val h = ByteArray(4); it.read(h) == 4 && h.contentEquals(MAGIC) }
     } catch (e: Exception) { false }
 
@@ -319,7 +319,7 @@ object Archive {
         }
     }
 
-    /** (encrypted, compression) of a DLC1 file, or null if it is not one. */
+    /** (encrypted, compression) of a KYA1 file, or null if it is not one. */
     fun info(f: File): Pair<Boolean, Compression>? = try {
         FileInputStream(f).use {
             val h = ByteArray(6)

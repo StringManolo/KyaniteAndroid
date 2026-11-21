@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.content.Context
 import org.apache.commons.compress.utils.CountingInputStream
@@ -27,9 +27,9 @@ class SysInfo(
  * Registry and lifecycle of systems. Layout: files/systems/<id>/
  *   meta.json            name, kind (system | livecd), timestamps
  *   rootfs/ + rootfs.ok  plain tree: exists while the system is in use (or always, if no archive policy)
- *   rootfs.dlc           archive at rest (optionally compressed and/or encrypted)
+ *   rootfs.kya           archive at rest (optionally compressed and/or encrypted)
  *   in_use               marker while a session works on rootfs/
- *   snapshots/<n>.dlc      point-in-time copies
+ *   snapshots/<n>.kya      point-in-time copies
  * Every system is independent; nothing here ever touches another system's files.
  */
 object SystemStore {
@@ -39,7 +39,7 @@ object SystemStore {
     fun base() = File(ctx.filesDir, "systems")
     fun dir(id: String) = File(base(), id)
     fun rootfs(id: String) = File(dir(id), "rootfs")
-    fun archive(id: String) = File(dir(id), "rootfs.dlc")
+    fun archive(id: String) = File(dir(id), "rootfs.kya")
     fun inUseFile(id: String) = File(dir(id), "in_use")
     fun snapDir(id: String) = File(dir(id), "snapshots")
     private fun metaFile(id: String) = File(dir(id), "meta.json")
@@ -111,7 +111,7 @@ object SystemStore {
         prefs.edit().putBoolean("migrated_systems", true).apply()
         val sys = Paths.legacyRoot(ctx, "system")
         if (Paths.okMarker(sys).exists()) {
-            val s = create("Debian (migrated)", "system")
+            val s = create("Kyanite (migrated)", "system")
             if (sys.renameTo(rootfs(s.id))) {
                 Paths.okMarker(rootfs(s.id)).writeText("1")
                 Cfg.activeSystem = s.id
@@ -128,7 +128,7 @@ object SystemStore {
 
     // ------------------------------------------------------------------ install sources
 
-    /** New system from the Debian image shipped in the APK. */
+    /** New system from the Kyanite image shipped in the APK. */
     fun createFromAsset(name: String, kind: String, id: String = newId(), progress: Progress): SysInfo {
         val info = create(name, kind, id)
         try {
@@ -170,7 +170,7 @@ object SystemStore {
         }
     }
 
-    /** Import of our own .dlc archive (needs the same key if encrypted) or any plain tar archive. */
+    /** Import of our own .kya archive (needs the same key if encrypted) or any plain tar archive. */
     fun importFile(name: String, input: InputStream, total: Long, progress: Progress): SysInfo =
         importStream(name, input, total, null, progress)
 
@@ -275,10 +275,10 @@ object SystemStore {
     // ------------------------------------------------------------------ snapshots
 
     fun snapshots(id: String): List<File> =
-        (snapDir(id).listFiles { f -> f.name.endsWith(".dlc") } ?: emptyArray()).sortedByDescending { it.name }
+        (snapDir(id).listFiles { f -> f.name.endsWith(".kya") } ?: emptyArray()).sortedByDescending { it.name }
 
     fun snapshotTitle(f: File): String {
-        val n = f.name.removeSuffix(".dlc")
+        val n = f.name.removeSuffix(".kya")
         val ts = n.substringBefore('_').toLongOrNull() ?: 0L
         val label = n.substringAfter('_', "")
         val date = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.US).format(java.util.Date(ts))
@@ -290,7 +290,7 @@ object SystemStore {
         if (!isInstalled(id)) throw IllegalStateException("That system is not installed")
         val pol = Policy.current()
         val safe = label.trim().ifEmpty { "snapshot" }.replace(Regex("[^A-Za-z0-9]+"), "-").take(40)
-        val dest = File(snapDir(id), "${System.currentTimeMillis()}_$safe.dlc")
+        val dest = File(snapDir(id), "${System.currentTimeMillis()}_$safe.kya")
         progress(0, "Taking snapshot…")
         if (hasArchive(id) && !plainReady(id)) {
             snapDir(id).mkdirs()
@@ -326,7 +326,7 @@ object SystemStore {
 
     // ------------------------------------------------------------------ export
 
-    /** [fmt]: "tgz" | "txz" (portable) or "dlc" (this app's container: uses the current compression/encryption policy). */
+    /** [fmt]: "tgz" | "txz" (portable) or "kya" (this app's container: uses the current compression/encryption policy). */
     fun export(id: String, os: OutputStream, fmt: String) {
         when (fmt) {
             "tgz" -> GZIPOutputStream(os, 1 shl 16).use { streamTar(id, it) }

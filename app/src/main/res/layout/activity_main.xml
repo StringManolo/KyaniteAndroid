@@ -3,7 +3,7 @@
   android:id="@+id/root"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/dlc_bg"
+  android:background="@color/kya_bg"
   android:orientation="vertical">
 
   <FrameLayout
@@ -22,7 +22,7 @@
       android:id="@+id/install_panel"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:background="@color/dlc_bg"
+      android:background="@color/kya_bg"
       android:gravity="center"
       android:orientation="vertical"
       android:padding="24dp"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
         android:text="@string/preparing"
-        android:textColor="@color/dlc_text"
+        android:textColor="@color/kya_text"
         android:textSize="13sp" />
 
       <ProgressBar
@@ -67,11 +67,11 @@
       android:alpha="0.45"
       android:gravity="center"
       android:text="⚙"
-      android:textColor="@color/dlc_text"
+      android:textColor="@color/kya_text"
       android:textSize="20sp" />
   </FrameLayout>
 
-  <io.github.stringmanolo.DebianLiveCD4Android.ExtraKeysView
+  <io.github.stringmanolo.KyaniteAndroid.ExtraKeysView
     android:id="@+id/extra_keys"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />

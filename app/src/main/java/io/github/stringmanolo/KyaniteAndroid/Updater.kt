@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -21,7 +21,7 @@ import java.io.IOException
  * Android always asks for confirmation to install, and only accepts an APK signed with the same key as the installed app.
  */
 object Updater {
-    const val REPO = "StringManolo/DebianLiveCD4Android"
+    const val REPO = "StringManolo/KyaniteAndroid"
     class Release(val tag: String, val page: String, val apkUrl: String?, val apkName: String?)
 
     fun releasesPage() = "https://github.com/$REPO/releases"
@@ -118,7 +118,7 @@ object Updater {
         val pi = PendingIntent.getActivity(ctx, 7, installIntent(ctx, apk), PendingIntent.FLAG_UPDATE_CURRENT)
         val b: Notification.Builder =
             if (Build.VERSION.SDK_INT >= 26) Notification.Builder(ctx, "updates") else Notification.Builder(ctx)
-        b.setContentTitle("DebianLiveCD update $tag downloaded")
+        b.setContentTitle("Kyanite update $tag downloaded")
             .setContentText("Tap to install")
             .setSmallIcon(android.R.drawable.stat_sys_download_done)
             .setContentIntent(pi)

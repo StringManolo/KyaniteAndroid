@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.Manifest
 import android.app.Activity
@@ -251,18 +251,18 @@ class SettingsActivity : Activity() {
         ui.header(p, "Systems", 0)
         ui.note(p, "Create, rename, duplicate, delete, import, export, download, snapshot and restore. Each system is stored on its own and never touches the others.")
         val space = ui.note(p, "Free space: ${fmtBytes(filesDir.usableSpace)} · Systems use: calculating…", 6)
-        ui.button(p, "New system from the shipped Debian") {
+        ui.button(p, "New system from the shipped Kyanite") {
             if (busy()) return@button
-            ui.prompt("New system", "Name", "Debian") { name ->
+            ui.prompt("New system", "Name", "Kyanite") { name ->
                 ui.ensureKeyUnlocked {
                     ui.job("Installing $name", { prog ->
-                        val s = SystemStore.createFromAsset(name.ifBlank { "Debian" }, "system", progress = prog)
+                        val s = SystemStore.createFromAsset(name.ifBlank { "Kyanite" }, "system", progress = prog)
                         if (Cfg.activeSystem.isEmpty()) Cfg.activeSystem = s.id
                     }) { show("systems") }
                 }
             }
         }
-        ui.button(p, "Import a tar / tar.gz / tar.xz / .dlc file…", 4) {
+        ui.button(p, "Import a tar / tar.gz / tar.xz / .kya file…", 4) {
             if (busy()) return@button
             picker(Intent(Intent.ACTION_OPEN_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE).setType("*/*"), REQ_IMPORT)
         }
@@ -338,9 +338,9 @@ class SettingsActivity : Activity() {
     }
 
     private fun exportDialog(s: SysInfo) {
-        ui.choose("Export ${s.name}", listOf("Portable .tar.gz", "Portable .tar.xz (smaller, slower)", "This app's .dlc (uses the current compression/encryption)")) { f ->
-            val fmt = listOf("tgz", "txz", "dlc")[f]
-            val ext = listOf(".tar.gz", ".tar.xz", ".dlc")[f]
+        ui.choose("Export ${s.name}", listOf("Portable .tar.gz", "Portable .tar.xz (smaller, slower)", "This app's .kya (uses the current compression/encryption)")) { f ->
+            val fmt = listOf("tgz", "txz", "kya")[f]
+            val ext = listOf(".tar.gz", ".tar.xz", ".kya")[f]
             ui.ensureKeyUnlocked {
                 pendingExport = Pair(s, fmt)
                 picker(Intent(Intent.ACTION_CREATE_DOCUMENT).addCategory(Intent.CATEGORY_OPENABLE)
@@ -658,8 +658,8 @@ class SettingsActivity : Activity() {
             NetBlockService.active -> "ACTIVE"
             else -> "NOT ACTIVE: sessions refuse to start until it is (fail closed)"
         }, 6)
-        ui.note(p, "When off: every process of this app, including your Debian systems, cannot reach the network (a local VPN with no exit silently drops their traffic; Android asks for VPN consent once). The VM gets no network device. The app itself will not download rootfs, check for updates, or open the browser.")
-        ui.note(p, "For a guarantee that survives this app being killed, enable Android's \"Always-on VPN\" and \"Block connections without VPN\" for DebianLiveCD in the system VPN settings.")
+        ui.note(p, "When off: every process of this app, including your Kyanite systems, cannot reach the network (a local VPN with no exit silently drops their traffic; Android asks for VPN consent once). The VM gets no network device. The app itself will not download rootfs, check for updates, or open the browser.")
+        ui.note(p, "For a guarantee that survives this app being killed, enable Android's \"Always-on VPN\" and \"Block connections without VPN\" for Kyanite in the system VPN settings.")
         ui.note(p, "Android cannot remove the INTERNET permission at runtime. A build without it can be produced on request.")
         ui.check(p, "Give the VM a network device (when the network is allowed)", Cfg.vmNic) { Cfg.vmNic = it }
         return p

@@ -1,8 +1,8 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.content.Context
 
-/** Which environment: the installed Debian ("system") or the read-only image shipped in the APK ("livecd"). */
+/** Which environment: the installed Kyanite ("system") or the read-only image shipped in the APK ("livecd"). */
 enum class Target { SYSTEM, LIVECD }
 
 /** How it runs: persistent on disk, temporary copy wiped on exit, or inside a QEMU VM (RAM only). */

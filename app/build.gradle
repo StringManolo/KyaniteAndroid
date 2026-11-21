@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-  namespace 'io.github.stringmanolo.DebianLiveCD4Android'
+  namespace 'io.github.stringmanolo.KyaniteAndroid'
   compileSdk 34
 
   defaultConfig {
-    applicationId "io.github.stringmanolo.DebianLiveCD4Android"
+    applicationId "io.github.stringmanolo.KyaniteAndroid"
     minSdk 24
     // MUST stay <= 28: Android 10+ blocks exec() of files in the app data dir for targetSdk >= 29 (W^X),
-    // and the Debian rootfs binaries live there.
+    // and the Kyanite rootfs binaries live there.
     targetSdk 28
     versionCode 1
     versionName "0.3.0"

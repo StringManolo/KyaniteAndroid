@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.content.Context
 import com.termux.terminal.TerminalSession

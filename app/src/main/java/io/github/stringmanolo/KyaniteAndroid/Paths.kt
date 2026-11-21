@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.content.Context
 import android.system.Os
@@ -9,7 +9,7 @@ import java.io.FileOutputStream
 import java.io.RandomAccessFile
 
 object Paths {
-    const val ROOTFS_ASSET = "rootfs/debian-arm64.tar.xz"
+    const val ROOTFS_ASSET = "rootfs/kyanite-aarch64.tar.xz"
 
     fun legacyRoot(ctx: Context, name: String) = File(ctx.filesDir, "rootfs/$name")
     fun ephemeralBase(ctx: Context) = File(ctx.filesDir, "eph")

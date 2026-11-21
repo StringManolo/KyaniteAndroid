@@ -12,7 +12,9 @@ Generate the keys and files needed for github secrets.
 Downloads binaries from the Termux apt repo (proot, QEMU) and repackages them as `jniLibs`.
 
 ### build_vm_assets.py + vm/init (CI)
-Builds the VM kernel (`assets/vm/Image`) and the tiny initramfs (`assets/vm/initramfs.cpio.gz`).
+Builds the VM kernel (`assets/vm/Image`, from Alpine's `linux-virt`; `VM_KERNEL=debian` for Debian's) and the tiny
+initramfs (`assets/vm/initramfs.bin`: busybox, the virtio modules in dependency order, `vm/init`).
 
-### fetch-rootfs.sh (CI)
-Downloads the official Debian arm64 rootfs into `assets/rootfs/`.
+### fetch-rootfs.sh + kyanite-release.pub (CI)
+Downloads the Kyanite aarch64 rootfs release into `assets/rootfs/`, verifying its SHA-256 and its Ed25519 signature
+(public key pinned in `kyanite-release.pub`). `KYANITE_TAG` selects the release (default `latest`).

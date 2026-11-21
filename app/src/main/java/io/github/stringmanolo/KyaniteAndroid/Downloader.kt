@@ -1,5 +1,6 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
+import org.json.JSONObject
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
@@ -22,7 +23,7 @@ object Downloader {
             c.instanceFollowRedirects = false
             c.connectTimeout = 20_000
             c.readTimeout = 30_000
-            c.setRequestProperty("User-Agent", "DebianLiveCD4Android")
+            c.setRequestProperty("User-Agent", "KyaniteAndroid")
             val code = c.responseCode
             if (code in 300..399) {
                 val loc = c.getHeaderField("Location") ?: throw IOException("redirect without Location")
@@ -69,7 +70,29 @@ object Downloader {
         return Resolved(base + file, sha, "Ubuntu " + file.removePrefix("ubuntu-base-").substringBefore("-base"))
     }
 
+    private const val KYANITE_REPO = "StringManolo/Kyanite"
+
+    /** Latest Kyanite release (aarch64): the .tar.xz plus the SHA-256 published next to it. */
+    private fun kyanite(): Resolved {
+        val j = JSONObject(text("https://api.github.com/repos/$KYANITE_REPO/releases/latest"))
+        val tag = j.optString("tag_name")
+        val assets = j.optJSONArray("assets") ?: throw IOException("the latest Kyanite release has no assets")
+        var url: String? = null
+        var shaUrl: String? = null
+        for (i in 0 until assets.length()) {
+            val a = assets.getJSONObject(i)
+            when (a.optString("name")) {
+                "kyanite-rootfs-aarch64.tar.xz" -> url = a.optString("browser_download_url")
+                "kyanite-rootfs-aarch64.tar.xz.sha256" -> shaUrl = a.optString("browser_download_url")
+            }
+        }
+        if (url == null) throw IOException("could not find kyanite-rootfs-aarch64.tar.xz in the latest Kyanite release")
+        val sha = shaUrl?.let { runCatching { firstHash(text(it)) }.getOrNull() }
+        return Resolved(url, sha, "Kyanite $tag")
+    }
+
     val CATALOG = listOf(
+        Entry("Kyanite, latest release (≈8 MB download, ≈30 MB installed; checksum verified)") { kyanite() },
         Entry("Alpine Linux, minirootfs (≈3 MB download, ≈10 MB installed; checksum verified)") { alpine() },
         Entry("Ubuntu Base 24.04 LTS (≈30 MB download, ≈100 MB installed; checksum verified)") { ubuntu() },
         Entry("Arch Linux ARM (≈500 MB download, ≈1.5 GB installed; no checksum available)") {

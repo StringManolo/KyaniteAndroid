@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.content.Context
 import com.termux.terminal.TerminalSession
@@ -33,7 +33,7 @@ object QemuLauncher {
             "libqemu.so: ${if (q.exists()) "yes (${q.length() / 1024} KB)" else "NO"}\n" +
             "asset vm/Image: ${yn(hasAsset(ctx, "vm/Image"))}\n" +
             "asset vm/initramfs.bin: ${yn(hasAsset(ctx, "vm/initramfs.bin"))}\n" +
-            "asset rootfs/debian-arm64.tar.xz: ${yn(hasAsset(ctx, Paths.ROOTFS_ASSET))}"
+            "asset rootfs/kyanite-aarch64.tar.xz: ${yn(hasAsset(ctx, Paths.ROOTFS_ASSET))}"
     }
 
     /** Kernel and initramfs must be real files for QEMU; they are not secret, so they may live on disk. */

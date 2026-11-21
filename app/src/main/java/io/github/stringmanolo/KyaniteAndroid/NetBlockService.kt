@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.util.Log
 import java.io.FileInputStream
 
 /**
- * "Network off": a local VPN that captures every packet of THIS app (and therefore of every Debian process running in
+ * "Network off": a local VPN that captures every packet of THIS app (and therefore of every Kyanite process running in
  * it, which shares the app's uid) and silently drops it. No permission is revoked (Android cannot do that at runtime);
  * the traffic simply has nowhere to go. Needs the one-time system VPN consent. For a guarantee that survives this
  * service dying, enable Android's "Always-on VPN" + "Block connections without VPN" for this app.
@@ -31,7 +31,7 @@ class NetBlockService : VpnService() {
         if (fd != null) return
         try {
             val p = Builder()
-                .setSession("DebianLiveCD: network blocked")
+                .setSession("Kyanite: network blocked")
                 .addAddress("10.255.0.1", 32)
                 .addAddress("fd00:255::1", 128)
                 .addRoute("0.0.0.0", 0)
@@ -74,7 +74,7 @@ class NetBlockService : VpnService() {
         /** Called when the block disappears although the network must stay off (killed, revoked by another VPN...). */
         @Volatile var onLost: (() -> Unit)? = null
 
-        const val ACTION_STOP = "io.github.stringmanolo.DebianLiveCD4Android.NETBLOCK_STOP"
+        const val ACTION_STOP = "io.github.stringmanolo.KyaniteAndroid.NETBLOCK_STOP"
 
         /** Null if consent was already given; otherwise an Intent to launch for the system dialog. */
         fun consentIntent(ctx: Context): Intent? = VpnService.prepare(ctx)

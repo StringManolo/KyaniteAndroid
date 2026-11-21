@@ -1,1 +1,1 @@
-Debian on Android via proot or a RAM-only QEMU VM. A Termux alternative for advanced users.
+Kyanite on Android via proot or a RAM-only QEMU VM. A Termux alternative for advanced users.

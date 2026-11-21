@@ -1,21 +1,23 @@
-# DebianLiveCD4Android
+# KyaniteAndroid
 
-A Termux alternative for advanced users: a real **Debian** userland on Android, built from the
+A Termux alternative for advanced users: [**Kyanite**](https://github.com/StringManolo/Kyanite) (a small, memory-safe
+Rust rootfs with `kpkg` and Brush) on Android, built from the
 [KotlinApkTemplate](https://github.com/StringManolo/KotlinApkTemplate) and compiled entirely by GitHub Actions.
+Fork of [DebianLiveCD4Android](https://github.com/StringManolo/DebianLiveCD4Android).
 
-- Debian runs under **proot** (the `termux/proot` fork), not inside a Termux-style prefix.
-- The Debian rootfs is the official `debuerreotype` tarball (same one as the Docker image), shipped inside the APK.
-- Terminal emulation reuses Termux's `terminal-emulator` / `terminal-view`, with an extra-keys bar
-  (ESC, TAB, CTRL, ALT, HOME, END, PGUP, PGDN, arrows; tap a modifier = one-shot, long-press = lock).
+- Kyanite runs under **proot** (the `termux/proot` fork), not inside a Termux-style prefix.
+- The Kyanite rootfs is the signed `kyanite-rootfs-aarch64.tar.xz` from the Kyanite releases, shipped inside the APK
+  (about 8 MB). The CI verifies its SHA-256 and its Ed25519 signature before packaging it (see Build).
+- Software installed afterwards comes from `kpkg` / `apt` inside Kyanite; the app itself does not care what is in the rootfs.
+- Terminal emulation reuses Termux's `terminal-emulator` / `terminal-view`, with an extra-keys bar (ESC, TAB, CTRL, ALT, HOME, END, PGUP, PGDN, arrows; tap a modifier = one-shot, long-press = lock).
 - `targetSdk 28` on purpose: newer targets cannot exec binaries from the app's data directory (W^X).
-
 ## First run, environments and modes (⚙ button, always available)
 
 Nothing is installed or started until you choose. The first launch opens the settings screen.
 
 |            | **Normal**                            | **Ephemeral**                                  | **VM**                                           |
 |------------|---------------------------------------|------------------------------------------------|--------------------------------------------------|
-| **System** | proot on your installed Debian        | proot on a temp copy of it, wiped on exit      | QEMU, installed tree streamed into guest RAM     |
+| **System** | proot on your installed Kyanite       | proot on a temp copy of it, wiped on exit      | QEMU, installed tree streamed into guest RAM     |
 | **LiveCD** | proot on a persistent extraction      | fresh extraction every start, wiped on exit    | QEMU, shipped image streamed into guest RAM      |
 
 **Modes never interfere with each other's storage**
@@ -51,9 +53,9 @@ unavailable and shows a diagnostics block.
 
 - **Environment**: system / LiveCD, mode (VM is **experimental**), VM RAM and cores, window mode, wake lock (off by default), opt-in access to
   shared storage (`/sdcard`, `~/storage/shared`; needs the Android permission, like `termux-setup-storage`, but on demand).
-- **Systems**: several systems at once; create from the shipped Debian, import (tar, tar.gz, tar.xz, `.dlc`),
-  download (Alpine, Ubuntu Base and Arch Linux ARM catalog with checksum verification where upstream publishes one, or any
-  URL + optional SHA-256), rename, duplicate, delete (optionally with random overwrite), export (tar.gz / tar.xz / `.dlc`),
+- **Systems**: several systems at once; create from the shipped Kyanite, import (tar, tar.gz, tar.xz, `.kya`),
+  download (Kyanite latest release, Alpine, Ubuntu Base and Arch Linux ARM catalog with checksum verification where upstream publishes one, or any
+  URL + optional SHA-256), rename, duplicate, delete (optionally with random overwrite), export (tar.gz / tar.xz / `.kya`),
   snapshots and restore.
 - **Appearance**: 28 colour schemes (including Vim-inspired ones) plus a fully custom palette, font size and bold.
 - **Security**
@@ -70,9 +72,9 @@ unavailable and shows a diagnostics block.
   it), the VM gets no NIC, and the app does not download or open the browser.
 - **Updates**: none / manual (opens the releases page) / automatic (default every 8 h: check, download, offer install).
 
-VM notes: the guest boots a Debian arm64 kernel under QEMU TCG (software emulation, no KVM), so expect roughly 10-40 s to
-the prompt on a phone even for a tiny rootfs like Alpine; the rootfs transfer itself takes seconds. If the console stops
-at a `[dlc]` message for minutes, something is wrong and the rescue shell / last message tells which step. Typing `exit`
+VM notes: the guest boots an Alpine `linux-virt` arm64 kernel (Kyanite has no kernel of its own yet) under QEMU TCG
+(software emulation, no KVM), so expect roughly 10-40 s to the prompt on a phone even for a tiny rootfs like Kyanite; the rootfs transfer itself takes seconds. If the console stops
+at a `[kya]` message for minutes, something is wrong and the rescue shell / last message tells which step. Typing `exit`
 in the guest shell (PID 1) powers the VM off, which ends the session.
 
 Robustness: the app never closes by itself. If a session ends (you type `exit`, a VM powers off, a start fails) it stays
@@ -87,9 +89,18 @@ confirmation and must be signed with the same key.
 
 ## Build
 
-Push to GitHub. `.github/actions/prepare-assets` downloads proot (and QEMU) from the Termux apt repo
-(sha256-verified), builds the VM kernel/initramfs from Debian packages and fetches the Debian rootfs; then Gradle
-builds the APK. Hashes and URLs are uploaded as the `provenance` artifact.
+Push to GitHub. `.github/actions/prepare-assets`:
+
+1. downloads proot (and QEMU) from the Termux apt repo (sha256-verified);
+2. builds the VM kernel/initramfs (`bash/build_vm_assets.py`) from Alpine's `linux-virt` and `busybox-static`
+   (`VM_KERNEL=debian` switches to Debian's kernel, `ALPINE_BRANCH` pins an Alpine branch);
+3. fetches the Kyanite rootfs (`bash/fetch-rootfs.sh`): downloads the release, checks its SHA-256, verifies the
+   Ed25519 signature against the key pinned in `bash/kyanite-release.pub`, and re-compresses it with `xz -6` so the
+   app can unpack it with a small heap. Use the `kyanite-tag` input of the action (or `KYANITE_TAG`) to pin a release
+   such as `v0.1.1`; the default is the latest one. A release without a valid signature fails the build
+   (`KYANITE_ALLOW_UNSIGNED=1` overrides that).
+
+Then Gradle builds the APK. Hashes and URLs are uploaded as the `provenance` artifact.
 
 Android 12+ may kill child processes ("phantom process killer"); disable it if sessions die in the background.
 

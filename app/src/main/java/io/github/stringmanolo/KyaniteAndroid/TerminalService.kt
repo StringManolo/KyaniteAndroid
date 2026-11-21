@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -280,7 +280,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
         )
         val b: Notification.Builder =
             if (Build.VERSION.SDK_INT >= 26) Notification.Builder(this, "ended") else Notification.Builder(this)
-        b.setContentTitle("DebianLiveCD")
+        b.setContentTitle("Kyanite")
             .setContentText(if (Cfg.hideNotifContent) "Session ended" else msg)
             .setSmallIcon(android.R.drawable.ic_menu_info_details)
             .setContentIntent(open)
@@ -293,7 +293,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
     private fun acquireWake() {
         if (!Cfg.wakeLock || wakeLock != null) return
         val pm = getSystemService(POWER_SERVICE) as PowerManager
-        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DebianLiveCD:session").apply {
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Kyanite:session").apply {
             setReferenceCounted(false)
             acquire(24 * 60 * 60 * 1000L)
         }
@@ -409,7 +409,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
         }
         val b: Notification.Builder =
             if (Build.VERSION.SDK_INT >= 26) Notification.Builder(this, CHANNEL) else Notification.Builder(this)
-        b.setContentTitle("DebianLiveCD")
+        b.setContentTitle("Kyanite")
             .setContentText(if (Cfg.hideNotifContent) "Running" else text)
             .setSmallIcon(android.R.drawable.ic_menu_info_details)
             .setContentIntent(if (minimized) svc(2, ACTION_RESTORE) else open)
@@ -494,12 +494,12 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
     companion object {
         const val CHANNEL = "terminal"
         const val NOTIF_ID = 1
-        const val ACTION_EXIT = "io.github.stringmanolo.DebianLiveCD4Android.EXIT"
-        const val ACTION_MINIMIZE = "io.github.stringmanolo.DebianLiveCD4Android.MINIMIZE"
-        const val ACTION_RESTORE = "io.github.stringmanolo.DebianLiveCD4Android.RESTORE"
-        const val ACTION_APPLY = "io.github.stringmanolo.DebianLiveCD4Android.APPLY"
-        const val ACTION_WIPE = "io.github.stringmanolo.DebianLiveCD4Android.WIPE"
-        const val ACTION_RESET_WINDOW = "io.github.stringmanolo.DebianLiveCD4Android.RESET_WINDOW"
+        const val ACTION_EXIT = "io.github.stringmanolo.KyaniteAndroid.EXIT"
+        const val ACTION_MINIMIZE = "io.github.stringmanolo.KyaniteAndroid.MINIMIZE"
+        const val ACTION_RESTORE = "io.github.stringmanolo.KyaniteAndroid.RESTORE"
+        const val ACTION_APPLY = "io.github.stringmanolo.KyaniteAndroid.APPLY"
+        const val ACTION_WIPE = "io.github.stringmanolo.KyaniteAndroid.WIPE"
+        const val ACTION_RESET_WINDOW = "io.github.stringmanolo.KyaniteAndroid.RESET_WINDOW"
         const val EXTRA_RESTART = "restart"
     }
 }

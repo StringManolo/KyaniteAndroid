@@ -1,0 +1,5 @@
+# Ed25519 PUBLIC key(s) that sign Kyanite releases (the .sha256.sig files).
+# One per line, 64 hex characters (32 bytes). Several lines = key rotation.
+# Copied from https://github.com/StringManolo/Kyanite (rootfs-overlay/etc/kpkg/kyanite-release.pub).
+# It lives HERE on purpose: fetch-rootfs.sh must not take its trust anchor from the same place it downloads from.
+41895d7e2d05cf7a915fe68f030afda374fd5895cd10491b0992d4ee2561d6b4

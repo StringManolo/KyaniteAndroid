@@ -1,4 +1,4 @@
-package io.github.stringmanolo.DebianLiveCD4Android
+package io.github.stringmanolo.KyaniteAndroid
 
 import android.content.Context
 import android.graphics.Color
@@ -83,7 +83,7 @@ class FloatingWindow(private val ctx: Context, private val host: Host) {
         fun hostFont(delta: Int)
     }
 
-    private val themed = ContextThemeWrapper(ctx, R.style.Theme_DebianLiveCD)
+    private val themed = ContextThemeWrapper(ctx, R.style.Theme_Kyanite)
     private val wm = ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val density = ctx.resources.displayMetrics.density
     private val st = FloatState.load(ctx)
@@ -146,7 +146,7 @@ class FloatingWindow(private val ctx: Context, private val host: Host) {
         )
 
         // ---- title bar (drag handle + buttons)
-        titleText.text = "DebianLiveCD"
+        titleText.text = "Kyanite"
         titleText.textSize = 12f
         titleText.gravity = Gravity.CENTER_VERTICAL
         titleText.setPadding(dp(8), 0, dp(8), 0)

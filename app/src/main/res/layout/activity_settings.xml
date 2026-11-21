@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:background="@color/dlc_bg">
+  android:background="@color/kya_bg">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -28,7 +28,7 @@
     <!-- ===== environment ===== -->
     <TextView style="@android:style/TextAppearance.Material.Subhead" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp" android:text="Environment" />
     <RadioGroup android:id="@+id/group_target" android:layout_width="match_parent" android:layout_height="wrap_content">
-      <RadioButton android:id="@+id/rb_system" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="System (installed Debian)" />
+      <RadioButton android:id="@+id/rb_system" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="System (installed Kyanite)" />
       <RadioButton android:id="@+id/rb_livecd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="LiveCD (image shipped in the APK)" />
     </RadioGroup>
 

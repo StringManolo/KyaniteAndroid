@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <style name="Theme.DebianLiveCD" parent="android:Theme.Material.NoActionBar">
-    <item name="android:windowBackground">@color/dlc_bg</item>
-    <item name="android:statusBarColor">@color/dlc_bg</item>
-    <item name="android:navigationBarColor">@color/dlc_panel</item>
+  <style name="Theme.Kyanite" parent="android:Theme.Material.NoActionBar">
+    <item name="android:windowBackground">@color/kya_bg</item>
+    <item name="android:statusBarColor">@color/kya_bg</item>
+    <item name="android:navigationBarColor">@color/kya_panel</item>
   </style>
 </resources>

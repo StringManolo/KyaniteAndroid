@@ -1,5 +1,5 @@
-A Termux alternative that gives you a real Debian userland on Android.
+A Termux alternative that gives you a small, memory-safe Kyanite userland on Android.
 
-- Debian under proot, using the official Debian rootfs
+- Kyanite under proot, using the signed Kyanite rootfs release
 - Floating-terminal-friendly UI with ESC/TAB/CTRL/ALT/HOME/END/arrow keys
 - System and LiveCD environments, each in three modes: Normal (persistent), Ephemeral (wiped on exit) and VM (QEMU, RAM only)

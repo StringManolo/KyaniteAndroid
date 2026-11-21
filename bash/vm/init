@@ -8,22 +8,31 @@ mount -t sysfs sysfs /sys
 mount -t devtmpfs devtmpfs /dev
 
 rescue() {
-  echo "[dlc] $1"
+  echo "[kya] $1"
   echo "--- /sys/bus/virtio/devices:"; ls -la /sys/bus/virtio/devices 2>&1
   echo "--- /sys/class/virtio-ports:"; ls -la /sys/class/virtio-ports 2>&1
   echo "--- /dev:"; ls /dev 2>&1 | head -60
   echo "--- dmesg (tail):"; dmesg 2>&1 | tail -40
-  echo "[dlc] rescue shell (exit = power off)"
+  echo "[kya] rescue shell (exit = power off)"
   setsid cttyhack /bin/sh
   echo o > /proc/sysrq-trigger
   sleep 5
 }
 
-for m in failover net_failover virtio_mmio virtio_console virtio_net; do
-  if [ -e /lib/modules/$m.ko ]; then
-    insmod /lib/modules/$m.ko || echo "[dlc] insmod $m failed (may be built in)"
-  fi
-done
+# load.list (written by bash/build_vm_assets.py) holds the modules in dependency order; modules the kernel has
+# built in are simply not in it.
+if [ -r /lib/modules/load.list ]; then
+  while read -r m; do
+    [ -n "$m" ] || continue
+    insmod /lib/modules/$m.ko || echo "[kya] insmod $m failed (may be built in)"
+  done < /lib/modules/load.list
+else
+  for m in failover net_failover virtio_mmio virtio_console virtio_net; do
+    if [ -e /lib/modules/$m.ko ]; then
+      insmod /lib/modules/$m.ko || echo "[kya] insmod $m failed (may be built in)"
+    fi
+  done
+fi
 
 # The port number depends on how many virtio devices were probed first (vport<N>p1), so find it by its name.
 find_port() {
@@ -46,10 +55,10 @@ while [ $i -lt 30 ]; do
   i=$((i+1))
 done
 [ -n "$PORT" ] || rescue "rootfs channel not found"
-echo "[dlc] rootfs channel: $PORT"
+echo "[kya] rootfs channel: $PORT"
 
 mount -t tmpfs -o size=90%,mode=755 tmpfs /newroot
-echo "[dlc] receiving rootfs into RAM..."
+echo "[kya] receiving rootfs into RAM..."
 tar -x -C /newroot -f "$PORT" || rescue "tar reported errors"
 [ -x /newroot/bin/sh ] || [ -L /newroot/bin/sh ] || rescue "rootfs looks empty"
 
@@ -72,14 +81,14 @@ mount -t tmpfs tmpfs /newroot/dev/shm
 
 # keep a static busybox inside the new root (RAM only): its cttyhack gives the shell a real controlling terminal,
 # which a plain "sh" started as PID 1 does not have (no job control, Ctrl-C does not work).
-mkdir -p /newroot/.dlc
-cp /bin/busybox /newroot/.dlc/busybox
+mkdir -p /newroot/.kya
+cp /bin/busybox /newroot/.kya/busybox
 
-echo "[dlc] rootfs ready, switching root. Tip: run 'stty rows N cols M' to match your screen."
-exec switch_root /newroot /.dlc/busybox sh -c '
+echo "[kya] rootfs ready, switching root. Tip: run 'stty rows N cols M' to match your screen."
+exec switch_root /newroot /.kya/busybox sh -c '
 export HOME=/root TERM=xterm-256color LANG=C.UTF-8 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 cd /root
 if [ -x /bin/bash ]; then SH=/bin/bash; else SH=/bin/sh; fi
-echo "[dlc] starting $SH (this is PID 1: leaving it powers the VM off)"
-exec /.dlc/busybox cttyhack $SH -l
+echo "[kya] starting $SH (this is PID 1: leaving it powers the VM off)"
+exec /.kya/busybox cttyhack $SH -l
 '

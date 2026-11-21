@@ -6,7 +6,7 @@
     <color name="ic_launcher_background">#FFFFFF</color>
     <color name="ic_launcher_foreground_color">#FF4081</color>
 
-    <color name="dlc_bg">#0B0E11</color>
-    <color name="dlc_panel">#12171C</color>
-    <color name="dlc_text">#C9D1D9</color>
+    <color name="kya_bg">#0B0E11</color>
+    <color name="kya_panel">#12171C</color>
+    <color name="kya_text">#C9D1D9</color>
 </resources>

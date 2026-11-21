@@ -1,7 +1,7 @@
 # TODO
 
 - [ ] First green Actions build (fix compile errors; Termux terminal API signatures were written from memory)
-- [ ] Verify proot starts Debian on a real device (seccomp / `PROOT_NO_SECCOMP` fallback)
+- [ ] Verify proot starts Kyanite on a real device (seccomp / `PROOT_NO_SECCOMP` fallback)
 - [ ] Verify VM mode on a real device (kernel image format, virtio modules, TCG JIT permissions)
 - [x] Floating window: drag, free resize, rotate, pin, opacity, minimize to notification (needs on-device testing)
 - [x] Theme settings (colour scheme, font size, bold)

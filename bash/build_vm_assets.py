@@ -39,7 +39,7 @@ DEBIAN_SUITE = os.environ.get("DEBIAN_SUITE", "trixie")
 MODULES = ["failover", "net_failover", "virtio_mmio", "virtio_console", "virtio_net"]
 # Applets bash/vm/init relies on; checked in the busybox binary so a missing one fails the build, not the boot.
 APPLETS = ["sh", "mount", "insmod", "find", "tar", "ip", "cat", "cp", "mkdir", "ls", "dmesg",
-           "sleep", "switch_root", "cttyhack"]
+           "sleep", "switch_root", "cttyhack", "setsid", "head", "tail"]
 
 
 def fetch(url):
@@ -257,9 +257,41 @@ def main():
     else:
         print("WARNING: no kernel config in the package, skipping the config sanity check")
 
-    # busybox must have every applet the init script uses
-    bb = busybox.read_bytes()
-    missing = [a for a in APPLETS if b"\0" + a.encode() + b"\0" not in bb]
+    # busybox must have every applet the init script uses. Alpine's busybox-static
+    # may be built without cttyhack; in that case use Debian's static BusyBox while
+    # keeping the Alpine kernel and its modules unchanged.
+    def missing_applets(binary):
+        data = binary.read_bytes()
+        return [a for a in APPLETS if b"\0" + a.encode() + b"\0" not in data]
+
+    missing = missing_applets(busybox)
+    if missing and PROVIDER == "alpine":
+        print("Alpine BusyBox lacks required applets:", missing)
+        print("Trying Debian busybox-static as an initramfs-only fallback...")
+        debian_pkgs = debian_index()
+        debian_bx = work / "busybox-debian"
+        debian_bx.mkdir(parents=True, exist_ok=True)
+        debian_provenance = get_deb(debian_pkgs, "busybox-static", work, debian_bx)
+        candidates = sorted(
+            p for p in debian_bx.rglob("busybox")
+            if p.is_file() and p.parent.name == "bin"
+        )
+        if not candidates:
+            sys.exit("Debian busybox-static did not contain a bin/busybox executable")
+
+        # Only accept the fallback if it passes exactly the same applet check.
+        fallback = candidates[0]
+        fallback_missing = missing_applets(fallback)
+        if fallback_missing:
+            sys.exit(
+                "Debian busybox-static also lacks required applets: "
+                f"{fallback_missing} (Alpine was missing: {missing})"
+            )
+        busybox = fallback
+        prov.append(debian_provenance)
+        missing = []
+        print("Using Debian busybox-static:", busybox)
+
     if missing:
         sys.exit(f"busybox is missing applets needed by bash/vm/init: {missing}")
 

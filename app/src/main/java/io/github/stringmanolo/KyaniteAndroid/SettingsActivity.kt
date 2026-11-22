@@ -141,7 +141,7 @@ class SettingsActivity : Activity() {
         ui.header(p, "Mode")
         val modes = listOf(
             "Normal (persistent)", "Ephemeral (temporary copy, wiped on exit)",
-            if (missingVm.isEmpty()) "VM (QEMU, RAM only) — Experimental" else "VM (Experimental) — unavailable: ${missingVm.joinToString()}"
+            if (missingVm.isEmpty()) "VM (QEMU, RAM only)" else "VM (Experimental) — unavailable: ${missingVm.joinToString()}"
         )
         ui.radios(p, modes, work.mode.ordinal) {
             if (it == 2 && missingVm.isNotEmpty()) { ui.toast("VM is not available in this build"); show("env") }

@@ -14,6 +14,8 @@ object QemuLauncher {
     /** What is missing for VM mode (empty = available). Shown in the settings screen. */
     fun missingParts(ctx: Context): List<String> {
         val m = ArrayList<String>()
+        // No 32-bit host QEMU is available (upstream dropped 32-bit hosts and Termux only ships aarch64 builds).
+        if (!Abi.is64) return listOf("not available on 32-bit ARM devices")
         if (!File(Paths.nativeLibDir(ctx), "libqemu.so").exists()) m += "libqemu.so"
         if (!hasAsset(ctx, "vm/Image")) m += "asset vm/Image"
         if (!hasAsset(ctx, "vm/initramfs.bin")) m += "asset vm/initramfs.bin"
@@ -33,7 +35,7 @@ object QemuLauncher {
             "libqemu.so: ${if (q.exists()) "yes (${q.length() / 1024} KB)" else "NO"}\n" +
             "asset vm/Image: ${yn(hasAsset(ctx, "vm/Image"))}\n" +
             "asset vm/initramfs.bin: ${yn(hasAsset(ctx, "vm/initramfs.bin"))}\n" +
-            "asset rootfs/kyanite-aarch64.tar.xz: ${yn(hasAsset(ctx, Paths.ROOTFS_ASSET))}"
+            "asset ${Paths.ROOTFS_ASSET}: ${yn(hasAsset(ctx, Paths.ROOTFS_ASSET))}"
     }
 
     /** Kernel and initramfs must be real files for QEMU; they are not secret, so they may live on disk. */

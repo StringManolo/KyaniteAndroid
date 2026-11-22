@@ -8,8 +8,24 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.RandomAccessFile
 
+/**
+ * ABI of the running process. [android.os.Process.is64Bit] is used instead of Build.SUPPORTED_ABIS because a
+ * 32-bit APK can run on an arm64 phone, and then the 32-bit userland is the one that matters.
+ */
+object Abi {
+    val is64: Boolean = android.os.Process.is64Bit()
+    /** Name used by the Kyanite release assets and by Alpine / Arch Linux ARM. */
+    val kyanite: String = if (is64) "aarch64" else "armv7"
+    val alpine: String = if (is64) "aarch64" else "armv7"
+    val archLinuxArm: String = if (is64) "aarch64" else "armv7"
+    /** Debian / Ubuntu name. */
+    val debian: String = if (is64) "arm64" else "armhf"
+    /** Name of the ABI folder / APK flavour. */
+    val apk: String = if (is64) "arm64-v8a" else "armeabi-v7a"
+}
+
 object Paths {
-    const val ROOTFS_ASSET = "rootfs/kyanite-aarch64.tar.xz"
+    val ROOTFS_ASSET: String get() = "rootfs/kyanite-${Abi.kyanite}.tar.xz"
 
     fun legacyRoot(ctx: Context, name: String) = File(ctx.filesDir, "rootfs/$name")
     fun ephemeralBase(ctx: Context) = File(ctx.filesDir, "eph")

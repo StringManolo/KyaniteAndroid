@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Repackage binaries from Termux's apt repo (aarch64) as Android jniLibs.
+"""Repackage binaries from Termux's apt repo (aarch64, or arm with TERMUX_ARCH=arm) as Android jniLibs.
 
   termux_fetch.py --clean --pkg proot \
       --bin usr/bin/proot=libproot.so \
@@ -7,7 +7,7 @@
       --bin 'usr/libexec/proot/loader32=libproot-loader32.so?'      (trailing ? = optional)
 
 Every package listed (and its Depends closure) is downloaded, sha256-checked against the repo index and
-extracted. Executables are copied to app/src/main/jniLibs/arm64-v8a/<dst>. Non-system shared libraries they
+extracted. Executables are copied to app/src/main/jniLibs/<abi>/<dst>. Non-system shared libraries they
 need (found by walking DT_NEEDED) are copied with flat names (libfoo.so.1 -> libfoo.so), NEEDED entries are
 patched to match and RPATH is set to $ORIGIN, so everything is found in nativeLibraryDir.
 Provenance is appended to build-info/termux-provenance.txt.
@@ -16,9 +16,11 @@ import argparse, gzip, hashlib, lzma, os, re, shutil, subprocess, sys, tempfile,
 from pathlib import Path
 
 REPO = "https://packages.termux.dev/apt/termux-main"
-ARCH = "aarch64"
+# TERMUX_ARCH: aarch64 (default) | arm (32-bit ARM, armeabi-v7a)
+ARCH = os.environ.get("TERMUX_ARCH", "aarch64")
+ABI_DIR = {"aarch64": "arm64-v8a", "arm": "armeabi-v7a"}[ARCH]
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "app/src/main/jniLibs/arm64-v8a"
+OUT = ROOT / "app/src/main/jniLibs" / ABI_DIR
 INFO = ROOT / "build-info"
 
 

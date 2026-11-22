@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Builds assets/rootfs/kyanite-aarch64.tar.xz from a RELEASE of Kyanite (https://github.com/StringManolo/Kyanite).
+# Builds assets/rootfs/kyanite-<arch>.tar.xz from a RELEASE of Kyanite (https://github.com/StringManolo/Kyanite).
 #
 #   KYANITE_REPO   owner/repo of the release            (default StringManolo/Kyanite)
+#   KYANITE_ARCH   aarch64 (default) | armv7           (must match the APK's ABI)
 #   KYANITE_TAG    "latest" or a tag such as v0.1.1     (default latest; pin a tag for reproducible builds)
 #   KYANITE_ALLOW_UNSIGNED=1   accept a release without a valid signature (default: refuse)
 #
@@ -15,11 +16,14 @@ ROOT="$PWD"
 
 REPO="${KYANITE_REPO:-StringManolo/Kyanite}"
 TAG="${KYANITE_TAG:-latest}"
-ARCH="aarch64"
+ARCH="${KYANITE_ARCH:-aarch64}"
+case "$ARCH" in aarch64|armv7) ;; *) echo "KYANITE_ARCH must be aarch64 or armv7, not $ARCH" >&2; exit 1 ;; esac
 NAME="kyanite-rootfs-${ARCH}.tar.xz"
 DEST="$ROOT/app/src/main/assets/rootfs"
 FILE="$DEST/kyanite-${ARCH}.tar.xz"
 mkdir -p "$DEST" "$ROOT/build-info"
+# only the rootfs of this ABI may end up in the APK
+rm -f "$DEST"/kyanite-*.tar.xz
 
 PUBKEYS="${KYANITE_PUBKEY_FILE:-$ROOT/bash/kyanite-release.pub}"   # override: tests only
 if [ -n "${KYANITE_BASE_URL:-}" ]; then

@@ -35,12 +35,15 @@ object Updater {
         var url: String? = null
         var name: String? = null
         if (assets != null) {
-            for (i in 0 until assets.length()) {
-                val a = assets.getJSONObject(i)
-                val n = a.optString("name")
-                if (n.endsWith(".apk") && (url == null || n.contains("release", true))) {
-                    url = a.optString("browser_download_url"); name = n
-                }
+            val tags = listOf("arm64-v8a", "armeabi-v7a")
+            val apks = (0 until assets.length()).map { assets.getJSONObject(it) }
+                .filter { it.optString("name").endsWith(".apk") }
+            // The APK built for the ABI this process runs as; releases from before the arm32 port carry a single,
+            // untagged APK (arm64), which is only valid for 64-bit.
+            val pick = apks.firstOrNull { it.optString("name").contains(Abi.apk) }
+                ?: if (Abi.is64) apks.firstOrNull { n -> tags.none { n.optString("name").contains(it) } } else null
+            if (pick != null) {
+                url = pick.optString("browser_download_url"); name = pick.optString("name")
             }
         }
         return Release(j.optString("tag_name"), j.optString("html_url", releasesPage()), url, name)

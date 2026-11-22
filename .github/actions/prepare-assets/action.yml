@@ -1,15 +1,27 @@
 name: Prepare proot / QEMU / rootfs assets
-description: Downloads proot, (optionally) QEMU + VM boot assets (Alpine linux-virt kernel) and the signed Kyanite rootfs release, and places them where Gradle packages them.
+description: Downloads proot, (optionally) QEMU + VM boot assets (Alpine linux-virt kernel) and the signed Kyanite rootfs release for one CPU architecture, and places them where Gradle packages them.
 inputs:
+  arch:
+    description: "Target architecture: aarch64 (arm64-v8a) or armv7 (armeabi-v7a, 32-bit ARM)"
+    default: "aarch64"
   kyanite-tag:
     description: "Kyanite release to ship: 'latest' or a tag such as v0.1.1 (pin a tag for reproducible builds)"
     default: "latest"
   with-vm:
-    description: "Also build the VM-mode assets (adds roughly 60-100 MB to the APK)"
+    description: "Also build the VM-mode assets (adds roughly 60-100 MB to the APK). Ignored for armv7: there is no 32-bit QEMU build."
     default: "true"
 runs:
   using: composite
   steps:
+    - name: Resolve architecture
+      shell: bash
+      run: |
+        case "${{ inputs.arch }}" in
+          aarch64) echo "TERMUX_ARCH=aarch64" >> "$GITHUB_ENV" ;;
+          armv7)   echo "TERMUX_ARCH=arm"     >> "$GITHUB_ENV" ;;
+          *) echo "::error::unsupported arch '${{ inputs.arch }}' (aarch64 or armv7)"; exit 1 ;;
+        esac
+        echo "KYANITE_ARCH=${{ inputs.arch }}" >> "$GITHUB_ENV"
     - shell: bash
       run: sudo apt-get update -qq && sudo apt-get install -y -qq patchelf binutils xz-utils cpio zstd kmod curl openssl
     - name: proot (termux/proot fork, from the Termux repo)
@@ -20,7 +32,7 @@ runs:
           --bin usr/libexec/proot/loader=libproot-loader.so \
           --bin 'usr/libexec/proot/loader32=libproot-loader32.so?'
     - name: QEMU + VM boot assets
-      if: inputs.with-vm == 'true'
+      if: inputs.with-vm == 'true' && inputs.arch == 'aarch64'
       shell: bash
       run: |
         python3 bash/termux_fetch.py --pkg qemu-system-aarch64-headless \
@@ -33,5 +45,5 @@ runs:
       run: bash bash/fetch-rootfs.sh
     - uses: actions/upload-artifact@v4
       with:
-        name: provenance
+        name: provenance-${{ inputs.arch }}
         path: build-info/

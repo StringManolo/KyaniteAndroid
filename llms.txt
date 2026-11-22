@@ -1,0 +1,45 @@
+# Kyanite
+
+Kyanite is a lightweight Linux distribution and Android application focused on privacy, security and portability.
+
+Official website:
+https://stringmanolo.github.io/KyaniteAndroid/
+
+## Projects
+
+- KyaniteAndroid: https://github.com/StringManolo/KyaniteAndroid
+- Kyanite Linux distribution: https://github.com/StringManolo/Kyanite
+
+## What is KyaniteAndroid?
+
+KyaniteAndroid is an Android application that allows users to run a Linux environment without root access.
+
+## Features
+
+- Linux terminal on Android.
+- Kyanite Linux root filesystem.
+- Proot execution.
+- QEMU ARM64 virtualization.
+- Encrypted system storage using AES-256-GCM.
+- PIN protection and duress PIN.
+- Ephemeral sessions.
+- Anti-forensic wipe.
+- Network isolation using a local VPN.
+- Floating terminal window.
+- Support for importing and downloading Linux distributions.
+
+## Supported environments
+
+- Kyanite
+- Alpine Linux
+- Ubuntu
+- Arch Linux ARM
+- Others
+- Custom rootfs
+
+## Resources
+
+- Download: https://github.com/StringManolo/KyaniteAndroid/releases
+- Source code: https://github.com/StringManolo/KyaniteAndroid
+- Documentation: https://github.com/StringManolo/KyaniteAndroid/blob/main/README.md
+- Linux distribution: https://github.com/StringManolo/Kyanite

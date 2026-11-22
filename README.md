@@ -5,6 +5,10 @@ Rust rootfs with `kpkg` and Brush) on Android, built from the
 [KotlinApkTemplate](https://github.com/StringManolo/KotlinApkTemplate) and compiled entirely by GitHub Actions.
 Fork of [DebianLiveCD4Android](https://github.com/StringManolo/DebianLiveCD4Android).
 
+🌐 **[Official website](https://stringmanolo.github.io/KyaniteAndroid/)** · User-friendly introduction, screenshots, features and download guide.
+
+📱 **[Download Kyanite for Android](https://github.com/StringManolo/KyaniteAndroid/releases)**
+
 - Kyanite runs under **proot** (the `termux/proot` fork), not inside a Termux-style prefix.
 - The Kyanite rootfs is the signed `kyanite-rootfs-aarch64.tar.xz` from the Kyanite releases, shipped inside the APK
   (about 8 MB). The CI verifies its SHA-256 and its Ed25519 signature before packaging it (see Build).

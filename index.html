@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0765de">
+<title>Kyanite para Android | Linux privado en tu móvil</title>
+<meta name="description" content="Kyanite: un Linux privado y seguro en tu Android. Cifrado, borrado antiforense y bloqueo de red. Sin root.">
+<link rel="icon" href="assets/icon48.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/icon192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#202032;--muted:#747488;--accent:#0765de;--accent-dark:#0549a8;--line:#e9e8ef;--paper:#fff;--soft:#f7f7fb;--radius:28px;--font:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;scroll-behavior:smooth;scroll-padding-top:108px;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:var(--paper);font-family:var(--font);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+button,a{-webkit-tap-highlight-color:transparent}
+img{max-width:100%;display:block}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{line-height:1.3;font-weight:650;letter-spacing:-.035em}
+a,button{outline-offset:5px}
+a:focus-visible,button:focus-visible{outline:3px solid #5a9bf0}
+[hidden]{display:none!important}
+.container{max-width:1248px;width:calc(100% - 96px);margin-inline:auto}
+.icon{width:22px;height:22px;flex-shrink:0;vertical-align:middle}
+.skip-link{position:fixed;left:20px;top:-60px;z-index:20;background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px}
+.skip-link:focus{top:12px}
+
+/* idioma: solo se muestra el activo */
+html[lang="es"] [lang="en"],
+html[lang="en"] [lang="es"]{display:none}
+
+/* botones */
+.button{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:54px;padding:14px 26px;border:1px solid transparent;border-radius:12px;font-size:16px;line-height:1.4;font-weight:600;background:var(--accent);color:#fff;transition:background .2s,transform .2s,box-shadow .2s;white-space:nowrap}
+.button:hover{background:var(--accent-dark);box-shadow:0 7px 18px #0765de26;transform:translateY(-2px)}
+.button-small{min-height:42px;padding:10px 18px;font-size:14px;border-radius:9px;gap:8px}
+.button-small .icon{width:17px;height:17px}
+
+/* cabecera */
+.site-header{position:sticky;top:0;z-index:10;height:80px;background:#ffffffed;backdrop-filter:blur(20px);border-bottom:1px solid #f1f0f7}
+.nav-wrap{max-width:1360px;width:calc(100% - 80px);height:100%;display:flex;align-items:center;margin:auto;gap:44px}
+.brand{flex-shrink:0;display:flex;align-items:center;gap:12px;font-size:22px;font-weight:700;letter-spacing:-.03em}
+.brand img{width:auto;height:30px}
+.main-nav{display:flex;align-items:center;gap:29px;flex:1;white-space:nowrap}
+.main-nav>a{font-size:14px;color:#676574;font-weight:500;display:flex;align-items:center;gap:4px;min-height:44px;position:relative}
+.main-nav>a[aria-current]{color:var(--accent)}
+.main-nav>a[aria-current]:after{content:"";height:3px;width:17px;border-radius:8px;background:var(--accent);position:absolute;bottom:-18px;left:calc(50% - 8px)}
+.main-nav>a:hover{color:var(--accent)}
+.main-nav .icon{height:12px;width:12px;opacity:.55}
+.nav-actions{display:flex;align-items:center;gap:21px}
+.language{display:flex;align-items:center;gap:6px;font-size:13px;min-height:44px;white-space:nowrap;background:none;border:0;padding:0}
+.language .icon{height:17px;width:17px;color:#797484}
+.menu-toggle{display:none;border:0;background:transparent;padding:8px}
+.menu-toggle>.icon:last-child{display:none}
+
+/* footer */
+.site-footer{background:#f9f9fc;border-top:1px solid #eeedf4}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;padding-top:56px;padding-bottom:49px;gap:35px}
+.footer-brand .brand{font-size:22px}
+.footer-brand p{font-size:14px;color:#8a8698;margin-top:15px}
+.footer-brand small{font-size:11px;color:#a29cae}
+.footer-brand small a:hover{text-decoration:underline;text-underline-offset:3px}
+.footer-column h2{font-size:13px;letter-spacing:0;font-weight:600;margin:6px 0 16px}
+.footer-column a{display:block;font-size:12px;color:#8a8498;margin-bottom:11px}
+.footer-column a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid #e9e7ef;font-size:10px;line-height:1.9;color:#a29bad;padding-top:21px;padding-bottom:25px;display:flex;align-items:flex-start;gap:16px;justify-content:space-between}
+.footer-bottom>div{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end;max-width:65%}
+.footer-bottom a:hover{color:var(--accent)}
+
+@media(max-width:1180px){.container{width:calc(100% - 64px)}.nav-wrap{width:calc(100% - 50px);gap:30px}.main-nav{gap:20px}.nav-actions{gap:14px}}
+@media(max-width:960px){
+  .main-nav{display:none;position:absolute;left:0;right:0;top:71px;background:#fff;padding:19px 32px 26px;border-bottom:1px solid var(--line);box-shadow:0 15px 25px #0a1e5a0b;white-space:normal}
+  .main-nav.is-open{display:flex;flex-direction:column;align-items:stretch;gap:3px}
+  .main-nav>a{font-size:14px!important;padding:8px}
+  .main-nav>a[aria-current]:after{display:none}
+  .site-header{height:72px}
+  .nav-wrap{justify-content:space-between}
+  .menu-toggle{display:grid;place-items:center}
+  .menu-toggle[aria-expanded=true]>.icon:first-child{display:none}
+  .menu-toggle[aria-expanded=true]>.icon:last-child{display:block}
+  .footer-bottom{flex-direction:column}
+  .footer-bottom>div{max-width:100%;justify-content:flex-start}
+}
+@media(max-width:700px){
+  :root{scroll-padding-top:90px}
+  .container{width:calc(100% - 40px)}
+  .site-header{height:65px}
+  .nav-wrap{width:calc(100% - 32px);gap:12px!important}
+  .brand{font-size:19px}
+  .brand img{height:26px}
+  .nav-actions{gap:10px}
+  .language{font-size:10px;gap:3px}
+  .language .icon{display:none}
+  .nav-actions .button{min-height:35px;padding:8px 11px;font-size:11px;gap:5px;border-radius:8px}
+  .nav-actions .button .icon{width:13px;height:13px}
+  .menu-toggle{padding:6px 0 6px 3px}
+  .menu-toggle .icon{width:21px;height:21px}
+  .main-nav{top:64px;padding:15px 20px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px 20px;padding-top:35px;padding-bottom:29px}
+  .footer-brand{grid-column:1/-1}
+  .footer-brand p{font-size:12px;margin-top:12px}
+  .footer-column h2{font-size:12px;margin-bottom:15px}
+  .footer-column a{font-size:11px;margin-bottom:10px}
+  .footer-bottom{padding:20px 0;font-size:9px;gap:9px}
+  .footer-bottom>div{gap:8px 14px}
+}
+@media(max-width:360px){.container{width:calc(100% - 32px)}.nav-wrap{width:calc(100% - 24px)}.nav-actions{gap:7px}.nav-actions .button{font-size:10px;padding-inline:9px}}
+@media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* ---------- home ---------- */
+.product-home{background:#fff;padding-bottom:72px}
+.product-feature{position:relative;min-width:0;isolation:isolate;scroll-margin-top:104px}
+.product-inner{width:100%;height:100%}
+.product-copy{position:relative;z-index:2;min-width:0}
+.product-copy h1,.product-copy h2{font-weight:660;letter-spacing:-.04em;line-height:1.35;text-wrap:balance}
+.product-copy p{color:#747184;font-size:16px;line-height:1.85;margin-top:17px;text-wrap:pretty}
+.product-art{position:relative;width:100%;height:400px;min-width:0;display:flex;align-items:center;justify-content:center}
+.product-picture{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+.product-picture img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 18px 20px #1a285a12)}
+
+.product-hero{background:radial-gradient(ellipse at 75% 45%,#d6e7fd 0,transparent 48%),linear-gradient(110deg,#fafcff 0%,#eef4fd 100%)}
+.product-hero .product-inner{max-width:1248px;width:calc(100% - 96px);min-height:710px;margin:auto;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:30px;padding:32px 0 50px}
+.product-hero .product-copy h1{font-size:clamp(44px,4.2vw,62px);line-height:1.38;letter-spacing:-.05em}
+.product-hero .product-copy h1 .accent{color:var(--accent)}
+.product-hero .product-copy p{font-size:18px;margin-top:24px}
+.product-hero .product-art{height:580px;overflow:visible}
+.hero-mark{position:absolute;left:-5%;top:48%;transform:translateY(-50%);font-size:390px;font-weight:740;line-height:1;letter-spacing:-.1em;color:#bcd6f98a;user-select:none}
+.product-art-real-phone .product-picture{width:246px;height:auto;display:block;border:6px solid #25242e;border-radius:35px;background:#121219;box-shadow:inset 0 0 0 1px #fff7,0 30px 50px #1a2c5a25;transform:translateX(52px) rotate(6deg)}
+.product-art-real-phone img{width:100%;height:auto;max-height:none;border-radius:28px;filter:none}
+.scroll-cue{position:absolute;bottom:18px;left:calc(50% - 22px);width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#6f8fc0;border-radius:50%;transition:background .2s}
+.scroll-cue:hover{background:#c5d8f245}
+.scroll-cue .icon{width:20px;height:20px;transform:rotate(90deg)}
+
+.product-sections{display:flex;flex-direction:column;gap:24px;padding-top:32px}
+.feature-grid-two{display:grid;gap:24px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.product-card,.product-wide{overflow:hidden;border-radius:28px;background:#f6f5fa}
+.product-card .product-inner{display:flex;flex-direction:column;align-items:center;text-align:center;padding:42px 32px 0}
+.product-card .product-copy{width:100%}
+.product-card .product-copy h2{font-size:31px}
+.product-card .product-copy p{font-size:14px;margin-top:15px}
+.product-card .product-art{margin-top:28px;height:370px;flex-shrink:0}
+
+/* tintes de cada tarjeta */
+.tint-ice{background:radial-gradient(ellipse at 50% 85%,#d3e6fc 0,transparent 58%),#eef5fe}
+.tint-lilac{background:radial-gradient(ellipse at 50% 85%,#d9defc 0,transparent 58%),#f3f4fd}
+.tint-teal{background:radial-gradient(ellipse at 50% 95%,#c7e7ee 0,transparent 64%),#edf7f9}
+.tint-sky{background:radial-gradient(ellipse at 50% 95%,#cfe0fb 0,transparent 64%),#f0f5fe}
+.tint-slate{background:radial-gradient(ellipse at 50% 85%,#dbe2f1 0,transparent 58%),#f3f5fa}
+.tint-row{background:radial-gradient(ellipse at 25% 70%,#d3dff6 0,transparent 56%),#f2f6fd}
+.tint-blue{background:radial-gradient(ellipse at 76% 75%,#d3e3ff 0,transparent 58%),#eef4fe}
+.fade .product-picture img{mask-image:linear-gradient(to bottom,#000 88%,transparent 100%)}
+
+.product-wide .product-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:36px;padding:45px 64px;min-height:540px}
+.product-wide .product-copy h2{font-size:42px;max-width:510px}
+.product-wide .product-copy p{font-size:16px;max-width:480px}
+.product-wide .product-art{height:448px}
+.product-reverse .product-copy{grid-column:2;grid-row:1}
+.product-reverse .product-art{grid-column:1;grid-row:1}
+
+.product-art-instance .product-picture{height:auto;width:185px;display:block;transform:rotate(-6deg);border:5px solid #272634;border-radius:27px;background:#16131f;box-shadow:0 24px 35px #3024461a}
+.product-art-instance img{width:100%;height:auto;max-height:none;border-radius:21px;filter:none}
+.product-art-instance:before,.product-art-instance:after{content:"";position:absolute;width:180px;height:370px;border:1px solid #b9cdee;border-radius:28px;background:linear-gradient(155deg,#f6faff9c,#cfdff741);transform:translateX(-62px) rotate(-13deg)}
+.product-art-instance:after{transform:translateX(70px) rotate(10deg);background:linear-gradient(155deg,#f0f6ff80,#b9cdf150);border-color:#b4c8ea6e}
+
+.product-windows-vm .product-inner{padding-bottom:0;min-height:520px}
+.product-windows-vm .product-art{height:465px;align-self:end}
+
+@media(max-width:1100px) and (min-width:701px){
+  .product-hero .product-inner{width:calc(100% - 64px);min-height:650px;gap:20px;grid-template-columns:1.08fr 1fr}
+  .product-hero .product-copy h1{font-size:42px}
+  .product-hero .product-copy p{font-size:15px}
+  .product-hero .product-art{height:520px}
+  .hero-mark{font-size:300px;left:-8%}
+  .product-art-real-phone .product-picture{width:208px;transform:translateX(18px) rotate(5deg);border-radius:30px}
+  .product-art-real-phone img{border-radius:24px}
+  .product-sections{width:calc(100% - 64px);gap:20px}
+  .feature-grid-two{gap:20px}
+  .product-card .product-inner{padding:32px 24px 0}
+  .product-card .product-copy h2{font-size:27px}
+  .product-card .product-copy p{font-size:13px;min-height:48px}
+  .product-card .product-art{height:320px;margin-top:20px}
+  .product-wide .product-inner{padding:35px 36px;gap:28px;min-height:480px}
+  .product-wide .product-copy h2{font-size:33px}
+  .product-wide .product-copy p{font-size:14px}
+  .product-wide .product-art{height:400px}
+  .product-art-instance .product-picture{width:166px}
+  .product-art-instance:before,.product-art-instance:after{height:320px;width:150px}
+  .product-art-instance:before{transform:translateX(-42px) rotate(-13deg)}
+  .product-art-instance:after{transform:translateX(45px) rotate(10deg)}
+  .product-windows-vm .product-inner{padding-bottom:0}
+}
+@media(max-width:700px){
+  .product-home{padding-bottom:26px}
+  .product-feature{scroll-margin-top:83px}
+  .product-hero .product-inner{width:calc(100% - 40px);min-height:0;display:flex;flex-direction:column;gap:25px;padding:38px 0 54px}
+  .product-hero .product-copy{text-align:center;width:100%}
+  .product-hero .product-copy h1{font-size:36px;line-height:1.4;letter-spacing:-.045em}
+  .product-hero .product-copy p{font-size:14px;margin:17px auto 0;max-width:330px}
+  .product-hero .product-art{height:390px;max-width:340px;margin:auto}
+  .hero-mark{left:0;top:47%;font-size:270px}
+  .product-art-real-phone .product-picture{width:163px;transform:translateX(28px) rotate(5deg);border-width:4px;border-radius:25px;box-shadow:0 20px 30px #1a2c5a25}
+  .product-art-real-phone img{border-radius:20px}
+  .scroll-cue{bottom:4px}
+  .product-sections{width:calc(100% - 32px);padding-top:18px;gap:18px}
+  .feature-grid-two{grid-template-columns:1fr;gap:18px}
+  .product-card,.product-wide{border-radius:22px}
+  .product-card .product-inner,.product-wide .product-inner{display:flex;flex-direction:column;gap:0;padding:32px 24px 0;min-height:0;text-align:center}
+  .product-copy{width:100%}
+  .product-card .product-copy h2,.product-wide .product-copy h2{font-size:27px;line-height:1.4;min-height:0;display:block;max-width:100%}
+  .product-card .product-copy p,.product-wide .product-copy p{font-size:13px;line-height:1.8;margin:14px auto 0;min-height:0;max-width:340px}
+  .product-card .product-art,.product-wide .product-art{height:325px;flex-shrink:0;margin:24px auto 0;max-width:340px}
+  .product-art-instance .product-picture{width:151px;max-width:65%;border-width:4px;border-radius:23px;transform:rotate(-5deg)}
+  .product-art-instance img{border-radius:18px}
+  .product-art-instance:before,.product-art-instance:after{width:140px;height:290px;top:35px;border-radius:22px}
+  .product-art-instance:before{transform:translateX(-45px) rotate(-13deg)}
+  .product-art-instance:after{transform:translateX(45px) rotate(10deg)}
+  .product-windows-vm .product-art{height:355px;align-self:center}
+}
+@media(max-width:360px){
+  .product-hero .product-inner{width:calc(100% - 32px);padding-top:29px;gap:22px}
+  .product-hero .product-copy h1{font-size:31px}
+  .product-hero .product-copy p{font-size:12px}
+  .product-hero .product-art{height:355px}
+  .product-art-real-phone .product-picture{width:148px;transform:translateX(25px) rotate(5deg)}
+  .hero-mark{font-size:240px}
+  .product-sections{width:calc(100% - 24px)}
+  .product-card .product-inner,.product-wide .product-inner{padding:28px 20px 0}
+  .product-card .product-copy h2,.product-wide .product-copy h2{font-size:24px}
+  .product-card .product-art{height:290px}
+  .product-card .product-copy p,.product-wide .product-copy p{font-size:12px}
+  .product-windows-vm .product-art{height:325px}
+}
+.feature-grid-support .product-art{height:350px}
+@media(max-width:600px){.feature-grid-support .product-art{height:325px}}
+@media(max-width:360px){.feature-grid-support .product-art{height:290px}}
+@media(min-width:701px){.feature-grid-support .product-copy{min-height:128px}}
+@media(min-width:701px){.feature-grid-two .product-copy{flex:1}}
+.product-multi-instance .product-art{height:500px}
+.product-art-instance .product-picture{width:216px;transform:rotate(-3deg)}
+@media(max-width:1100px) and (min-width:701px){.product-multi-instance .product-art{height:440px}.product-art-instance .product-picture{width:188px}}
+@media(max-width:700px){.product-multi-instance .product-art{height:420px}.product-art-instance .product-picture{width:174px}}
+@media(max-width:360px){.product-multi-instance .product-art{height:390px}.product-art-instance .product-picture{width:158px}}
+
+/* botones de descarga (insignia + APK) */
+.download-choice-actions{display:grid;grid-template-columns:minmax(135px,1.12fr) minmax(100px,1fr);align-items:stretch;gap:16px;width:100%;max-width:416px;margin-block:22px 14px}
+.download-choice-actions>.download-option-direct{width:100%;min-width:0;min-height:44px;padding:12px 15px;gap:8px;font-size:15px;border-radius:12px;background:linear-gradient(135deg,#2f86f0,#0765de);box-shadow:0 7px 18px #0765de1c;white-space:nowrap}
+.download-choice-actions>.download-option-direct:hover{background:linear-gradient(135deg,#1f78e8,#0549a8);transform:translateY(-1px)}
+.download-option-direct .icon{width:19px;height:19px}
+.play-store-badge{display:flex;align-items:center;justify-content:center;width:100%;min-width:0;min-height:44px;padding:0;line-height:0;border:0;background:transparent;box-shadow:none}
+.play-store-badge img{display:block;width:100%;height:auto;aspect-ratio:240 / 71}
+.product-hero-actions{margin-top:30px;margin-bottom:14px}
+.feature-guide-link{display:inline;color:inherit;border-radius:5px}
+.feature-guide-link>.icon{width:.55em;height:.55em;margin-left:.25em;vertical-align:baseline;color:#8fa6cc;transition:color .2s,transform .2s}
+.feature-guide-link:hover{color:var(--accent)}
+.feature-guide-link:hover>.icon{color:var(--accent);transform:translateX(3px)}
+
+/* diálogo de descarga */
+body.download-dialog-open{overflow:hidden}
+.download-dialog{width:min(480px,calc(100% - 24px));max-width:none;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:0;border:1px solid #ffffffcc;border-radius:24px;background:var(--paper);color:var(--ink);box-shadow:0 24px 80px #0f1f4a26,0 4px 16px #0f1f4a0d;overflow:auto;overscroll-behavior:contain}
+.download-dialog::backdrop{background:#10204552;backdrop-filter:blur(3px)}
+.download-dialog-panel{position:relative;padding:30px 28px 28px}
+.download-dialog-close{position:absolute;top:17px;right:16px;display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:11px;border:0;border-radius:50%;background:transparent;color:#8b8798;transition:background .15s,color .15s}
+.download-dialog-close:hover{background:#f1f4fa;color:var(--ink)}
+.download-dialog-close .icon{width:20px;height:20px}
+.download-dialog h2{padding-right:40px;font-size:26px;line-height:1.3;letter-spacing:-.035em}
+.download-dialog-panel>p{margin-top:7px;color:var(--muted);font-size:14px;line-height:1.6}
+.download-dialog-actions{margin-top:22px;margin-bottom:10px}
+@media(max-width:700px){.download-choice-actions{max-width:360px;gap:14px}.product-hero-actions{margin:23px auto 14px}.product-hero .product-inner{gap:19px;padding-bottom:48px}.product-hero .product-art{height:350px}.product-art-real-phone .product-picture{width:154px}.nav-actions .button{min-height:44px}}
+@media(max-width:480px){.download-choice-actions{gap:14px}.download-choice-actions>.download-option-direct{padding:10px 9px;font-size:13px;gap:7px}.download-option-direct .icon{width:16px;height:16px}.download-dialog{border-radius:22px}.download-dialog-panel{padding:27px 20px max(24px,env(safe-area-inset-bottom))}.download-dialog h2{font-size:25px}}
+@media(max-width:360px){.download-choice-actions{gap:12px}.download-choice-actions>.download-option-direct{padding-inline:7px;font-size:12px}.download-choice-actions.has-play .download-option-direct>.icon{display:none}.download-dialog-panel{padding-inline:16px}.download-dialog h2{font-size:24px}.download-dialog-panel>p{font-size:13px}.product-hero .product-inner{gap:17px}.product-hero .product-art{height:320px}.product-art-real-phone .product-picture{width:139px}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main"><span lang="es">Saltar al contenido</span><span lang="en">Skip to content</span></a>
+
+<header class="site-header"><div class="nav-wrap">
+  <a class="brand" href="#inicio" aria-label="Kyanite"><img src="assets/logo.png" alt="" width="35" height="30">Kyanite</a>
+  <nav id="site-nav" class="main-nav" aria-label="Principal">
+    <a aria-current="page" href="#inicio"><span lang="es">Inicio</span><span lang="en">Home</span></a>
+    <a href="https://github.com/StringManolo/Kyanite/blob/main/docs/android.md#kyanite-on-android" target="_blank" rel="noopener"><span lang="es">Guía de usuario</span><span lang="en">User guide</span></a>
+    <a href="https://github.com/StringManolo/Kyanite/blob/main/SECURITY.md" target="_blank" rel="noopener"><span lang="es">Seguridad</span><span lang="en">Security</span></a>
+    <a href="https://github.com/StringManolo/Kyanite" target="_blank" rel="noopener">GitHub<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 3H4v17h17v-6"/></svg></a>
+    <a href="https://github.com/StringManolo/KyaniteAndroid/issues" target="_blank" rel="noopener"><span lang="es">Reportar un fallo</span><span lang="en">Report a bug</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 3H4v17h17v-6"/></svg></a>
+  </nav>
+  <div class="nav-actions">
+    <button class="language" id="lang" type="button" aria-label="Cambiar idioma / Change language"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg><span id="lang-label">English</span></button>
+    <a class="button button-small" href="https://github.com/StringManolo/KyaniteAndroid/releases/latest" data-open-download aria-haspopup="dialog" aria-controls="download-dialog"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg><span lang="es">Descargar</span><span lang="en">Download</span></a>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="site-nav"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
+  </div>
+</div></header>
+
+<main id="main" class="product-home">
+
+  <!-- HERO. Imagen: 720 x 1584 px (captura de pantalla; el marco de móvil lo pone el CSS) -->
+  <section class="product-feature product-hero" id="inicio" aria-labelledby="hero-title"><div class="product-inner">
+    <div class="product-copy">
+      <h1 id="hero-title">
+        <span lang="es">Tu propio<br><span class="accent">Linux privado en tu Android</span></span>
+        <span lang="en">Your own<br><span class="accent">private Linux on your Android</span></span>
+      </h1>
+      <p>
+        <span lang="es">Crea un entorno Linux separado en tu móvil, con cifrado, borrado antiforense y bloqueo de red. Sin root.</span>
+        <span lang="en">Create a separate Linux environment on your phone, with encryption, anti-forensic wipe and a network kill switch. No root needed.</span>
+      </p>
+      <div class="download-choice-actions has-play product-hero-actions">
+        <a class="play-store-badge" href="https://github.com/StringManolo/KyaniteAndroid/releases/latest">
+          <img lang="es" src="assets/github-badge-es.svg" alt="Disponible en GitHub" width="240" height="71">
+          <img lang="en" src="assets/github-badge-en.svg" alt="Get it on GitHub" width="240" height="71">
+        </a>
+        <a class="button download-option-direct" href="https://github.com/StringManolo/KyaniteAndroid/releases/latest/download/Kyanite.apk">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>
+          <span lang="es">Descargar APK</span><span lang="en">Download APK</span>
+        </a>
+      </div>
+    </div>
+    <div class="product-art product-art-real-phone">
+      <span class="hero-mark" aria-hidden="true">K</span>
+      <picture class="product-picture"><img src="assets/hero.png" alt="" width="720" height="1584" fetchpriority="high" decoding="async"></picture>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#funciones" aria-label="Ver todas las funciones / See all features"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+  </section>
+
+  <div class="product-sections container">
+
+    <!-- PAREJA 1. Imágenes de tarjeta: 616 x 878 px -->
+    <div class="feature-grid-two">
+      <section class="product-feature product-card tint-ice fade" id="funciones" aria-labelledby="f1"><div class="product-inner">
+        <div class="product-copy">
+          <h2 id="f1"><a class="feature-guide-link" href="https://github.com/stringmanolo/kyanite#in-short" target="_blank" rel="noopener"><span lang="es">Un Linux de solo 10 MB</span><span lang="en">A Linux of just 10 MB</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></h2>
+          <p><span lang="es">Kyanite está hecho con piezas en Rust, un lenguaje que evita de raíz los fallos de memoria. Pequeño, ligero y más seguro desde la base.</span><span lang="en">Kyanite is built from Rust components, a language that rules out whole classes of memory bugs. Small, light and safer from the ground up.</span></p>
+        </div>
+        <div class="product-art"><picture class="product-picture"><img src="assets/card.png" alt="" width="616" height="878" loading="lazy" decoding="async"></picture></div>
+      </div></section>
+      <section class="product-feature product-card tint-lilac fade" id="apt" aria-labelledby="f2"><div class="product-inner">
+        <div class="product-copy">
+          <h2 id="f2"><a class="feature-guide-link" href="https://github.com/StringManolo/Kyanite/blob/main/docs/kpkg.md" target="_blank" rel="noopener"><span lang="es">Todo Debian a un comando</span><span lang="en">All of Debian, one command away</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></h2>
+          <p><span lang="es">Instala miles de paquetes con kpkg o con los comandos apt de siempre. No hay nada nuevo que aprender.</span><span lang="en">Install thousands of packages with kpkg or the apt commands you already know. Nothing new to learn.</span></p>
+        </div>
+        <div class="product-art"><picture class="product-picture"><img src="assets/card2.png" alt="" width="616" height="878" loading="lazy" decoding="async"></picture></div>
+      </div></section>
+    </div>
+
+    <!-- FILA con captura enmarcada (imagen izquierda): 1080 x 2376 px -->
+    <section class="product-feature product-multi-instance product-wide product-reverse tint-row" id="modos" aria-labelledby="f3"><div class="product-inner">
+      <div class="product-copy">
+        <h2 id="f3"><a class="feature-guide-link" href="https://github.com/StringManolo/Kyanite/blob/main/docs/android.md#ways-to-run-kyanite" target="_blank" rel="noopener"><span lang="es">Normal, efímero o máquina virtual</span><span lang="en">Normal, ephemeral or virtual machine</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></h2>
+        <p><span lang="es">Guarda tu trabajo, empieza de cero en cada sesión o arranca una máquina virtual (en RAM) que no escribe nada en el almacenamiento del móvil.</span><span lang="en">Keep your work, start fresh every session, or boot a virtual machine (on RAM) that writes nothing to your phone’s storage.</span></p>
+      </div>
+      <div class="product-art product-art-instance"><picture class="product-picture"><img src="assets/instance.png" alt="" width="1080" height="2376" loading="lazy" decoding="async"></picture></div>
+    </div></section>
+
+    <!-- PAREJA 2 (seguridad) -->
+    <div class="feature-grid-two feature-grid-support">
+      <section class="product-feature product-card tint-teal fade" id="cifrado" aria-labelledby="f4"><div class="product-inner">
+        <div class="product-copy">
+          <h2 id="f4"><a class="feature-guide-link" href="https://github.com/StringManolo/KyaniteAndroid#settings-tabs" target="_blank" rel="noopener"><span lang="es">Cifrado y bajo llave</span><span lang="en">Encrypted and locked</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></h2>
+          <p><span lang="es">Tus sistemas se guardan cifrados con AES-256 y la app se bloquea con PIN. Añade un PIN de coacción que lo borra todo.</span><span lang="en">Your systems are stored encrypted with AES-256 and the app locks behind a PIN. Add a duress PIN that wipes everything.</span></p>
+        </div>
+        <div class="product-art"><picture class="product-picture"><img src="assets/card3.png" alt="" width="616" height="878" loading="lazy" decoding="async"></picture></div>
+      </div></section>
+      <section class="product-feature product-card tint-slate fade" id="wipe" aria-labelledby="f5"><div class="product-inner">
+        <div class="product-copy">
+          <h2 id="f5"><a class="feature-guide-link" href="https://github.com/StringManolo/KyaniteAndroid#settings-tabs" target="_blank" rel="noopener"><span lang="es">Borrado antiforense</span><span lang="en">Anti-forensic wipe</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></h2>
+          <p><span lang="es">Se activa tras varios PIN fallidos, mucho tiempo sin abrir la app o si alguien activa la depuración USB. Destruye la clave, sobrescribe los datos y borra todo.</span><span lang="en">Triggers after wrong PINs, a long time without opening the app, or when USB debugging gets turned on. It destroys the key, overwrites the data and deletes everything.</span></p>
+        </div>
+        <div class="product-art"><picture class="product-picture"><img src="assets/card4.png" alt="" width="616" height="878" loading="lazy" decoding="async"></picture></div>
+      </div></section>
+    </div>
+
+    <!-- FILA ancha (imagen derecha, sin marco): 590 x 878 px -->
+    <section class="product-feature product-windows-vm product-wide tint-blue fade" id="red" aria-labelledby="f6"><div class="product-inner">
+      <div class="product-copy">
+        <h2 id="f6"><a class="feature-guide-link" href="https://github.com/StringManolo/KyaniteAndroid#settings-tabs" target="_blank" rel="noopener"><span lang="es">Red cortada con un interruptor</span><span lang="en">Network off with one switch</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></h2>
+        <p><span lang="es">Una VPN local sin salida deja sin internet a la app y a todo lo que corre dentro. Sin conexión, sin sorpresas.</span><span lang="en">A local VPN with no exit cuts internet for the app and everything running inside it. No connection, no surprises.</span></p>
+      </div>
+      <div class="product-art"><picture class="product-picture"><img src="assets/card5.png" alt="" width="590" height="878" loading="lazy" decoding="async"></picture></div>
+    </div></section>
+
+    <!-- PAREJA 3 -->
+    <div class="feature-grid-two feature-grid-support">
+      <section class="product-feature product-card tint-sky fade" id="ventana" aria-labelledby="f7"><div class="product-inner">
+        <div class="product-copy">
+          <h2 id="f7"><a class="feature-guide-link" href="https://github.com/StringManolo/KyaniteAndroid#window-and-appearance" target="_blank" rel="noopener"><span lang="es">Ventana flotante</span><span lang="en">Floating window</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></h2>
+          <p><span lang="es">Mueve, redimensiona, gira y haz transparente la terminal para usarla encima de cualquier otra app.</span><span lang="en">Move, resize, rotate and fade the terminal so you can use it on top of any other app.</span></p>
+        </div>
+        <div class="product-art"><picture class="product-picture"><img src="assets/card6.png" alt="" width="616" height="878" loading="lazy" decoding="async"></picture></div>
+      </div></section>
+      <section class="product-feature product-card tint-ice fade" id="sistemas" aria-labelledby="f8"><div class="product-inner">
+        <div class="product-copy">
+          <h2 id="f8"><a class="feature-guide-link" href="https://github.com/StringManolo/KyaniteAndroid#settings-tabs" target="_blank" rel="noopener"><span lang="es">Todos tus sistemas</span><span lang="en">All your systems</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></h2>
+          <p><span lang="es">Importa o descarga Alpine, Ubuntu Base y Arch Linux ARM, y guarda instantáneas para volver atrás cuando quieras.</span><span lang="en">Import or download Alpine, Ubuntu Base and Arch Linux ARM, and keep snapshots to roll back whenever you want.</span></p>
+        </div>
+        <div class="product-art"><picture class="product-picture"><img src="assets/card7.png" alt="" width="616" height="878" loading="lazy" decoding="async"></picture></div>
+      </div></section>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top container">
+    <div class="footer-brand">
+      <a class="brand" href="#inicio"><img src="assets/logo.png" alt="" width="35" height="30">Kyanite</a>
+      <p><span lang="es">Tu Linux privado. En tu móvil.</span><span lang="en">Your private Linux. On your phone.</span></p>
+      <small><a href="https://github.com/StringManolo/DebianLiveCD4Android" target="_blank" rel="noopener"><span lang="es">Basado en DebianLiveCD4Android</span><span lang="en">Based on DebianLiveCD4Android</span></a></small>
+    </div>
+    <div class="footer-column">
+      <h2><span lang="es">Producto y ayuda</span><span lang="en">Product &amp; help</span></h2>
+      <a href="https://github.com/StringManolo/KyaniteAndroid/releases/latest"><span lang="es">Descarga oficial</span><span lang="en">Official download</span></a>
+      <a href="https://github.com/StringManolo/Kyanite#documentation"><span lang="es">Guía de usuario</span><span lang="en">User guide</span></a>
+      <a href="https://github.com/StringManolo/Kyanite"><span lang="es">Kyanite, la distro</span><span lang="en">Kyanite, the distro</span></a>
+    </div>
+    <div class="footer-column">
+      <h2><span lang="es">Contacto</span><span lang="en">Get in touch</span></h2>
+      <a href="https://github.com/StringManolo">GitHub</a>
+      <a href="https://github.com/StringManolo/KyaniteAndroid/issues"><span lang="es">Reportar un fallo</span><span lang="en">Report a bug</span></a>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <span>© 2026 Kyanite</span>
+    <div>
+      <a href="https://github.com/StringManolo/Kyanite/blob/main/SECURITY.md"><span lang="es">Política de seguridad</span><span lang="en">Security policy</span></a>
+      <a href="https://github.com/StringManolo/Kyanite#third-party-components-and-licenses"><span lang="es">Licencias de terceros</span><span lang="en">Third-party licenses</span></a>
+    </div>
+  </div>
+</footer>
+
+<dialog id="download-dialog" class="download-dialog" aria-labelledby="download-dialog-title" aria-describedby="download-dialog-description">
+  <div class="download-dialog-panel">
+    <button type="button" class="download-dialog-close" data-close-download aria-label="Cerrar / Close" autofocus><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
+    <h2 id="download-dialog-title"><span lang="es">Descargar Kyanite</span><span lang="en">Download Kyanite</span></h2>
+    <p id="download-dialog-description"><span lang="es">Elige una opción de descarga.</span><span lang="en">Choose a download option.</span></p>
+    <div class="download-choice-actions has-play download-dialog-actions">
+      <a class="play-store-badge" href="https://github.com/StringManolo/KyaniteAndroid/releases/latest">
+        <img lang="es" src="assets/github-badge-es.svg" alt="Disponible en GitHub" width="240" height="71">
+        <img lang="en" src="assets/github-badge-en.svg" alt="Get it on GitHub" width="240" height="71">
+      </a>
+      <a class="button download-option-direct" href="https://github.com/StringManolo/KyaniteAndroid/releases/latest/download/Kyanite.apk">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>
+        <span lang="es">Descargar APK</span><span lang="en">Download APK</span>
+      </a>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  var html = document.documentElement;
+  var langBtn = document.getElementById('lang');
+  var label = document.getElementById('lang-label');
+  var toggle = document.getElementById('menu-toggle');
+  var nav = document.getElementById('site-nav');
+  var dlg = document.getElementById('download-dialog');
+
+  /* idioma */
+  var saved = null;
+  try { saved = localStorage.getItem('kyanite-lang'); } catch (e) {}
+  var lang = saved || ((navigator.language || 'es').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+  function applyLang(l){
+    html.lang = l;
+    label.textContent = l === 'es' ? 'English' : 'Español';
+    toggle.setAttribute('aria-label', l === 'es' ? 'Abrir menú' : 'Open menu');
+    document.title = l === 'es' ? 'Kyanite para Android | Linux privado en tu móvil' : 'Kyanite for Android | Private Linux on your phone';
+  }
+  applyLang(lang);
+  langBtn.addEventListener('click', function(){
+    lang = html.lang === 'es' ? 'en' : 'es';
+    applyLang(lang);
+    try { localStorage.setItem('kyanite-lang', lang); } catch (e) {}
+  });
+
+  /* menú hamburguesa (≤ 960 px) */
+  function setMenu(open){
+    nav.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  toggle.addEventListener('click', function(){ setMenu(!nav.classList.contains('is-open')); });
+  nav.addEventListener('click', function(e){ if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) { setMenu(false); toggle.focus(); }
+  });
+
+  /* diálogo de descarga */
+  var opener = document.querySelector('[data-open-download]');
+  opener.addEventListener('click', function(e){
+    if (!dlg.showModal) return;          /* sin <dialog>: el enlace funciona tal cual */
+    e.preventDefault();
+    setMenu(false);
+    dlg.showModal();
+    document.body.classList.add('download-dialog-open');
+  });
+  function closeDlg(){ dlg.close(); }
+  dlg.addEventListener('close', function(){ document.body.classList.remove('download-dialog-open'); });
+  dlg.querySelector('[data-close-download]').addEventListener('click', closeDlg);
+  dlg.addEventListener('click', function(e){
+    var r = dlg.getBoundingClientRect();
+    var inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) closeDlg();
+  });
+})();
+</script>
+</body>
+</html>

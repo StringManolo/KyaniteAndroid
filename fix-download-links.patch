@@ -1,0 +1,15 @@
+diff --git a/.github/workflows/android.yml b/.github/workflows/android.yml
+--- a/.github/workflows/android.yml
++++ b/.github/workflows/android.yml
+@@ -24,8 +24,9 @@
+           - arch: aarch64
+             abi: arm64-v8a
+             with_vm: 'true'
+-            # contains "release": releases older clients still pick this one (see Updater.kt)
+-            release_apk: KyaniteAndroid-release-arm64-v8a.apk
++            # same name as before the arm32 port: existing .../releases/latest/download/app-release.apk links keep working,
++            # and it contains "release" so old in-app updaters still pick it (see Updater.kt)
++            release_apk: app-release.apk
+             debug_apk: KyaniteAndroid-debug-arm64-v8a.apk
+           - arch: armv7
+             abi: armeabi-v7a

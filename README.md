@@ -7,7 +7,7 @@ Fork of [DebianLiveCD4Android](https://github.com/StringManolo/DebianLiveCD4Andr
 
 🌐 **[Official website](https://stringmanolo.github.io/KyaniteAndroid/)** · User-friendly introduction, screenshots, features and download guide.
 
-📱 **[Download Kyanite for Android](https://github.com/StringManolo/KyaniteAndroid/releases)**
+📱 **[Download Kyanite for Android](https://github.com/StringManolo/KyaniteAndroid/releases/latest/download/Kyanite.apk)**
 
 - Kyanite runs under **proot** (the `termux/proot` fork), not inside a Termux-style prefix.
 - The Kyanite rootfs is the signed `kyanite-rootfs-aarch64.tar.xz` from the Kyanite releases, shipped inside the APK

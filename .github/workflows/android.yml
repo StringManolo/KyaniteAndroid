@@ -26,12 +26,12 @@ jobs:
             with_vm: 'true'
             # same name as before the arm32 port: existing .../releases/latest/download/app-release.apk links keep working,
             # and it contains "release" so old in-app updaters still pick it (see Updater.kt)
-            release_apk: app-release.apk
+            release_apk: Kyanite.apk
             debug_apk: KyaniteAndroid-debug-arm64-v8a.apk
           - arch: armv7
             abi: armeabi-v7a
             with_vm: 'false'
-            release_apk: KyaniteAndroid-armeabi-v7a.apk
+            release_apk: kyanite_v7.apk
             debug_apk: KyaniteAndroid-debug-armeabi-v7a.apk
 
     steps:

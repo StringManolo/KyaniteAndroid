@@ -35,13 +35,11 @@ object Updater {
         var url: String? = null
         var name: String? = null
         if (assets != null) {
-            val tags = listOf("arm64-v8a", "armeabi-v7a")
             val apks = (0 until assets.length()).map { assets.getJSONObject(it) }
                 .filter { it.optString("name").endsWith(".apk") }
-            // The APK built for the ABI this process runs as; releases from before the arm32 port carry a single,
-            // untagged APK (arm64), which is only valid for 64-bit.
-            val pick = apks.firstOrNull { it.optString("name").contains(Abi.apk) }
-                ?: if (Abi.is64) apks.firstOrNull { n -> tags.none { n.optString("name").contains(it) } } else null
+            // The 32-bit APK is the one whose name contains "v7" (kyanite_v7.apk); any other APK is the 64-bit one
+            // (Kyanite.apk), which is also the only kind that releases from before the arm32 port carry.
+            val pick = apks.firstOrNull { it.optString("name").contains("v7", true) == !Abi.is64 }
             if (pick != null) {
                 url = pick.optString("browser_download_url"); name = pick.optString("name")
             }

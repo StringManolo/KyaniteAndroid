@@ -41,5 +41,5 @@ KyaniteAndroid is an Android application that allows users to run a Linux enviro
 
 - Download: https://github.com/StringManolo/KyaniteAndroid/releases
 - Source code: https://github.com/StringManolo/KyaniteAndroid
-- Documentation: https://github.com/StringManolo/KyaniteAndroid/blob/main/README.md
+- Documentation: https://github.com/stringmanolo/kyanite#on-android-easiest
 - Linux distribution: https://github.com/StringManolo/Kyanite

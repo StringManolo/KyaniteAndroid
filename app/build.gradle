@@ -22,8 +22,8 @@ android {
     // MUST stay <= 28: Android 10+ blocks exec() of files in the app data dir for targetSdk >= 29 (W^X),
     // and the Kyanite rootfs binaries live there.
     targetSdk 28
-    versionCode 1 * 10 + abiCode
-    versionName "0.3.0"
+    versionCode 100 + abiCode
+    versionName "1.0.0"
     ndk { abiFilters targetAbi }
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

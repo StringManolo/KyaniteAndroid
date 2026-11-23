@@ -3,11 +3,10 @@ name: Android Native CI/CD
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  create:
     tags:
       - 'v*'
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -24,6 +23,8 @@ jobs:
           - arch: aarch64
             abi: arm64-v8a
             with_vm: 'true'
+            # same name as before the arm32 port: existing .../releases/latest/download/app-release.apk links keep working,
+            # and it contains "release" so old in-app updaters still pick it (see Updater.kt)
             release_apk: Kyanite.apk
             debug_apk: KyaniteAndroid-debug-arm64-v8a.apk
           - arch: armv7
@@ -94,7 +95,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: Kyanite ${{ github.ref_name }}
-          body_path: RELEASE_NOTES.md
+          body_path: RELEASE_NOTES/${{ github.ref_name }}.md
           files: ${{ matrix.release_apk }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,7 @@
 package io.github.stringmanolo.KyaniteAndroid
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -16,6 +17,8 @@ import android.widget.TextView
 
 /** PIN entry: mode "unlock" (checks the stored PIN) or "set" (choose a new PIN; "duress" sets the duress PIN). */
 class PinActivity : Activity() {
+
+    override fun attachBaseContext(base: Context) { super.attachBaseContext(L.wrap(base)) }
 
     private lateinit var msg: TextView
     private lateinit var field: EditText
@@ -37,14 +40,14 @@ class PinActivity : Activity() {
         msg = TextView(this).apply {
             textSize = 16f; setTextColor(Color.parseColor("#C9D1D9")); gravity = Gravity.CENTER
             text = when (mode) {
-                MODE_SET -> "Choose a PIN (4 to 12 digits)"
-                MODE_DURESS -> "Choose a duress PIN. Entering it wipes the data (if wipe-on-duress is enabled)."
-                else -> "Enter PIN"
+                MODE_SET -> L.t("Choose a PIN (4 to 12 digits)")
+                MODE_DURESS -> L.t("Choose a duress PIN. Entering it wipes the data (if wipe-on-duress is enabled).")
+                else -> L.t("Enter PIN")
             }
         }
-        field = pinField("PIN")
-        confirm = pinField("Repeat PIN")
-        val ok = Button(this).apply { text = "OK"; setOnClickListener { submit() } }
+        field = pinField(L.t("PIN"))
+        confirm = pinField(L.t("Repeat PIN"))
+        val ok = Button(this).apply { text = L.t("OK"); setOnClickListener { submit() } }
         root.addView(msg)
         root.addView(field, LinearLayout.LayoutParams(-1, -2).apply { topMargin = 32 })
         if (mode != MODE_UNLOCK) root.addView(confirm, LinearLayout.LayoutParams(-1, -2))
@@ -64,22 +67,22 @@ class PinActivity : Activity() {
         val pin = field.text.toString()
         if (mode == MODE_UNLOCK) {
             val wait = AppLock.waitSeconds()
-            if (wait > 0) { msg.text = "Too many attempts. Wait $wait s."; return }
+            if (wait > 0) { msg.text = L.f("Too many attempts. Wait %d s.", wait); return }
             when (AppLock.attempt(pin)) {
                 AppLock.Result.OK -> { setResult(RESULT_OK); finish() }
-                AppLock.Result.WRONG -> { msg.text = "Wrong PIN"; field.setText("") }
+                AppLock.Result.WRONG -> { msg.text = L.t("Wrong PIN"); field.setText("") }
                 AppLock.Result.DURESS, AppLock.Result.WIPE -> {
                     // look like a normal failure while the wipe runs
                     startService(Intent(this, TerminalService::class.java).setAction(TerminalService.ACTION_WIPE).putExtra("reason", "PIN policy"))
-                    msg.text = "Wrong PIN"; field.setText("")
+                    msg.text = L.t("Wrong PIN"); field.setText("")
                 }
             }
             return
         }
-        if (pin.length !in 4..12) { msg.text = "The PIN must have 4 to 12 digits"; return }
-        if (pin != confirm.text.toString()) { msg.text = "The PINs do not match"; return }
+        if (pin.length !in 4..12) { msg.text = L.t("The PIN must have 4 to 12 digits"); return }
+        if (pin != confirm.text.toString()) { msg.text = L.t("The PINs do not match"); return }
         if (mode == MODE_DURESS) {
-            if (AppLock.verify(pin)) { msg.text = "The duress PIN must differ from the real PIN"; return }
+            if (AppLock.verify(pin)) { msg.text = L.t("The duress PIN must differ from the real PIN"); return }
             AppLock.setDuress(pin)
         } else {
             AppLock.setPin(pin)

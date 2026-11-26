@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">环境设置</string>
+    <string name="preparing">正在准备环境…</string>
+</resources>

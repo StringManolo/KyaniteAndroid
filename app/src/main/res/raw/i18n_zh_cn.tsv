@@ -1,0 +1,351 @@
+# Kyanite UI translations: English text <TAB> translation. Missing text = shown in English.
+# Escapes: \n newline, \t tab, \\ backslash. Keep %s / %d placeholders.
+OK	确定
+Cancel	取消
+Repeat	再次输入
+Passphrase	口令
+Passphrase (12+ characters recommended)	口令（建议 12 个字符以上）
+Passphrase too short	口令太短
+The passphrases do not match	两次输入的口令不一致
+Unlock encryption key	解锁加密密钥
+Unlock	解锁
+Wrong passphrase	口令错误
+Failed: %s	失败：%s
+Settings	设置
+Choose how to start	选择启动方式
+Apply environment & window	应用环境和窗口
+Environment	环境
+Systems	系统
+Appearance	外观
+Security	安全
+Network	网络
+Updates	更新
+Language	语言
+Automatic by default: the system language is used when it is available, otherwise English. Once you pick a language here it is always kept.	默认自动选择：如果系统语言可用就使用它，否则使用英语。一旦你在这里选择了语言，就会一直保留。
+System (one of your installed systems)	系统（你已安装的系统之一）
+LiveCD (image shipped in the APK)	LiveCD（APK 内置的镜像）
+No system installed yet. Create one in the Systems tab (nothing is installed automatically).	尚未安装任何系统。请在“系统”标签页中创建一个（不会自动安装任何内容）。
+Active system	当前系统
+Mode	模式
+Normal (persistent)	普通（持久化）
+Ephemeral (temporary copy, wiped on exit)	临时（临时副本，退出时擦除）
+VM (QEMU, RAM only)	虚拟机（QEMU，仅内存）
+VM (Experimental) — unavailable: %s	虚拟机（实验性）— 不可用：%s
+VM is not available in this build	此版本不提供虚拟机
+Mount the active system at /mnt/system (read-write)	将当前系统挂载到 /mnt/system（可读写）
+Like a live CD mounting the hard disk to repair or back it up. Off by default.	就像 live CD 挂载硬盘来修复或备份。默认关闭。
+Overwrite files with random data before deleting	删除前用随机数据覆写文件
+VM RAM (MB)	虚拟机内存（MB）
+VM CPU cores	虚拟机 CPU 核心数
+Give the VM a network device (only if the network is allowed)	为虚拟机提供网络设备（仅在允许网络时）
+Window	窗口
+Fullscreen	全屏
+Floating window (drag, resize, rotate, pin, opacity, minimize)	悬浮窗口（拖动、缩放、旋转、固定、透明度、最小化）
+Needs "Display over other apps" (you will be asked). Minimize with —; restore from the notification.	需要“显示在其他应用上层”权限（会提示你）。用 — 最小化，从通知中恢复。
+Reset floating window (size, position, rotation, opacity, pin)	重置悬浮窗口（大小、位置、旋转、透明度、固定）
+Floating window reset to its defaults.	悬浮窗口已恢复默认设置。
+While running	运行期间
+Keep the CPU awake (wake lock)	保持 CPU 唤醒（wake lock）
+Only needed for long jobs while the screen is off (builds, servers, VM). Costs battery.	仅在屏幕关闭时运行长时间任务（编译、服务器、虚拟机）才需要。会消耗电量。
+Allow access to shared storage (/sdcard and ~/storage/shared)	允许访问共享存储（/sdcard 和 ~/storage/shared）
+Storage is no longer mounted in new sessions. To also revoke the Android permission, use the button below.	新会话不再挂载存储。如需同时撤销 Android 权限，请使用下面的按钮。
+Open Android app permissions	打开 Android 应用权限
+Like termux-setup-storage, but on demand. VM mode never has shared storage.	类似 termux-setup-storage，但按需启用。虚拟机模式永远没有共享存储。
+Diagnostics	诊断
+Runs the active system; everything you change is kept.	运行当前系统；你所做的一切更改都会保留。
+Runs on a temporary copy of the active system; changes are discarded and the copy is wiped. The system itself is never modified. Flash storage may keep remnants: for no disk traces use VM.	在当前系统的临时副本上运行；更改会被丢弃，副本会被擦除。系统本身永远不会被修改。闪存可能残留数据：如需完全不留磁盘痕迹，请使用虚拟机。
+EXPERIMENTAL. The active system is streamed into a QEMU VM and lives only in RAM (decrypted on the fly if it is encrypted). Changes are lost on exit. Much slower than proot.	实验性。当前系统会被流式传入 QEMU 虚拟机，仅存在于内存中（若已加密则即时解密）。退出时更改会丢失。比 proot 慢得多。
+The shipped image is extracted once and kept (LiveCD with persistence), separate from your systems.	内置镜像只解压一次并保留（带持久化的 LiveCD），与你的系统分开。
+A fresh copy of the shipped image on every start, wiped on exit.	每次启动都使用内置镜像的全新副本，退出时擦除。
+EXPERIMENTAL. The shipped image is streamed into a QEMU VM and lives only in RAM. Nothing is written to disk.	实验性。内置镜像会被流式传入 QEMU 虚拟机，仅存在于内存中。不会向磁盘写入任何内容。
+Select or create a system first (Systems tab), or use the LiveCD.	请先选择或创建一个系统（“系统”标签页），或使用 LiveCD。
+VM mode is not available in this build.	此版本不提供虚拟机模式。
+Stop the running session first (notification > Exit).	请先停止正在运行的会话（通知 > 退出）。
+Create, rename, duplicate, delete, import, export, download, snapshot and restore. Each system is stored on its own and never touches the others.	创建、重命名、复制、删除、导入、导出、下载、创建快照和恢复。每个系统都单独存放，绝不会影响其他系统。
+New system from the shipped Kyanite	用内置的 Kyanite 新建系统
+New system	新建系统
+Name	名称
+Import a tar / tar.gz / tar.xz / .kya file…	导入 tar / tar.gz / tar.xz / .kya 文件…
+Download a rootfs…	下载 rootfs…
+Installed	已安装
+Nothing installed.	尚未安装任何内容。
+not installed	未安装
+in use	使用中
+at rest	静置
+, encrypted	，已加密
+(archive)	(归档)
+plain	明文
+system	系统
+livecd	LiveCD
+%s%s\n%s · %s · %d snapshot(s)	%s%s\n%s · %s · %d 个快照
+Use as the active system	设为当前系统
+Rename…	重命名…
+Rename	重命名
+Duplicate…	复制…
+Duplicate	复制
+Name for the copy	副本名称
+copy	副本
+Duplicating	正在复制
+Export…	导出…
+Take snapshot…	创建快照…
+Snapshot	快照
+Label	标签
+Reset LiveCD persistence…	重置 LiveCD 持久化数据…
+Delete…	删除…
+Delete	删除
+Delete %s	删除 %s
+Export %s	导出 %s
+Snapshots (%d)…	快照（%d）…
+Snapshots of %s	%s 的快照
+Secure wipe (overwrite with random data, slower)	安全擦除（用随机数据覆写，较慢）
+Deleting	正在删除
+Portable .tar.gz	便携 .tar.gz
+Portable .tar.xz (smaller, slower)	便携 .tar.xz（更小，更慢）
+This app's .kya (uses the current compression/encryption)	本应用的 .kya（使用当前的压缩和加密设置）
+No snapshots yet.	还没有快照。
+Restore (replaces the current content)	恢复（替换当前内容）
+Restore snapshot	恢复快照
+Restore	恢复
+Restoring	正在恢复
+The current content of %s will be replaced.	%s 的当前内容将被替换。
+The network is disabled (Network tab).	网络已禁用（“网络”标签页）。
+Download a rootfs  (free space: %s)	下载 rootfs（可用空间：%s）
+Custom URL…	自定义 URL…
+SHA-256 (optional but recommended)	SHA-256（可选，但建议填写）
+Custom rootfs URL	自定义 rootfs 地址
+Next	下一步
+Custom system	自定义系统
+Enter an http(s) URL	请输入 http(s) 地址
+Looking up…	正在查找…
+Checking size…	正在检查大小…
+Download %s	下载 %s
+Download: %s	下载大小：%s
+Installed (estimate): %s	安装后大小（估计）：%s
+Free space: %s	可用空间：%s
+unknown	未知
+SHA-256 will be verified.	将校验 SHA-256。
+No checksum: the download is not verified.	没有校验和：下载内容不会被校验。
+⚠ There may not be enough free space.	⚠ 可用空间可能不足。
+Download anyway	仍然下载
+Downloading %s	正在下载 %s
+Installing %s	正在安装 %s
+Free space: %s · Systems use: calculating…	可用空间：%s · 系统占用：计算中…
+Free space: %s · Systems use: %s	可用空间：%s · 系统占用：%s
+The encryption key is locked: enter your passphrase.	加密密钥已锁定：请输入你的口令。
+archive is truncated (missing final chunk)	归档文件被截断（缺少最后一个数据块）
+empty passphrase	口令为空
+this archive was encrypted with a different key	此归档文件使用了不同的密钥加密
+truncated archive	归档文件被截断
+truncated header	文件头被截断
+wrong key or corrupted archive	密钥错误或归档文件已损坏
+Alpine Linux, minirootfs (≈3 MB download, ≈10 MB installed; checksum verified)	Alpine Linux，minirootfs（下载约 3 MB，安装后约 10 MB；会校验校验和）
+Arch Linux ARM (≈500 MB download, ≈1.5 GB installed; no checksum available)	Arch Linux ARM（下载约 500 MB，安装后约 1.5 GB；无校验和）
+Kyanite, latest release (≈8 MB download, ≈30 MB installed; checksum verified)	Kyanite 最新版本（下载约 8 MB，安装后约 30 MB；会校验校验和）
+Ubuntu Base 24.04 LTS (≈30 MB download, ≈100 MB installed; checksum verified)	Ubuntu Base 24.04 LTS（下载约 30 MB，安装后约 100 MB；会校验校验和）
+The network is disabled (Settings > Network).	网络已禁用（设置 > 网络）。
+the release has no APK attached	该版本没有附带 APK
+Choose environment	选择环境
+Could not start:\n%s	无法启动：\n%s
+Enter passphrase	输入口令
+Floating window mode needs the "Display over other apps" permission.	悬浮窗口模式需要“显示在其他应用上层”权限。
+Grant permission	授予权限
+Not restarting automatically.	不会自动重新启动。
+Preparing…	正在准备…
+Restart	重新启动
+Retry	重试
+The app stays open so you can restart or change the environment.	应用会保持打开，方便你重新启动或更换环境。
+The last session failed.	上一个会话失败了。
+This system is encrypted. Enter your passphrase to unlock it.	此系统已加密。请输入口令来解锁。
+Welcome. Choose how to start: System, LiveCD or VM.	欢迎。请选择启动方式：系统、LiveCD 或虚拟机。
+Kyanite: network blocked	Kyanite：网络已被阻止
+The network is disabled in Settings but the VPN permission is missing, so it cannot be enforced. Open Settings > Network, enable and disable the network option again, and accept the VPN dialog.	设置中已禁用网络，但缺少 VPN 权限，因此无法强制执行。请打开“设置 > 网络”，把网络选项重新打开再关闭，并接受 VPN 对话框。
+The network is disabled in Settings but the network block could not be started (another VPN may be active). Refusing to start the session without it.	设置中已禁用网络，但无法启动网络阻止（可能有其他 VPN 正在运行）。没有它就不会启动会话。
+VPN consent missing	缺少 VPN 授权
+Choose a PIN (4 to 12 digits)	请设置 PIN（4 到 12 位数字）
+Choose a duress PIN. Entering it wipes the data (if wipe-on-duress is enabled).	请设置胁迫 PIN。输入它会清除数据（需已启用“输入胁迫 PIN 时擦除”）。
+Enter PIN	输入 PIN
+PIN policy	PIN 规则
+Repeat PIN	再次输入 PIN
+PIN	PIN
+The PIN must have 4 to 12 digits	PIN 必须为 4 到 12 位数字
+The PINs do not match	两次输入的 PIN 不一致
+The duress PIN must differ from the real PIN	胁迫 PIN 必须与真实 PIN 不同
+Too many attempts. Wait %d s.	尝试次数过多。请等待 %d 秒。
+Wrong PIN	PIN 错误
+Extracting… %d entries	正在解压…%d 个条目
+not available on 32-bit ARM devices	在 32 位 ARM 设备上不可用
+Copying system to a temporary directory…	正在把系统复制到临时目录…
+No system is selected. Create or select one in Settings > Systems (nothing is installed automatically).	尚未选择系统。请在“设置 > 系统”中创建或选择一个（不会自动安装任何内容）。
+Starting VM…	正在启动虚拟机…
+VM mode is not available in this build (missing: %s)	此版本不提供虚拟机模式（缺少：%s）
+Copying system… %d files	正在复制系统…%d 个文件
+Copying…	正在复制…
+Copying… %d files	正在复制…%d 个文件
+Protecting system (compressing)…	正在保护系统（压缩中）…
+Protecting system (encrypting)…	正在保护系统（加密中）…
+Restoring…	正在恢复…
+Stop the session first	请先停止会话
+Taking snapshot…	正在创建快照…
+That system is not installed	该系统尚未安装
+The system is in use	系统正在使用中
+Unlocking system…	正在解锁系统…
+%d min	%d 分钟
+%d s	%d 秒
+Could not start: %s	无法启动：%s
+Exit	退出
+Idle	空闲
+Minimize	最小化
+Running	运行中
+Saving and protecting the system…	正在保存并保护系统…
+Session ended	会话已结束
+Session ended after %s (exit status %d).	会话在 %s 后结束（退出状态 %d）。
+Session running	会话运行中
+Terminal session	终端会话
+The network block was lost (killed, or replaced by another VPN), so the session was closed to avoid leaking traffic.	网络阻止已失效（被终止，或被其他 VPN 替换），因此会话已关闭，以防止流量泄露。
+Window minimized	窗口已最小化
+Wiping…	正在擦除…
+Check failed: %s	检查失败：%s
+Kyanite update %s downloaded	Kyanite 更新 %s 已下载
+Tap to install	点按安装
+Update %s available	有可用更新 %s
+Filling free space…	正在填充可用空间…
+Wipe complete	擦除完成
+Wiping %s…	正在擦除 %s…
+%d day(s)	%d 天
+%d hours	%d 小时
+1 day	1 天
+12 hours	12 小时
+14 days	14 天
+3 days	3 天
+30 days	30 天
+6 hours	6 小时
+7 days	7 天
+After 1 hour	1 小时后
+After 1 min	1 分钟后
+After 15 min	15 分钟后
+After 5 min	5 分钟后
+All systems and snapshots will be decrypted and the key deleted.	所有系统和快照都将被解密，密钥将被删除。
+Allow network access	允许访问网络
+Android always asks you to confirm an install and only accepts an APK signed with the same key as the installed app. Debug builds (package …debug) are not updated by release APKs.	Android 总会要求你确认安装，并且只接受与已安装应用使用相同密钥签名的 APK。调试版本（包名 …debug）不会通过正式版 APK 更新。
+Android cannot remove the INTERNET permission at runtime. A build without it can be produced on request.	Android 无法在运行时移除 INTERNET 权限。如有需要，可以按请求提供不含该权限的版本。
+Anyone with the phone will be able to open the app.	任何拿到手机的人都能打开此应用。
+App-generated key (Android Keystore)	应用生成的密钥（Android Keystore）
+App-generated key (Android Keystore, nothing to remember)	应用生成的密钥（Android Keystore，无需记忆）
+Automatic (check, download and offer to install)	自动（检查、下载并提示安装）
+Best (xz, slow)	最佳（xz，较慢）
+Block screenshots and hide the app in Recents	禁止截屏，并在最近任务中隐藏应用
+Block status:	阻止状态：
+Bold font	粗体字体
+Cancelled	已取消
+Change PIN	更改 PIN
+Change key type / passphrase…	更改密钥类型 / 口令…
+Change the duress PIN…	更改胁迫 PIN…
+Changes apply instantly; the session is not restarted.	更改会立即生效，不会重启会话。
+Check every	检查间隔
+Check now	立即检查
+Checking for updates	正在检查更新
+Choose a passphrase	设置口令
+Clear	清除
+Clear the clipboard when the session ends	会话结束时清空剪贴板
+Colour scheme	配色方案
+Compression	压缩
+Continue	继续
+Current passphrase	当前口令
+Current version: %s. Source: github.com/%s releases.	当前版本：%s。来源：github.com/%s 的发布页。
+Custom colours (#RRGGBB)	自定义颜色（#RRGGBB）
+Custom…	自定义…
+Decrypting	正在解密
+Disable	禁用
+Disable PIN	禁用 PIN
+Disable clipboard copy/paste with Android	禁用与 Android 之间的剪贴板复制/粘贴
+Disable encryption	禁用加密
+Download	下载
+Downloading %s…	正在下载 %s…
+Edit custom colours…	编辑自定义颜色…
+Enable	启用
+Enable scheduled wipe	启用定时擦除
+Enable wipe	启用擦除
+Encrypt systems at rest	静置时加密系统
+Encrypting systems	正在加密系统
+Encryption & compression at rest	静置时的加密与压缩
+End the session when the screen turns off	屏幕关闭时结束会话
+Ending the session re-packs (and re-encrypts) the system, and forgets a passphrase key from memory.	结束会话时会重新打包（并重新加密）系统，同时从内存中清除口令密钥。
+Every archive is re-encrypted with a new key. Do not interrupt this.	每个归档文件都会用新密钥重新加密。请不要中断。
+Exported	已导出
+Exporting %s	正在导出 %s
+Fast (gzip)	快速（gzip）
+Font size (sp)	字体大小（sp）
+For a guarantee that survives this app being killed, enable Android's "Always-on VPN" and "Block connections without VPN" for Kyanite in the system VPN settings.	若要在此应用被终止后仍能保证有效，请在系统 VPN 设置中为 Kyanite 启用 Android 的“始终开启的 VPN”和“屏蔽没有 VPN 的连接”。
+Give the VM a network device (when the network is allowed)	为虚拟机提供网络设备（允许网络时）
+Hide notification content on the lock screen	在锁屏上隐藏通知内容
+Import system (file %s, free %s)	导入系统（文件 %s，可用 %s）
+Imported	已导入
+Importing	正在导入
+Invalid colour: use #RRGGBB	颜色无效：请使用 #RRGGBB
+Irreversibly destroys the selected data when a condition is met. The key is destroyed first (crypto-shredding), then every file is overwritten with random data from a throw-away key, then deleted.	满足条件时不可逆地销毁所选数据。先销毁密钥（密码学粉碎），然后用一次性密钥生成的随机数据覆写每个文件，最后将其删除。
+Key changed	密钥已更改
+Key type	密钥类型
+Key:	密钥：
+Last check: %s	上次检查：%s
+LiveCD persistence	LiveCD 持久化数据
+Lock again	重新锁定
+Manual (opens the releases page in your browser, nothing else)	手动（仅在浏览器中打开发布页，不做其他事）
+My passphrase (asked once per session)	我的口令（每个会话询问一次）
+NOT ACTIVE: sessions refuse to start until it is (fail closed)	未启用：在启用之前会话拒绝启动（失败即关闭）
+Never	从不
+New passphrase	新口令
+No updates (never contacts GitHub)	不更新（绝不联系 GitHub）
+None	无
+Open the releases page	打开发布页
+PIN lock	PIN 锁
+Passphrase changed	口令已更改
+Permission denied.	权限被拒绝。
+Privacy	隐私
+Re-packing systems	正在重新打包系统
+Require a PIN to use the app	使用应用时需要输入 PIN
+Rotate	轮换
+Rotate key	轮换密钥
+Rotate the data key (re-encrypt everything)	轮换数据密钥（重新加密所有内容）
+Rotating key	正在轮换密钥
+Save	保存
+Scheduled wipe	定时擦除
+Set a duress PIN…	设置胁迫 PIN…
+Snapshots	快照
+Start from	基于
+The fill step can take a long time and temporarily leaves ~200 MB free. Conditions are checked about every 30 minutes by Android's job scheduler and when the app starts, so timing is approximate.	填充步骤可能需要很长时间，并会暂时只留下约 200 MB 可用空间。Android 的任务调度器大约每 30 分钟以及应用启动时检查一次条件，因此触发时间只是大致的。
+Then fill the free space with random files and delete them (anti-forensics)	然后用随机文件填满可用空间再删除它们（反取证）
+This destroys the selected data (see above; if scheduled wipe is off, systems, LiveCD persistence and snapshots) IRREVERSIBLY.	这将不可逆地销毁所选数据（见上文；若定时擦除已关闭，则为系统、LiveCD 持久化数据和快照）。
+Type WIPE to confirm	输入 WIPE 以确认
+Up to date (latest %s)	已是最新（最新版本 %s）
+Update %s downloaded	更新 %s 已下载
+What to wipe	擦除内容
+When off: every process of this app, including your Kyanite systems, cannot reach the network (a local VPN with no exit silently drops their traffic; Android asks for VPN consent once). The VM gets no network device. The app itself will not download rootfs, check for updates, or open the browser.	关闭时：此应用的所有进程（包括你的 Kyanite 系统）都无法访问网络（没有出口的本地 VPN 会悄悄丢弃它们的流量；Android 会请求一次 VPN 授权）。虚拟机不会获得网络设备。应用本身也不会下载 rootfs、检查更新或打开浏览器。
+Whenever the app is left	每次离开应用时
+While a system is not in use it is stored as an archive: compressed (saves space with many systems) and/or encrypted with AES-256-GCM. It is unpacked when you start it and packed again when the session ends. Protects stopped systems against malware or backdoors in a running one, and against someone copying your files.	系统不使用时会以归档文件形式存放：可压缩（系统很多时能节省空间）和/或使用 AES-256-GCM 加密。启动时解包，会话结束时重新打包。这样能保护已停止的系统不受运行中系统里的恶意软件或后门影响，也能防止别人复制你的文件。
+Wipe after this many wrong PIN attempts	输错 PIN 达到此次数后擦除
+Wipe if USB debugging (ADB) is enabled	开启 USB 调试（ADB）时擦除
+Wipe if the app is not opened for…	应用超过以下时间未打开则擦除…
+Wipe now	立即擦除
+Wipe now…	立即擦除…
+Wipe on a date: %s	在指定日期擦除：%s
+Wipe started (see the notification).	擦除已开始（请查看通知）。
+Wipe when the duress PIN is entered	输入胁迫 PIN 时擦除
+Writing…	正在写入…
+Your data will be destroyed IRREVERSIBLY when a condition below is met. Make sure you have backups (Systems > Export).	满足下列任一条件时，你的数据将被不可逆地销毁。请确保已有备份（系统 > 导出）。
+cannot open the file	无法打开该文件
+cannot write the file	无法写入该文件
+generated by the app, stored in the Android Keystore	由应用生成，保存在 Android Keystore 中
+not needed (the network is allowed)	无需阻止（已允许网络）
+your passphrase (asked once per session; the key is forgotten from memory afterwards)	你的口令（每个会话询问一次；之后密钥会从内存中清除）
+ACTIVE	已启用
+off	关闭
+background	背景
+foreground	前景
+cursor	光标
+Dark (default)	深色（默认）
+Light	浅色
+Retro amber	复古琥珀
+Custom	自定义
+Vim: delek (light)	Vim: delek（浅色）
+Vim: morning (light)	Vim: morning（浅色）
+Vim: peachpuff (light)	Vim: peachpuff（浅色）

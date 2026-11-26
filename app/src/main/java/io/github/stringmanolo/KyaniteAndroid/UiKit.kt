@@ -34,39 +34,39 @@ class Ui(private val act: Activity) {
 
     fun header(p: LinearLayout, s: String, top: Int = 18): TextView {
         val t = TextView(act)
-        t.text = s; t.textSize = 16f; t.setTextColor(Color.parseColor("#58A6FF"))
+        t.text = L.t(s); t.textSize = 16f; t.setTextColor(Color.parseColor("#58A6FF"))
         p.addView(t, lp(top)); return t
     }
 
     fun note(p: LinearLayout, s: String, top: Int = 4): TextView {
         val t = TextView(act)
-        t.text = s; t.textSize = 12f; t.setTextColor(dim)
+        t.text = L.t(s); t.textSize = 12f; t.setTextColor(dim)
         p.addView(t, lp(top)); return t
     }
 
     fun label(p: LinearLayout, s: String, top: Int = 8): TextView {
         val t = TextView(act)
-        t.text = s; t.textSize = 13f; t.setTextColor(text)
+        t.text = L.t(s); t.textSize = 13f; t.setTextColor(text)
         p.addView(t, lp(top)); return t
     }
 
     fun check(p: LinearLayout, s: String, on: Boolean, change: (Boolean) -> Unit): CheckBox {
         val c = CheckBox(act)
-        c.text = s; c.isChecked = on; c.setTextColor(text)
+        c.text = L.t(s); c.isChecked = on; c.setTextColor(text)
         c.setOnCheckedChangeListener { b, v -> if (b.isPressed) change(v) }
         p.addView(c, lp(2)); return c
     }
 
     fun button(p: LinearLayout, s: String, top: Int = 8, click: () -> Unit): Button {
         val b = Button(act)
-        b.text = s; b.isAllCaps = false
+        b.text = L.t(s); b.isAllCaps = false
         b.setOnClickListener { click() }
         p.addView(b, lp(top)); return b
     }
 
     fun spinner(p: LinearLayout, items: List<String>, selected: Int, pick: (Int) -> Unit): Spinner {
         val sp = Spinner(act)
-        sp.adapter = ArrayAdapter(act, android.R.layout.simple_spinner_dropdown_item, items)
+        sp.adapter = ArrayAdapter(act, android.R.layout.simple_spinner_dropdown_item, items.map { L.t(it) })
         sp.setSelection(selected.coerceIn(0, (items.size - 1).coerceAtLeast(0)))
         var first = true
         sp.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
@@ -83,7 +83,7 @@ class Ui(private val act: Activity) {
         val g = RadioGroup(act)
         items.forEachIndexed { i, s ->
             val r = RadioButton(act)
-            r.id = View.generateViewId(); r.text = s; r.setTextColor(text)
+            r.id = View.generateViewId(); r.text = L.t(s); r.setTextColor(text)
             g.addView(r)
             if (i == selected) g.check(r.id)
         }
@@ -94,39 +94,39 @@ class Ui(private val act: Activity) {
         p.addView(g, lp(2)); return g
     }
 
-    fun toast(s: String) = Toast.makeText(act, s, Toast.LENGTH_LONG).show()
+    fun toast(s: String) = Toast.makeText(act, L.t(s), Toast.LENGTH_LONG).show()
 
     fun confirm(title: String, msg: String, yes: String = "OK", onYes: () -> Unit) {
-        AlertDialog.Builder(act).setTitle(title).setMessage(msg)
-            .setPositiveButton(yes) { _, _ -> onYes() }.setNegativeButton("Cancel", null).show()
+        AlertDialog.Builder(act).setTitle(L.t(title)).setMessage(L.t(msg))
+            .setPositiveButton(L.t(yes)) { _, _ -> onYes() }.setNegativeButton(L.t("Cancel"), null).show()
     }
 
     fun choose(title: String, items: List<String>, pick: (Int) -> Unit) {
-        AlertDialog.Builder(act).setTitle(title).setItems(items.toTypedArray()) { _, i -> pick(i) }
-            .setNegativeButton("Cancel", null).show()
+        AlertDialog.Builder(act).setTitle(L.t(title)).setItems(items.map { L.t(it) }.toTypedArray()) { _, i -> pick(i) }
+            .setNegativeButton(L.t("Cancel"), null).show()
     }
 
     fun prompt(title: String, hint: String, initial: String = "", password: Boolean = false, onOk: (String) -> Unit) {
         val e = EditText(act)
-        e.hint = hint; e.setText(initial)
+        e.hint = L.t(hint); e.setText(initial)
         if (password) e.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        AlertDialog.Builder(act).setTitle(title).setView(e)
-            .setPositiveButton("OK") { _, _ -> onOk(e.text.toString()) }.setNegativeButton("Cancel", null).show()
+        AlertDialog.Builder(act).setTitle(L.t(title)).setView(e)
+            .setPositiveButton(L.t("OK")) { _, _ -> onOk(e.text.toString()) }.setNegativeButton(L.t("Cancel"), null).show()
     }
 
     /** Two fields: new passphrase + repeat. */
     fun newPassphrase(title: String, onOk: (CharArray) -> Unit) {
         val box = LinearLayout(act).apply { orientation = LinearLayout.VERTICAL; setPadding(dp(20), dp(8), dp(20), 0) }
-        val a = EditText(act).apply { hint = "Passphrase (12+ characters recommended)"; inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD }
-        val b = EditText(act).apply { hint = "Repeat"; inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD }
+        val a = EditText(act).apply { hint = L.t("Passphrase (12+ characters recommended)"); inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD }
+        val b = EditText(act).apply { hint = L.t("Repeat"); inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD }
         box.addView(a); box.addView(b)
-        AlertDialog.Builder(act).setTitle(title).setView(box)
-            .setPositiveButton("OK") { _, _ ->
+        AlertDialog.Builder(act).setTitle(L.t(title)).setView(box)
+            .setPositiveButton(L.t("OK")) { _, _ ->
                 val x = a.text.toString()
                 if (x.length < 6) toast("Passphrase too short")
                 else if (x != b.text.toString()) toast("The passphrases do not match")
                 else onOk(x.toCharArray())
-            }.setNegativeButton("Cancel", null).show()
+            }.setNegativeButton(L.t("Cancel"), null).show()
     }
 
     /** Unlocks the key if it is passphrase-protected; [then] runs once the key is usable. */
@@ -143,18 +143,18 @@ class Ui(private val act: Activity) {
         val msg = TextView(act).apply { text = "…"; textSize = 13f }
         val bar = ProgressBar(act, null, android.R.attr.progressBarStyleHorizontal).apply { max = 100 }
         box.addView(msg); box.addView(bar)
-        val dlg = AlertDialog.Builder(act).setTitle(title).setView(box).setCancelable(false).create()
+        val dlg = AlertDialog.Builder(act).setTitle(L.t(title)).setView(box).setCancelable(false).create()
         dlg.show()
         Thread {
             var err: Throwable? = null
             try {
-                work { pct, m -> act.runOnUiThread { bar.progress = pct; msg.text = m } }
+                work { pct, m -> act.runOnUiThread { bar.progress = pct; msg.text = L.t(m) } }
             } catch (t: Throwable) {
                 err = t
             }
             act.runOnUiThread {
                 try { dlg.dismiss() } catch (_: Exception) {}
-                if (err != null) toast("Failed: ${err.message ?: err.javaClass.simpleName}")
+                if (err != null) toast(L.f("Failed: %s", L.t(err.message ?: err.javaClass.simpleName)))
                 done(err)
             }
         }.start()

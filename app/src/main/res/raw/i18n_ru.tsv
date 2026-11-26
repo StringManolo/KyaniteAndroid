@@ -1,0 +1,351 @@
+# Kyanite UI translations: English text <TAB> translation. Missing text = shown in English.
+# Escapes: \n newline, \t tab, \\ backslash. Keep %s / %d placeholders.
+OK	ОК
+Cancel	Отмена
+Repeat	Повторите
+Passphrase	Парольная фраза
+Passphrase (12+ characters recommended)	Парольная фраза (рекомендуется 12 и более символов)
+Passphrase too short	Парольная фраза слишком короткая
+The passphrases do not match	Парольные фразы не совпадают
+Unlock encryption key	Разблокировать ключ шифрования
+Unlock	Разблокировать
+Wrong passphrase	Неверная парольная фраза
+Failed: %s	Ошибка: %s
+Settings	Настройки
+Choose how to start	Выберите, как запускать
+Apply environment & window	Применить среду и окно
+Environment	Среда
+Systems	Системы
+Appearance	Оформление
+Security	Безопасность
+Network	Сеть
+Updates	Обновления
+Language	Язык
+Automatic by default: the system language is used when it is available, otherwise English. Once you pick a language here it is always kept.	По умолчанию язык выбирается автоматически: используется язык системы, если он доступен, иначе английский. Выбранный здесь язык сохраняется всегда.
+System (one of your installed systems)	Система (одна из установленных систем)
+LiveCD (image shipped in the APK)	LiveCD (образ, входящий в APK)
+No system installed yet. Create one in the Systems tab (nothing is installed automatically).	Системы пока не установлены. Создайте её на вкладке «Системы» (автоматически ничего не устанавливается).
+Active system	Активная система
+Mode	Режим
+Normal (persistent)	Обычный (с сохранением)
+Ephemeral (temporary copy, wiped on exit)	Временный (временная копия, стирается при выходе)
+VM (QEMU, RAM only)	ВМ (QEMU, только ОЗУ)
+VM (Experimental) — unavailable: %s	ВМ (экспериментально) — недоступно: %s
+VM is not available in this build	ВМ недоступна в этой сборке
+Mount the active system at /mnt/system (read-write)	Смонтировать активную систему в /mnt/system (чтение и запись)
+Like a live CD mounting the hard disk to repair or back it up. Off by default.	Как live-CD, который монтирует жёсткий диск для ремонта или резервного копирования. По умолчанию выключено.
+Overwrite files with random data before deleting	Перезаписывать файлы случайными данными перед удалением
+VM RAM (MB)	ОЗУ ВМ (МБ)
+VM CPU cores	Ядра ЦП для ВМ
+Give the VM a network device (only if the network is allowed)	Дать ВМ сетевое устройство (только если сеть разрешена)
+Window	Окно
+Fullscreen	Полный экран
+Floating window (drag, resize, rotate, pin, opacity, minimize)	Плавающее окно (перетаскивание, изменение размера, поворот, закрепление, прозрачность, сворачивание)
+Needs "Display over other apps" (you will be asked). Minimize with —; restore from the notification.	Требуется разрешение «Поверх других приложений» (будет запрос). Сворачивайте кнопкой —, возвращайте из уведомления.
+Reset floating window (size, position, rotation, opacity, pin)	Сбросить плавающее окно (размер, положение, поворот, прозрачность, закрепление)
+Floating window reset to its defaults.	Плавающее окно сброшено к значениям по умолчанию.
+While running	Во время работы
+Keep the CPU awake (wake lock)	Не усыплять процессор (wake lock)
+Only needed for long jobs while the screen is off (builds, servers, VM). Costs battery.	Нужно только для долгих задач при выключенном экране (сборки, серверы, ВМ). Расходует батарею.
+Allow access to shared storage (/sdcard and ~/storage/shared)	Разрешить доступ к общему хранилищу (/sdcard и ~/storage/shared)
+Storage is no longer mounted in new sessions. To also revoke the Android permission, use the button below.	Хранилище больше не подключается в новых сеансах. Чтобы отозвать и разрешение Android, нажмите кнопку ниже.
+Open Android app permissions	Открыть разрешения приложения в Android
+Like termux-setup-storage, but on demand. VM mode never has shared storage.	Как termux-setup-storage, но по запросу. В режиме ВМ общего хранилища нет никогда.
+Diagnostics	Диагностика
+Runs the active system; everything you change is kept.	Запускает активную систему; все ваши изменения сохраняются.
+Runs on a temporary copy of the active system; changes are discarded and the copy is wiped. The system itself is never modified. Flash storage may keep remnants: for no disk traces use VM.	Работает на временной копии активной системы; изменения отбрасываются, а копия стирается. Сама система не изменяется. Флеш-память может сохранять остатки: чтобы не оставлять следов на диске, используйте ВМ.
+EXPERIMENTAL. The active system is streamed into a QEMU VM and lives only in RAM (decrypted on the fly if it is encrypted). Changes are lost on exit. Much slower than proot.	ЭКСПЕРИМЕНТАЛЬНО. Активная система передаётся в ВМ QEMU и существует только в ОЗУ (если она зашифрована, расшифровывается на лету). Изменения теряются при выходе. Намного медленнее, чем proot.
+The shipped image is extracted once and kept (LiveCD with persistence), separate from your systems.	Встроенный образ распаковывается один раз и сохраняется (LiveCD с сохранением), отдельно от ваших систем.
+A fresh copy of the shipped image on every start, wiped on exit.	Новая копия встроенного образа при каждом запуске, стирается при выходе.
+EXPERIMENTAL. The shipped image is streamed into a QEMU VM and lives only in RAM. Nothing is written to disk.	ЭКСПЕРИМЕНТАЛЬНО. Встроенный образ передаётся в ВМ QEMU и существует только в ОЗУ. На диск ничего не записывается.
+Select or create a system first (Systems tab), or use the LiveCD.	Сначала выберите или создайте систему (вкладка «Системы») либо используйте LiveCD.
+VM mode is not available in this build.	Режим ВМ недоступен в этой сборке.
+Stop the running session first (notification > Exit).	Сначала остановите текущий сеанс (уведомление > Выход).
+Create, rename, duplicate, delete, import, export, download, snapshot and restore. Each system is stored on its own and never touches the others.	Создавайте, переименовывайте, дублируйте, удаляйте, импортируйте, экспортируйте, скачивайте, делайте снимки и восстанавливайте. Каждая система хранится отдельно и никогда не затрагивает другие.
+New system from the shipped Kyanite	Новая система из встроенного Kyanite
+New system	Новая система
+Name	Название
+Import a tar / tar.gz / tar.xz / .kya file…	Импортировать файл tar / tar.gz / tar.xz / .kya…
+Download a rootfs…	Скачать rootfs…
+Installed	Установленные
+Nothing installed.	Ничего не установлено.
+not installed	не установлена
+in use	используется
+at rest	на хранении
+, encrypted	, зашифрована
+(archive)	(архив)
+plain	обычная
+system	система
+livecd	LiveCD
+%s%s\n%s · %s · %d snapshot(s)	%s%s\n%s · %s · снимков: %d
+Use as the active system	Использовать как активную систему
+Rename…	Переименовать…
+Rename	Переименовать
+Duplicate…	Дублировать…
+Duplicate	Дублировать
+Name for the copy	Название копии
+copy	копия
+Duplicating	Дублирование
+Export…	Экспортировать…
+Take snapshot…	Сделать снимок…
+Snapshot	Снимок
+Label	Метка
+Reset LiveCD persistence…	Сбросить сохранённые данные LiveCD…
+Delete…	Удалить…
+Delete	Удалить
+Delete %s	Удалить: %s
+Export %s	Экспорт: %s
+Snapshots (%d)…	Снимки (%d)…
+Snapshots of %s	Снимки: %s
+Secure wipe (overwrite with random data, slower)	Безопасное стирание (перезапись случайными данными, медленнее)
+Deleting	Удаление
+Portable .tar.gz	Переносимый .tar.gz
+Portable .tar.xz (smaller, slower)	Переносимый .tar.xz (меньше, медленнее)
+This app's .kya (uses the current compression/encryption)	.kya этого приложения (использует текущее сжатие и шифрование)
+No snapshots yet.	Снимков пока нет.
+Restore (replaces the current content)	Восстановить (заменяет текущее содержимое)
+Restore snapshot	Восстановить снимок
+Restore	Восстановить
+Restoring	Восстановление
+The current content of %s will be replaced.	Текущее содержимое «%s» будет заменено.
+The network is disabled (Network tab).	Сеть отключена (вкладка «Сеть»).
+Download a rootfs  (free space: %s)	Скачать rootfs (свободно: %s)
+Custom URL…	Свой URL…
+SHA-256 (optional but recommended)	SHA-256 (необязательно, но рекомендуется)
+Custom rootfs URL	Свой URL rootfs
+Next	Далее
+Custom system	Своя система
+Enter an http(s) URL	Введите URL http(s)
+Looking up…	Поиск…
+Checking size…	Проверка размера…
+Download %s	Скачать: %s
+Download: %s	Загрузка: %s
+Installed (estimate): %s	После установки (оценка): %s
+Free space: %s	Свободно: %s
+unknown	неизвестно
+SHA-256 will be verified.	SHA-256 будет проверен.
+No checksum: the download is not verified.	Контрольной суммы нет: загрузка не проверяется.
+⚠ There may not be enough free space.	⚠ Возможно, свободного места недостаточно.
+Download anyway	Всё равно скачать
+Downloading %s	Загрузка: %s
+Installing %s	Установка: %s
+Free space: %s · Systems use: calculating…	Свободно: %s · Системы занимают: подсчёт…
+Free space: %s · Systems use: %s	Свободно: %s · Системы занимают: %s
+The encryption key is locked: enter your passphrase.	Ключ шифрования заблокирован: введите парольную фразу.
+archive is truncated (missing final chunk)	архив обрезан (отсутствует последний блок)
+empty passphrase	пустая парольная фраза
+this archive was encrypted with a different key	этот архив зашифрован другим ключом
+truncated archive	архив обрезан
+truncated header	заголовок обрезан
+wrong key or corrupted archive	неверный ключ или повреждённый архив
+Alpine Linux, minirootfs (≈3 MB download, ≈10 MB installed; checksum verified)	Alpine Linux, minirootfs (≈3 МБ загрузка, ≈10 МБ после установки; контрольная сумма проверяется)
+Arch Linux ARM (≈500 MB download, ≈1.5 GB installed; no checksum available)	Arch Linux ARM (≈500 МБ загрузка, ≈1,5 ГБ после установки; контрольной суммы нет)
+Kyanite, latest release (≈8 MB download, ≈30 MB installed; checksum verified)	Kyanite, последний релиз (≈8 МБ загрузка, ≈30 МБ после установки; контрольная сумма проверяется)
+Ubuntu Base 24.04 LTS (≈30 MB download, ≈100 MB installed; checksum verified)	Ubuntu Base 24.04 LTS (≈30 МБ загрузка, ≈100 МБ после установки; контрольная сумма проверяется)
+The network is disabled (Settings > Network).	Сеть отключена (Настройки > Сеть).
+the release has no APK attached	к релизу не приложен APK
+Choose environment	Выбрать среду
+Could not start:\n%s	Не удалось запустить:\n%s
+Enter passphrase	Ввести парольную фразу
+Floating window mode needs the "Display over other apps" permission.	Для режима плавающего окна нужно разрешение «Поверх других приложений».
+Grant permission	Дать разрешение
+Not restarting automatically.	Автоматический перезапуск не выполняется.
+Preparing…	Подготовка…
+Restart	Перезапустить
+Retry	Повторить
+The app stays open so you can restart or change the environment.	Приложение остаётся открытым, чтобы вы могли перезапустить сеанс или сменить среду.
+The last session failed.	Последний сеанс завершился с ошибкой.
+This system is encrypted. Enter your passphrase to unlock it.	Эта система зашифрована. Введите парольную фразу, чтобы разблокировать её.
+Welcome. Choose how to start: System, LiveCD or VM.	Добро пожаловать. Выберите, как запускать: Система, LiveCD или ВМ.
+Kyanite: network blocked	Kyanite: сеть заблокирована
+The network is disabled in Settings but the VPN permission is missing, so it cannot be enforced. Open Settings > Network, enable and disable the network option again, and accept the VPN dialog.	В настройках сеть отключена, но нет разрешения VPN, поэтому запрет не может действовать. Откройте Настройки > Сеть, снова включите и выключите параметр сети и примите запрос VPN.
+The network is disabled in Settings but the network block could not be started (another VPN may be active). Refusing to start the session without it.	В настройках сеть отключена, но блокировку сети запустить не удалось (возможно, активна другая VPN). Сеанс не будет запущен без неё.
+VPN consent missing	Нет согласия на VPN
+Choose a PIN (4 to 12 digits)	Выберите PIN-код (от 4 до 12 цифр)
+Choose a duress PIN. Entering it wipes the data (if wipe-on-duress is enabled).	Выберите PIN под принуждением. Его ввод стирает данные (если включено стирание при принуждении).
+Enter PIN	Введите PIN-код
+PIN policy	Правила PIN-кода
+Repeat PIN	Повторите PIN-код
+PIN	PIN-код
+The PIN must have 4 to 12 digits	PIN-код должен содержать от 4 до 12 цифр
+The PINs do not match	PIN-коды не совпадают
+The duress PIN must differ from the real PIN	PIN под принуждением должен отличаться от настоящего
+Too many attempts. Wait %d s.	Слишком много попыток. Подождите %d с.
+Wrong PIN	Неверный PIN-код
+Extracting… %d entries	Распаковка… элементов: %d
+not available on 32-bit ARM devices	недоступно на 32-битных устройствах ARM
+Copying system to a temporary directory…	Копирование системы во временный каталог…
+No system is selected. Create or select one in Settings > Systems (nothing is installed automatically).	Система не выбрана. Создайте или выберите её в Настройки > Системы (автоматически ничего не устанавливается).
+Starting VM…	Запуск ВМ…
+VM mode is not available in this build (missing: %s)	Режим ВМ недоступен в этой сборке (отсутствует: %s)
+Copying system… %d files	Копирование системы… файлов: %d
+Copying…	Копирование…
+Copying… %d files	Копирование… файлов: %d
+Protecting system (compressing)…	Защита системы (сжатие)…
+Protecting system (encrypting)…	Защита системы (шифрование)…
+Restoring…	Восстановление…
+Stop the session first	Сначала остановите сеанс
+Taking snapshot…	Создание снимка…
+That system is not installed	Эта система не установлена
+The system is in use	Система используется
+Unlocking system…	Разблокировка системы…
+%d min	%d мин
+%d s	%d с
+Could not start: %s	Не удалось запустить: %s
+Exit	Выход
+Idle	Ожидание
+Minimize	Свернуть
+Running	Работает
+Saving and protecting the system…	Сохранение и защита системы…
+Session ended	Сеанс завершён
+Session ended after %s (exit status %d).	Сеанс завершён через %s (код выхода %d).
+Session running	Сеанс запущен
+Terminal session	Сеанс терминала
+The network block was lost (killed, or replaced by another VPN), so the session was closed to avoid leaking traffic.	Блокировка сети потеряна (завершена или заменена другой VPN), поэтому сеанс закрыт, чтобы не допустить утечки трафика.
+Window minimized	Окно свёрнуто
+Wiping…	Стирание…
+Check failed: %s	Не удалось проверить: %s
+Kyanite update %s downloaded	Обновление Kyanite %s загружено
+Tap to install	Нажмите, чтобы установить
+Update %s available	Доступно обновление %s
+Filling free space…	Заполнение свободного места…
+Wipe complete	Стирание завершено
+Wiping %s…	Стирание: %s…
+%d day(s)	%d дн.
+%d hours	%d ч
+1 day	1 день
+12 hours	12 часов
+14 days	14 дней
+3 days	3 дня
+30 days	30 дней
+6 hours	6 часов
+7 days	7 дней
+After 1 hour	Через 1 час
+After 1 min	Через 1 мин
+After 15 min	Через 15 мин
+After 5 min	Через 5 мин
+All systems and snapshots will be decrypted and the key deleted.	Все системы и снимки будут расшифрованы, а ключ удалён.
+Allow network access	Разрешить доступ к сети
+Android always asks you to confirm an install and only accepts an APK signed with the same key as the installed app. Debug builds (package …debug) are not updated by release APKs.	Android всегда просит подтвердить установку и принимает только APK, подписанный тем же ключом, что и установленное приложение. Отладочные сборки (пакет …debug) не обновляются релизными APK.
+Android cannot remove the INTERNET permission at runtime. A build without it can be produced on request.	Android не может отозвать разрешение INTERNET во время работы. Сборку без него можно подготовить по запросу.
+Anyone with the phone will be able to open the app.	Любой, у кого окажется телефон, сможет открыть приложение.
+App-generated key (Android Keystore)	Ключ, созданный приложением (Android Keystore)
+App-generated key (Android Keystore, nothing to remember)	Ключ, созданный приложением (Android Keystore, запоминать ничего не нужно)
+Automatic (check, download and offer to install)	Автоматически (проверять, загружать и предлагать установить)
+Best (xz, slow)	Максимальное (xz, медленно)
+Block screenshots and hide the app in Recents	Запретить скриншоты и скрывать приложение в списке недавних
+Block status:	Состояние блокировки:
+Bold font	Жирный шрифт
+Cancelled	Отменено
+Change PIN	Изменить PIN-код
+Change key type / passphrase…	Изменить тип ключа / парольную фразу…
+Change the duress PIN…	Изменить PIN под принуждением…
+Changes apply instantly; the session is not restarted.	Изменения применяются сразу; сеанс не перезапускается.
+Check every	Проверять каждые
+Check now	Проверить сейчас
+Checking for updates	Проверка обновлений
+Choose a passphrase	Выберите парольную фразу
+Clear	Сбросить
+Clear the clipboard when the session ends	Очищать буфер обмена при завершении сеанса
+Colour scheme	Цветовая схема
+Compression	Сжатие
+Continue	Продолжить
+Current passphrase	Текущая парольная фраза
+Current version: %s. Source: github.com/%s releases.	Текущая версия: %s. Источник: релизы github.com/%s.
+Custom colours (#RRGGBB)	Свои цвета (#RRGGBB)
+Custom…	Свой…
+Decrypting	Расшифровка
+Disable	Отключить
+Disable PIN	Отключить PIN-код
+Disable clipboard copy/paste with Android	Отключить копирование и вставку через буфер обмена Android
+Disable encryption	Отключить шифрование
+Download	Скачать
+Downloading %s…	Загрузка: %s…
+Edit custom colours…	Изменить свои цвета…
+Enable	Включить
+Enable scheduled wipe	Включить стирание по расписанию
+Enable wipe	Включить стирание
+Encrypt systems at rest	Шифровать системы при хранении
+Encrypting systems	Шифрование систем
+Encryption & compression at rest	Шифрование и сжатие при хранении
+End the session when the screen turns off	Завершать сеанс при выключении экрана
+Ending the session re-packs (and re-encrypts) the system, and forgets a passphrase key from memory.	При завершении сеанса система заново упаковывается (и шифруется), а ключ парольной фразы стирается из памяти.
+Every archive is re-encrypted with a new key. Do not interrupt this.	Каждый архив шифруется заново новым ключом. Не прерывайте процесс.
+Exported	Экспортировано
+Exporting %s	Экспорт: %s
+Fast (gzip)	Быстрое (gzip)
+Font size (sp)	Размер шрифта (sp)
+For a guarantee that survives this app being killed, enable Android's "Always-on VPN" and "Block connections without VPN" for Kyanite in the system VPN settings.	Чтобы защита сохранялась, даже если приложение будет завершено, включите для Kyanite «Постоянную VPN» и «Блокировать соединения без VPN» в системных настройках VPN Android.
+Give the VM a network device (when the network is allowed)	Дать ВМ сетевое устройство (когда сеть разрешена)
+Hide notification content on the lock screen	Скрывать содержимое уведомлений на экране блокировки
+Import system (file %s, free %s)	Импорт системы (файл %s, свободно %s)
+Imported	Импортировано
+Importing	Импорт
+Invalid colour: use #RRGGBB	Неверный цвет: используйте #RRGGBB
+Irreversibly destroys the selected data when a condition is met. The key is destroyed first (crypto-shredding), then every file is overwritten with random data from a throw-away key, then deleted.	Необратимо уничтожает выбранные данные при выполнении условия. Сначала уничтожается ключ (crypto-shredding), затем каждый файл перезаписывается случайными данными от одноразового ключа и удаляется.
+Key changed	Ключ изменён
+Key type	Тип ключа
+Key:	Ключ:
+Last check: %s	Последняя проверка: %s
+LiveCD persistence	Сохранённые данные LiveCD
+Lock again	Заблокировать снова
+Manual (opens the releases page in your browser, nothing else)	Вручную (открывает страницу релизов в браузере, больше ничего)
+My passphrase (asked once per session)	Моя парольная фраза (запрашивается один раз за сеанс)
+NOT ACTIVE: sessions refuse to start until it is (fail closed)	НЕ АКТИВНА: сеансы не запускаются, пока она не заработает (безопасный отказ)
+Never	Никогда
+New passphrase	Новая парольная фраза
+No updates (never contacts GitHub)	Без обновлений (никогда не обращается к GitHub)
+None	Нет
+Open the releases page	Открыть страницу релизов
+PIN lock	Блокировка PIN-кодом
+Passphrase changed	Парольная фраза изменена
+Permission denied.	Доступ запрещён.
+Privacy	Конфиденциальность
+Re-packing systems	Повторная упаковка систем
+Require a PIN to use the app	Требовать PIN-код для использования приложения
+Rotate	Сменить
+Rotate key	Сменить ключ
+Rotate the data key (re-encrypt everything)	Сменить ключ данных (зашифровать всё заново)
+Rotating key	Смена ключа
+Save	Сохранить
+Scheduled wipe	Стирание по расписанию
+Set a duress PIN…	Задать PIN под принуждением…
+Snapshots	Снимки
+Start from	Взять за основу
+The fill step can take a long time and temporarily leaves ~200 MB free. Conditions are checked about every 30 minutes by Android's job scheduler and when the app starts, so timing is approximate.	Этап заполнения может занять много времени и временно оставляет свободными около 200 МБ. Условия проверяются примерно каждые 30 минут планировщиком задач Android и при запуске приложения, поэтому время срабатывания приблизительное.
+Then fill the free space with random files and delete them (anti-forensics)	Затем заполнить свободное место случайными файлами и удалить их (антикриминалистика)
+This destroys the selected data (see above; if scheduled wipe is off, systems, LiveCD persistence and snapshots) IRREVERSIBLY.	Это НЕОБРАТИМО уничтожит выбранные данные (см. выше; если стирание по расписанию выключено — системы, данные LiveCD и снимки).
+Type WIPE to confirm	Введите WIPE для подтверждения
+Up to date (latest %s)	Установлена последняя версия (%s)
+Update %s downloaded	Обновление %s загружено
+What to wipe	Что стирать
+When off: every process of this app, including your Kyanite systems, cannot reach the network (a local VPN with no exit silently drops their traffic; Android asks for VPN consent once). The VM gets no network device. The app itself will not download rootfs, check for updates, or open the browser.	Когда выключено: ни один процесс этого приложения, включая ваши системы Kyanite, не может выйти в сеть (локальная VPN без выхода молча отбрасывает их трафик; Android один раз запрашивает согласие на VPN). У ВМ нет сетевого устройства. Само приложение не будет скачивать rootfs, проверять обновления или открывать браузер.
+Whenever the app is left	Каждый раз при выходе из приложения
+While a system is not in use it is stored as an archive: compressed (saves space with many systems) and/or encrypted with AES-256-GCM. It is unpacked when you start it and packed again when the session ends. Protects stopped systems against malware or backdoors in a running one, and against someone copying your files.	Пока система не используется, она хранится в виде архива: сжатого (экономит место, если систем много) и/или зашифрованного с помощью AES-256-GCM. Она распаковывается при запуске и снова упаковывается при завершении сеанса. Это защищает остановленные системы от вредоносных программ и бэкдоров в запущенной системе, а также от копирования ваших файлов.
+Wipe after this many wrong PIN attempts	Стирать после такого числа неверных попыток ввода PIN-кода
+Wipe if USB debugging (ADB) is enabled	Стирать, если включена отладка по USB (ADB)
+Wipe if the app is not opened for…	Стирать, если приложение не открывалось…
+Wipe now	Стереть сейчас
+Wipe now…	Стереть сейчас…
+Wipe on a date: %s	Стереть в указанную дату: %s
+Wipe started (see the notification).	Стирание запущено (см. уведомление).
+Wipe when the duress PIN is entered	Стирать при вводе PIN-кода под принуждением
+Writing…	Запись…
+Your data will be destroyed IRREVERSIBLY when a condition below is met. Make sure you have backups (Systems > Export).	Ваши данные будут НЕОБРАТИМО уничтожены при выполнении одного из условий ниже. Убедитесь, что у вас есть резервные копии (Системы > Экспорт).
+cannot open the file	не удаётся открыть файл
+cannot write the file	не удаётся записать файл
+generated by the app, stored in the Android Keystore	создан приложением и хранится в Android Keystore
+not needed (the network is allowed)	не нужна (сеть разрешена)
+your passphrase (asked once per session; the key is forgotten from memory afterwards)	ваша парольная фраза (запрашивается один раз за сеанс; затем ключ стирается из памяти)
+ACTIVE	АКТИВНА
+off	выкл.
+background	фон
+foreground	текст
+cursor	курсор
+Dark (default)	Тёмная (по умолчанию)
+Light	Светлая
+Retro amber	Ретро-янтарь
+Custom	Своя
+Vim: delek (light)	Vim: delek (светлая)
+Vim: morning (light)	Vim: morning (светлая)
+Vim: peachpuff (light)	Vim: peachpuff (светлая)

@@ -177,7 +177,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
         lastProgress = null
         lastError = t.message ?: t.javaClass.simpleName
         Cfg.autoLaunchBlocked = true
-        Cfg.lastEnded = "Could not start: $lastError"
+        Cfg.lastEnded = L.f("Could not start: %s", lastError?.let { L.t(it) })
         cleanup = plan?.cleanup
         runCleanup {}
         updateNotification()
@@ -236,13 +236,13 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
         floating?.hide()
         floating = null
         minimized = false
-        wipeStatus = "Wiping…"
+        wipeStatus = L.t("Wiping…")
         listener?.onExitRequested()
         stopCurrent {
             Thread {
                 try {
                     WipeManager.execute(this) { pct, msg ->
-                        wipeStatus = "$msg $pct%"
+                        wipeStatus = L.t(msg) + " $pct%"
                         main.post { updateNotification() }
                     }
                 } catch (t: Throwable) {
@@ -262,8 +262,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
         try { NetBlockService.apply(this) } catch (_: Exception) {}
         main.postDelayed({
             if (!Cfg.allowNetwork && !NetBlockService.active && session === s) {
-                pendingEndReason = "The network block was lost (killed, or replaced by another VPN), so the session was closed " +
-                    "to avoid leaking traffic."
+                pendingEndReason = L.t("The network block was lost (killed, or replaced by another VPN), so the session was closed to avoid leaking traffic.")
                 s.finishIfRunning()
             }
         }, 3000)
@@ -272,7 +271,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
     private fun postEndedNotification(msg: String) {
         val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= 26) {
-            nm.createNotificationChannel(NotificationChannel("ended", "Session ended", NotificationManager.IMPORTANCE_DEFAULT))
+            nm.createNotificationChannel(NotificationChannel("ended", L.t("Session ended"), NotificationManager.IMPORTANCE_DEFAULT))
         }
         val open = PendingIntent.getActivity(
             this, 5, Intent(this, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
@@ -281,7 +280,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
         val b: Notification.Builder =
             if (Build.VERSION.SDK_INT >= 26) Notification.Builder(this, "ended") else Notification.Builder(this)
         b.setContentTitle("Kyanite")
-            .setContentText(if (Cfg.hideNotifContent) "Session ended" else msg)
+            .setContentText(if (Cfg.hideNotifContent) L.t("Session ended") else msg)
             .setSmallIcon(android.R.drawable.ic_menu_info_details)
             .setContentIntent(open)
             .setAutoCancel(true)
@@ -386,7 +385,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
     private fun buildNotification(): Notification {
         val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= 26) {
-            nm.createNotificationChannel(NotificationChannel(CHANNEL, "Terminal session", NotificationManager.IMPORTANCE_LOW))
+            nm.createNotificationChannel(NotificationChannel(CHANNEL, L.t("Terminal session"), NotificationManager.IMPORTANCE_LOW))
         }
         fun svc(code: Int, action: String) = PendingIntent.getService(
             this, code, Intent(this, TerminalService::class.java).setAction(action), PendingIntent.FLAG_UPDATE_CURRENT
@@ -402,26 +401,26 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
         val floatingMode = AppConfig.load(this).windowMode == WindowMode.FLOATING && session != null
         val text = when {
             wipeStatus != null -> wipeStatus!!
-            preparing -> "Preparing…"
-            session == null -> "Idle"
-            minimized -> "Window minimized"
-            else -> "Session running"
+            preparing -> L.t("Preparing…")
+            session == null -> L.t("Idle")
+            minimized -> L.t("Window minimized")
+            else -> L.t("Session running")
         }
         val b: Notification.Builder =
             if (Build.VERSION.SDK_INT >= 26) Notification.Builder(this, CHANNEL) else Notification.Builder(this)
         b.setContentTitle("Kyanite")
-            .setContentText(if (Cfg.hideNotifContent) "Running" else text)
+            .setContentText(if (Cfg.hideNotifContent) L.t("Running") else text)
             .setSmallIcon(android.R.drawable.ic_menu_info_details)
             .setContentIntent(if (minimized) svc(2, ACTION_RESTORE) else open)
             .setOngoing(true)
         if (Cfg.hideNotifContent) b.setVisibility(Notification.VISIBILITY_SECRET)
         if (wipeStatus == null) {
             if (floatingMode) {
-                if (minimized) b.addAction(android.R.drawable.ic_menu_view, "Restore", svc(2, ACTION_RESTORE))
-                else b.addAction(android.R.drawable.ic_menu_revert, "Minimize", svc(3, ACTION_MINIMIZE))
+                if (minimized) b.addAction(android.R.drawable.ic_menu_view, L.t("Restore"), svc(2, ACTION_RESTORE))
+                else b.addAction(android.R.drawable.ic_menu_revert, L.t("Minimize"), svc(3, ACTION_MINIMIZE))
             }
-            b.addAction(android.R.drawable.ic_menu_preferences, "Settings", settings)
-            b.addAction(android.R.drawable.ic_menu_close_clear_cancel, "Exit", svc(4, ACTION_EXIT))
+            b.addAction(android.R.drawable.ic_menu_preferences, L.t("Settings"), settings)
+            b.addAction(android.R.drawable.ic_menu_close_clear_cancel, L.t("Exit"), svc(4, ACTION_EXIT))
         }
         return b.build()
     }
@@ -442,7 +441,7 @@ class TerminalService : Service(), TerminalSessionClient, FloatingWindow.Host {
         val secs = (SystemClock.elapsedRealtime() - sessionStart) / 1000
         val reason = pendingEndReason
         pendingEndReason = null
-        val msg = reason ?: "Session ended after ${if (secs >= 60) "${secs / 60} min" else "$secs s"} (exit status ${finishedSession.exitStatus})."
+        val msg = reason ?: L.f("Session ended after %s (exit status %d).", if (secs >= 60) L.f("%d min", secs / 60) else L.f("%d s", secs), finishedSession.exitStatus)
         session = null
         floating?.hide()
         floating = null

@@ -1,0 +1,351 @@
+# Kyanite UI translations: English text <TAB> translation. Missing text = shown in English.
+# Escapes: \n newline, \t tab, \\ backslash. Keep %s / %d placeholders.
+OK	Aceptar
+Cancel	Cancelar
+Repeat	Repetir
+Passphrase	Frase de contraseña
+Passphrase (12+ characters recommended)	Frase de contraseña (se recomiendan 12 o más caracteres)
+Passphrase too short	La frase de contraseña es demasiado corta
+The passphrases do not match	Las frases de contraseña no coinciden
+Unlock encryption key	Desbloquear la clave de cifrado
+Unlock	Desbloquear
+Wrong passphrase	Frase de contraseña incorrecta
+Failed: %s	Error: %s
+Settings	Ajustes
+Choose how to start	Elige cómo empezar
+Apply environment & window	Aplicar entorno y ventana
+Environment	Entorno
+Systems	Sistemas
+Appearance	Apariencia
+Security	Seguridad
+Network	Red
+Updates	Actualizaciones
+Language	Idioma
+Automatic by default: the system language is used when it is available, otherwise English. Once you pick a language here it is always kept.	Es automático por defecto: se usa el idioma del sistema si está disponible y, si no, inglés. Cuando eliges un idioma aquí, siempre se respeta.
+System (one of your installed systems)	Sistema (uno de tus sistemas instalados)
+LiveCD (image shipped in the APK)	LiveCD (imagen incluida en el APK)
+No system installed yet. Create one in the Systems tab (nothing is installed automatically).	Todavía no hay ningún sistema instalado. Crea uno en la pestaña Sistemas (no se instala nada automáticamente).
+Active system	Sistema activo
+Mode	Modo
+Normal (persistent)	Normal (persistente)
+Ephemeral (temporary copy, wiped on exit)	Efímero (copia temporal, se borra al salir)
+VM (QEMU, RAM only)	VM (QEMU, solo RAM)
+VM (Experimental) — unavailable: %s	VM (experimental) — no disponible: %s
+VM is not available in this build	La VM no está disponible en esta versión
+Mount the active system at /mnt/system (read-write)	Montar el sistema activo en /mnt/system (lectura y escritura)
+Like a live CD mounting the hard disk to repair or back it up. Off by default.	Como un CD live que monta el disco duro para repararlo o hacer una copia de seguridad. Desactivado por defecto.
+Overwrite files with random data before deleting	Sobrescribir los archivos con datos aleatorios antes de borrarlos
+VM RAM (MB)	RAM de la VM (MB)
+VM CPU cores	Núcleos de CPU de la VM
+Give the VM a network device (only if the network is allowed)	Dar un dispositivo de red a la VM (solo si se permite la red)
+Window	Ventana
+Fullscreen	Pantalla completa
+Floating window (drag, resize, rotate, pin, opacity, minimize)	Ventana flotante (arrastrar, redimensionar, girar, fijar, opacidad, minimizar)
+Needs "Display over other apps" (you will be asked). Minimize with —; restore from the notification.	Requiere «Mostrar sobre otras apps» (se te pedirá). Minimiza con —; restaura desde la notificación.
+Reset floating window (size, position, rotation, opacity, pin)	Restablecer la ventana flotante (tamaño, posición, rotación, opacidad, fijado)
+Floating window reset to its defaults.	La ventana flotante se ha restablecido a sus valores por defecto.
+While running	Mientras se ejecuta
+Keep the CPU awake (wake lock)	Mantener la CPU activa (wake lock)
+Only needed for long jobs while the screen is off (builds, servers, VM). Costs battery.	Solo hace falta para tareas largas con la pantalla apagada (compilaciones, servidores, VM). Consume batería.
+Allow access to shared storage (/sdcard and ~/storage/shared)	Permitir el acceso al almacenamiento compartido (/sdcard y ~/storage/shared)
+Storage is no longer mounted in new sessions. To also revoke the Android permission, use the button below.	El almacenamiento ya no se monta en las sesiones nuevas. Para revocar también el permiso de Android, usa el botón de abajo.
+Open Android app permissions	Abrir los permisos de la app en Android
+Like termux-setup-storage, but on demand. VM mode never has shared storage.	Como termux-setup-storage, pero bajo demanda. El modo VM nunca tiene almacenamiento compartido.
+Diagnostics	Diagnóstico
+Runs the active system; everything you change is kept.	Ejecuta el sistema activo; todo lo que cambies se conserva.
+Runs on a temporary copy of the active system; changes are discarded and the copy is wiped. The system itself is never modified. Flash storage may keep remnants: for no disk traces use VM.	Se ejecuta sobre una copia temporal del sistema activo; los cambios se descartan y la copia se borra. El sistema en sí nunca se modifica. La memoria flash puede conservar restos: para no dejar rastros en el disco, usa VM.
+EXPERIMENTAL. The active system is streamed into a QEMU VM and lives only in RAM (decrypted on the fly if it is encrypted). Changes are lost on exit. Much slower than proot.	EXPERIMENTAL. El sistema activo se transmite a una VM de QEMU y vive solo en la RAM (se descifra al vuelo si está cifrado). Los cambios se pierden al salir. Mucho más lenta que proot.
+The shipped image is extracted once and kept (LiveCD with persistence), separate from your systems.	La imagen incluida se extrae una vez y se conserva (LiveCD con persistencia), separada de tus sistemas.
+A fresh copy of the shipped image on every start, wiped on exit.	Una copia nueva de la imagen incluida en cada inicio, que se borra al salir.
+EXPERIMENTAL. The shipped image is streamed into a QEMU VM and lives only in RAM. Nothing is written to disk.	EXPERIMENTAL. La imagen incluida se transmite a una VM de QEMU y vive solo en la RAM. No se escribe nada en el disco.
+Select or create a system first (Systems tab), or use the LiveCD.	Primero selecciona o crea un sistema (pestaña Sistemas), o usa el LiveCD.
+VM mode is not available in this build.	El modo VM no está disponible en esta versión.
+Stop the running session first (notification > Exit).	Detén primero la sesión en curso (notificación > Salir).
+Create, rename, duplicate, delete, import, export, download, snapshot and restore. Each system is stored on its own and never touches the others.	Crea, renombra, duplica, elimina, importa, exporta, descarga, haz instantáneas y restaura. Cada sistema se guarda por separado y nunca toca a los demás.
+New system from the shipped Kyanite	Nuevo sistema a partir del Kyanite incluido
+New system	Nuevo sistema
+Name	Nombre
+Import a tar / tar.gz / tar.xz / .kya file…	Importar un archivo tar / tar.gz / tar.xz / .kya…
+Download a rootfs…	Descargar un rootfs…
+Installed	Instalados
+Nothing installed.	No hay nada instalado.
+not installed	sin instalar
+in use	en uso
+at rest	en reposo
+, encrypted	, cifrado
+(archive)	(archivo)
+plain	sin comprimir
+system	sistema
+livecd	LiveCD
+%s%s\n%s · %s · %d snapshot(s)	%s%s\n%s · %s · %d instantánea(s)
+Use as the active system	Usar como sistema activo
+Rename…	Renombrar…
+Rename	Renombrar
+Duplicate…	Duplicar…
+Duplicate	Duplicar
+Name for the copy	Nombre de la copia
+copy	copia
+Duplicating	Duplicando
+Export…	Exportar…
+Take snapshot…	Crear instantánea…
+Snapshot	Instantánea
+Label	Etiqueta
+Reset LiveCD persistence…	Restablecer la persistencia del LiveCD…
+Delete…	Eliminar…
+Delete	Eliminar
+Delete %s	Eliminar %s
+Export %s	Exportar %s
+Snapshots (%d)…	Instantáneas (%d)…
+Snapshots of %s	Instantáneas de %s
+Secure wipe (overwrite with random data, slower)	Borrado seguro (sobrescribe con datos aleatorios, más lento)
+Deleting	Eliminando
+Portable .tar.gz	.tar.gz portátil
+Portable .tar.xz (smaller, slower)	.tar.xz portátil (más pequeño, más lento)
+This app's .kya (uses the current compression/encryption)	.kya de esta app (usa la compresión y el cifrado actuales)
+No snapshots yet.	Todavía no hay instantáneas.
+Restore (replaces the current content)	Restaurar (reemplaza el contenido actual)
+Restore snapshot	Restaurar instantánea
+Restore	Restaurar
+Restoring	Restaurando
+The current content of %s will be replaced.	El contenido actual de %s será reemplazado.
+The network is disabled (Network tab).	La red está desactivada (pestaña Red).
+Download a rootfs  (free space: %s)	Descargar un rootfs (espacio libre: %s)
+Custom URL…	URL personalizada…
+SHA-256 (optional but recommended)	SHA-256 (opcional pero recomendado)
+Custom rootfs URL	URL de rootfs personalizada
+Next	Siguiente
+Custom system	Sistema personalizado
+Enter an http(s) URL	Introduce una URL http(s)
+Looking up…	Buscando…
+Checking size…	Comprobando el tamaño…
+Download %s	Descargar %s
+Download: %s	Descarga: %s
+Installed (estimate): %s	Instalado (estimación): %s
+Free space: %s	Espacio libre: %s
+unknown	desconocido
+SHA-256 will be verified.	Se verificará el SHA-256.
+No checksum: the download is not verified.	Sin suma de comprobación: la descarga no se verifica.
+⚠ There may not be enough free space.	⚠ Puede que no haya espacio libre suficiente.
+Download anyway	Descargar de todos modos
+Downloading %s	Descargando %s
+Installing %s	Instalando %s
+Free space: %s · Systems use: calculating…	Espacio libre: %s · Los sistemas usan: calculando…
+Free space: %s · Systems use: %s	Espacio libre: %s · Los sistemas usan: %s
+The encryption key is locked: enter your passphrase.	La clave de cifrado está bloqueada: introduce tu frase de contraseña.
+archive is truncated (missing final chunk)	el archivo está truncado (falta el último bloque)
+empty passphrase	frase de contraseña vacía
+this archive was encrypted with a different key	este archivo se cifró con otra clave
+truncated archive	archivo truncado
+truncated header	cabecera truncada
+wrong key or corrupted archive	clave incorrecta o archivo dañado
+Alpine Linux, minirootfs (≈3 MB download, ≈10 MB installed; checksum verified)	Alpine Linux, minirootfs (≈3 MB de descarga, ≈10 MB instalado; suma de comprobación verificada)
+Arch Linux ARM (≈500 MB download, ≈1.5 GB installed; no checksum available)	Arch Linux ARM (≈500 MB de descarga, ≈1,5 GB instalado; sin suma de comprobación)
+Kyanite, latest release (≈8 MB download, ≈30 MB installed; checksum verified)	Kyanite, última versión (≈8 MB de descarga, ≈30 MB instalado; suma de comprobación verificada)
+Ubuntu Base 24.04 LTS (≈30 MB download, ≈100 MB installed; checksum verified)	Ubuntu Base 24.04 LTS (≈30 MB de descarga, ≈100 MB instalado; suma de comprobación verificada)
+The network is disabled (Settings > Network).	La red está desactivada (Ajustes > Red).
+the release has no APK attached	la versión no tiene ningún APK adjunto
+Choose environment	Elegir entorno
+Could not start:\n%s	No se pudo iniciar:\n%s
+Enter passphrase	Introducir frase de contraseña
+Floating window mode needs the "Display over other apps" permission.	El modo de ventana flotante necesita el permiso «Mostrar sobre otras apps».
+Grant permission	Conceder permiso
+Not restarting automatically.	No se reinicia automáticamente.
+Preparing…	Preparando…
+Restart	Reiniciar
+Retry	Reintentar
+The app stays open so you can restart or change the environment.	La app sigue abierta para que puedas reiniciar o cambiar el entorno.
+The last session failed.	La última sesión falló.
+This system is encrypted. Enter your passphrase to unlock it.	Este sistema está cifrado. Introduce tu frase de contraseña para desbloquearlo.
+Welcome. Choose how to start: System, LiveCD or VM.	Te damos la bienvenida. Elige cómo empezar: Sistema, LiveCD o VM.
+Kyanite: network blocked	Kyanite: red bloqueada
+The network is disabled in Settings but the VPN permission is missing, so it cannot be enforced. Open Settings > Network, enable and disable the network option again, and accept the VPN dialog.	La red está desactivada en los Ajustes pero falta el permiso de VPN, así que no se puede aplicar. Abre Ajustes > Red, activa y desactiva de nuevo la opción de red, y acepta el diálogo de la VPN.
+The network is disabled in Settings but the network block could not be started (another VPN may be active). Refusing to start the session without it.	La red está desactivada en los Ajustes pero no se pudo iniciar el bloqueo de red (puede que haya otra VPN activa). No se iniciará la sesión sin él.
+VPN consent missing	Falta el consentimiento de la VPN
+Choose a PIN (4 to 12 digits)	Elige un PIN (de 4 a 12 dígitos)
+Choose a duress PIN. Entering it wipes the data (if wipe-on-duress is enabled).	Elige un PIN de coacción. Al introducirlo se borran los datos (si el borrado por coacción está activado).
+Enter PIN	Introduce el PIN
+PIN policy	Política de PIN
+Repeat PIN	Repite el PIN
+PIN	PIN
+The PIN must have 4 to 12 digits	El PIN debe tener de 4 a 12 dígitos
+The PINs do not match	Los PIN no coinciden
+The duress PIN must differ from the real PIN	El PIN de coacción debe ser distinto del PIN real
+Too many attempts. Wait %d s.	Demasiados intentos. Espera %d s.
+Wrong PIN	PIN incorrecto
+Extracting… %d entries	Extrayendo… %d elementos
+not available on 32-bit ARM devices	no disponible en dispositivos ARM de 32 bits
+Copying system to a temporary directory…	Copiando el sistema a un directorio temporal…
+No system is selected. Create or select one in Settings > Systems (nothing is installed automatically).	No hay ningún sistema seleccionado. Crea o selecciona uno en Ajustes > Sistemas (no se instala nada automáticamente).
+Starting VM…	Iniciando la VM…
+VM mode is not available in this build (missing: %s)	El modo VM no está disponible en esta versión (falta: %s)
+Copying system… %d files	Copiando el sistema… %d archivos
+Copying…	Copiando…
+Copying… %d files	Copiando… %d archivos
+Protecting system (compressing)…	Protegiendo el sistema (comprimiendo)…
+Protecting system (encrypting)…	Protegiendo el sistema (cifrando)…
+Restoring…	Restaurando…
+Stop the session first	Detén primero la sesión
+Taking snapshot…	Creando la instantánea…
+That system is not installed	Ese sistema no está instalado
+The system is in use	El sistema está en uso
+Unlocking system…	Desbloqueando el sistema…
+%d min	%d min
+%d s	%d s
+Could not start: %s	No se pudo iniciar: %s
+Exit	Salir
+Idle	Inactivo
+Minimize	Minimizar
+Running	En ejecución
+Saving and protecting the system…	Guardando y protegiendo el sistema…
+Session ended	Sesión terminada
+Session ended after %s (exit status %d).	La sesión terminó tras %s (estado de salida %d).
+Session running	Sesión en ejecución
+Terminal session	Sesión de terminal
+The network block was lost (killed, or replaced by another VPN), so the session was closed to avoid leaking traffic.	Se perdió el bloqueo de red (lo cerraron o lo reemplazó otra VPN), así que se cerró la sesión para evitar fugas de tráfico.
+Window minimized	Ventana minimizada
+Wiping…	Borrando…
+Check failed: %s	Falló la comprobación: %s
+Kyanite update %s downloaded	Actualización de Kyanite %s descargada
+Tap to install	Toca para instalar
+Update %s available	Actualización %s disponible
+Filling free space…	Rellenando el espacio libre…
+Wipe complete	Borrado completado
+Wiping %s…	Borrando %s…
+%d day(s)	%d día(s)
+%d hours	%d horas
+1 day	1 día
+12 hours	12 horas
+14 days	14 días
+3 days	3 días
+30 days	30 días
+6 hours	6 horas
+7 days	7 días
+After 1 hour	Tras 1 hora
+After 1 min	Tras 1 min
+After 15 min	Tras 15 min
+After 5 min	Tras 5 min
+All systems and snapshots will be decrypted and the key deleted.	Todos los sistemas y las instantáneas se descifrarán y la clave se eliminará.
+Allow network access	Permitir el acceso a la red
+Android always asks you to confirm an install and only accepts an APK signed with the same key as the installed app. Debug builds (package …debug) are not updated by release APKs.	Android siempre te pide confirmar la instalación y solo acepta un APK firmado con la misma clave que la app instalada. Las versiones de depuración (paquete …debug) no se actualizan con los APK de versiones finales.
+Android cannot remove the INTERNET permission at runtime. A build without it can be produced on request.	Android no puede quitar el permiso INTERNET en tiempo de ejecución. Se puede generar una versión sin él si se solicita.
+Anyone with the phone will be able to open the app.	Cualquiera que tenga el móvil podrá abrir la app.
+App-generated key (Android Keystore)	Clave generada por la app (Android Keystore)
+App-generated key (Android Keystore, nothing to remember)	Clave generada por la app (Android Keystore, nada que recordar)
+Automatic (check, download and offer to install)	Automático (comprobar, descargar y ofrecer la instalación)
+Best (xz, slow)	Máxima (xz, lenta)
+Block screenshots and hide the app in Recents	Bloquear las capturas de pantalla y ocultar la app en Recientes
+Block status:	Estado del bloqueo:
+Bold font	Fuente en negrita
+Cancelled	Cancelado
+Change PIN	Cambiar el PIN
+Change key type / passphrase…	Cambiar el tipo de clave / la frase de contraseña…
+Change the duress PIN…	Cambiar el PIN de coacción…
+Changes apply instantly; the session is not restarted.	Los cambios se aplican al instante; la sesión no se reinicia.
+Check every	Comprobar cada
+Check now	Comprobar ahora
+Checking for updates	Buscando actualizaciones
+Choose a passphrase	Elige una frase de contraseña
+Clear	Quitar
+Clear the clipboard when the session ends	Vaciar el portapapeles al terminar la sesión
+Colour scheme	Esquema de colores
+Compression	Compresión
+Continue	Continuar
+Current passphrase	Frase de contraseña actual
+Current version: %s. Source: github.com/%s releases.	Versión actual: %s. Origen: versiones de github.com/%s.
+Custom colours (#RRGGBB)	Colores personalizados (#RRGGBB)
+Custom…	Personalizado…
+Decrypting	Descifrando
+Disable	Desactivar
+Disable PIN	Desactivar el PIN
+Disable clipboard copy/paste with Android	Desactivar copiar/pegar con el portapapeles de Android
+Disable encryption	Desactivar el cifrado
+Download	Descargar
+Downloading %s…	Descargando %s…
+Edit custom colours…	Editar los colores personalizados…
+Enable	Activar
+Enable scheduled wipe	Activar el borrado programado
+Enable wipe	Activar el borrado
+Encrypt systems at rest	Cifrar los sistemas en reposo
+Encrypting systems	Cifrando los sistemas
+Encryption & compression at rest	Cifrado y compresión en reposo
+End the session when the screen turns off	Terminar la sesión cuando se apague la pantalla
+Ending the session re-packs (and re-encrypts) the system, and forgets a passphrase key from memory.	Al terminar la sesión se vuelve a empaquetar (y a cifrar) el sistema, y se olvida de la memoria la clave de la frase de contraseña.
+Every archive is re-encrypted with a new key. Do not interrupt this.	Cada archivo se vuelve a cifrar con una clave nueva. No lo interrumpas.
+Exported	Exportado
+Exporting %s	Exportando %s
+Fast (gzip)	Rápida (gzip)
+Font size (sp)	Tamaño de fuente (sp)
+For a guarantee that survives this app being killed, enable Android's "Always-on VPN" and "Block connections without VPN" for Kyanite in the system VPN settings.	Para una garantía que sobreviva a que se cierre esta app, activa «VPN siempre activada» y «Bloquear conexiones sin VPN» de Android para Kyanite en los ajustes de VPN del sistema.
+Give the VM a network device (when the network is allowed)	Dar un dispositivo de red a la VM (cuando se permite la red)
+Hide notification content on the lock screen	Ocultar el contenido de las notificaciones en la pantalla de bloqueo
+Import system (file %s, free %s)	Importar sistema (archivo %s, libre %s)
+Imported	Importado
+Importing	Importando
+Invalid colour: use #RRGGBB	Color no válido: usa #RRGGBB
+Irreversibly destroys the selected data when a condition is met. The key is destroyed first (crypto-shredding), then every file is overwritten with random data from a throw-away key, then deleted.	Destruye de forma irreversible los datos seleccionados cuando se cumple una condición. Primero se destruye la clave (crypto-shredding), después cada archivo se sobrescribe con datos aleatorios de una clave desechable y por último se elimina.
+Key changed	Clave cambiada
+Key type	Tipo de clave
+Key:	Clave:
+Last check: %s	Última comprobación: %s
+LiveCD persistence	Persistencia del LiveCD
+Lock again	Bloquear de nuevo
+Manual (opens the releases page in your browser, nothing else)	Manual (abre la página de versiones en el navegador, nada más)
+My passphrase (asked once per session)	Mi frase de contraseña (se pide una vez por sesión)
+NOT ACTIVE: sessions refuse to start until it is (fail closed)	INACTIVO: las sesiones no arrancan hasta que lo esté (fallo seguro)
+Never	Nunca
+New passphrase	Nueva frase de contraseña
+No updates (never contacts GitHub)	Sin actualizaciones (nunca contacta con GitHub)
+None	Ninguna
+Open the releases page	Abrir la página de versiones
+PIN lock	Bloqueo con PIN
+Passphrase changed	Frase de contraseña cambiada
+Permission denied.	Permiso denegado.
+Privacy	Privacidad
+Re-packing systems	Reempaquetando los sistemas
+Require a PIN to use the app	Pedir un PIN para usar la app
+Rotate	Rotar
+Rotate key	Rotar la clave
+Rotate the data key (re-encrypt everything)	Rotar la clave de datos (volver a cifrar todo)
+Rotating key	Rotando la clave
+Save	Guardar
+Scheduled wipe	Borrado programado
+Set a duress PIN…	Definir un PIN de coacción…
+Snapshots	Instantáneas
+Start from	Empezar desde
+The fill step can take a long time and temporarily leaves ~200 MB free. Conditions are checked about every 30 minutes by Android's job scheduler and when the app starts, so timing is approximate.	El paso de relleno puede tardar mucho y deja temporalmente unos 200 MB libres. Android comprueba las condiciones más o menos cada 30 minutos con su planificador de tareas y al iniciar la app, así que el momento exacto es aproximado.
+Then fill the free space with random files and delete them (anti-forensics)	Después rellenar el espacio libre con archivos aleatorios y eliminarlos (antiforense)
+This destroys the selected data (see above; if scheduled wipe is off, systems, LiveCD persistence and snapshots) IRREVERSIBLY.	Esto destruye de forma IRREVERSIBLE los datos seleccionados (ver arriba; si el borrado programado está desactivado, los sistemas, la persistencia del LiveCD y las instantáneas).
+Type WIPE to confirm	Escribe WIPE para confirmar
+Up to date (latest %s)	Estás al día (última: %s)
+Update %s downloaded	Actualización %s descargada
+What to wipe	Qué borrar
+When off: every process of this app, including your Kyanite systems, cannot reach the network (a local VPN with no exit silently drops their traffic; Android asks for VPN consent once). The VM gets no network device. The app itself will not download rootfs, check for updates, or open the browser.	Si está desactivado: ningún proceso de esta app, incluidos tus sistemas Kyanite, puede acceder a la red (una VPN local sin salida descarta su tráfico en silencio; Android pide el consentimiento de la VPN una vez). La VM no recibe dispositivo de red. La propia app no descargará rootfs, no buscará actualizaciones ni abrirá el navegador.
+Whenever the app is left	Cada vez que se sale de la app
+While a system is not in use it is stored as an archive: compressed (saves space with many systems) and/or encrypted with AES-256-GCM. It is unpacked when you start it and packed again when the session ends. Protects stopped systems against malware or backdoors in a running one, and against someone copying your files.	Mientras un sistema no se usa, se guarda como un archivo: comprimido (ahorra espacio si tienes muchos sistemas) y/o cifrado con AES-256-GCM. Se desempaqueta al iniciarlo y se vuelve a empaquetar al terminar la sesión. Protege los sistemas detenidos frente a malware o puertas traseras en uno en ejecución, y frente a quien copie tus archivos.
+Wipe after this many wrong PIN attempts	Borrar tras este número de intentos de PIN fallidos
+Wipe if USB debugging (ADB) is enabled	Borrar si se activa la depuración USB (ADB)
+Wipe if the app is not opened for…	Borrar si la app no se abre durante…
+Wipe now	Borrar ahora
+Wipe now…	Borrar ahora…
+Wipe on a date: %s	Borrar en una fecha: %s
+Wipe started (see the notification).	Borrado iniciado (mira la notificación).
+Wipe when the duress PIN is entered	Borrar al introducir el PIN de coacción
+Writing…	Escribiendo…
+Your data will be destroyed IRREVERSIBLY when a condition below is met. Make sure you have backups (Systems > Export).	Tus datos se destruirán de forma IRREVERSIBLE cuando se cumpla una de las condiciones de abajo. Asegúrate de tener copias de seguridad (Sistemas > Exportar).
+cannot open the file	no se puede abrir el archivo
+cannot write the file	no se puede escribir el archivo
+generated by the app, stored in the Android Keystore	generada por la app y guardada en el Android Keystore
+not needed (the network is allowed)	no hace falta (la red está permitida)
+your passphrase (asked once per session; the key is forgotten from memory afterwards)	tu frase de contraseña (se pide una vez por sesión; después la clave se olvida de la memoria)
+ACTIVE	ACTIVO
+off	desactivado
+background	fondo
+foreground	texto
+cursor	cursor
+Dark (default)	Oscuro (por defecto)
+Light	Claro
+Retro amber	Ámbar retro
+Custom	Personalizado
+Vim: delek (light)	Vim: delek (claro)
+Vim: morning (light)	Vim: morning (claro)
+Vim: peachpuff (light)	Vim: peachpuff (claro)

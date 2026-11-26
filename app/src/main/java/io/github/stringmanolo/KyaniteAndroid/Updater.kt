@@ -98,29 +98,29 @@ object Updater {
         try {
             val r = latest()
             if (isNewer(r.tag, currentVersion(ctx))) {
-                Cfg.lastUpdateInfo = "Update ${r.tag} available"
+                Cfg.lastUpdateInfo = L.f("Update %s available", r.tag)
                 if (r.apkUrl != null) {
                     val apk = download(ctx, r) {}
                     notifyInstall(ctx, apk, r.tag)
                 }
             } else {
-                Cfg.lastUpdateInfo = "Up to date (latest ${r.tag})"
+                Cfg.lastUpdateInfo = L.f("Up to date (latest %s)", r.tag)
             }
         } catch (e: Exception) {
-            Cfg.lastUpdateInfo = "Check failed: ${e.message}"
+            Cfg.lastUpdateInfo = L.f("Check failed: %s", e.message)
         }
     }
 
     private fun notifyInstall(ctx: Context, apk: File, tag: String) {
         val nm = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= 26) {
-            nm.createNotificationChannel(NotificationChannel("updates", "Updates", NotificationManager.IMPORTANCE_DEFAULT))
+            nm.createNotificationChannel(NotificationChannel("updates", L.t("Updates"), NotificationManager.IMPORTANCE_DEFAULT))
         }
         val pi = PendingIntent.getActivity(ctx, 7, installIntent(ctx, apk), PendingIntent.FLAG_UPDATE_CURRENT)
         val b: Notification.Builder =
             if (Build.VERSION.SDK_INT >= 26) Notification.Builder(ctx, "updates") else Notification.Builder(ctx)
-        b.setContentTitle("Kyanite update $tag downloaded")
-            .setContentText("Tap to install")
+        b.setContentTitle(L.f("Kyanite update %s downloaded", tag))
+            .setContentText(L.t("Tap to install"))
             .setSmallIcon(android.R.drawable.stat_sys_download_done)
             .setContentIntent(pi)
             .setAutoCancel(true)

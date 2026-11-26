@@ -53,7 +53,7 @@ class RootfsInstaller(private val ctx: Context) {
                 if (now - last > 150) {
                     last = now
                     val pct = if (bytesRead != null && total > 0) (bytesRead() * 100 / total).toInt().coerceIn(0, 99) else 50
-                    onProgress(pct, "Extracting… $n entries")
+                    onProgress(pct, L.f("Extracting… %d entries", n))
                 }
                 e = tar.nextTarEntry
             }

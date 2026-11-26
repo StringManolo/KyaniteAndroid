@@ -58,7 +58,7 @@ object WipeManager {
 
             val systems = SystemStore.list()
             systems.forEachIndexed { i, s ->
-                progress(5 + i * 60 / systems.size.coerceAtLeast(1), "Wiping ${s.name}…")
+                progress(5 + i * 60 / systems.size.coerceAtLeast(1), L.f("Wiping %s…", s.name))
                 val inCategory = if (s.kind == "livecd") Cfg.wipeLivecd else Cfg.wipeSystems
                 val dir = SystemStore.dir(s.id)
                 if (inCategory) {

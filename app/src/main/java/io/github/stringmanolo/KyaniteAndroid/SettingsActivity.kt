@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -28,10 +29,13 @@ import java.util.Calendar
 /** Tabbed settings. Environment/Window changes use the Apply button; everything else takes effect immediately. */
 class SettingsActivity : Activity() {
 
+    override fun attachBaseContext(base: Context) { super.attachBaseContext(L.wrap(base)) }
+
     private lateinit var ui: Ui
     private lateinit var content: FrameLayout
     private lateinit var tabBar: LinearLayout
     private lateinit var applyBar: Button
+    private lateinit var titleView: TextView
     private lateinit var old: AppConfig
     private lateinit var work: AppConfig
     private var currentTab = "env"
@@ -50,15 +54,15 @@ class SettingsActivity : Activity() {
         missingVm = QemuLauncher.missingParts(this)
 
         val root = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setBackgroundColor(Color.parseColor("#0B0E11")) }
-        val title = TextView(this).apply {
-            text = if (old.configured) "Settings" else "Choose how to start"
+        titleView = TextView(this).apply {
+            text = L.t(if (old.configured) "Settings" else "Choose how to start")
             textSize = 20f; setTextColor(Color.WHITE); setPadding(ui.dp(16), ui.dp(14), ui.dp(16), ui.dp(6))
         }
         tabBar = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
         val tabScroll = HorizontalScrollView(this).apply { isHorizontalScrollBarEnabled = false; addView(tabBar) }
         content = FrameLayout(this)
-        applyBar = Button(this).apply { text = "Apply environment & window"; isAllCaps = false; setOnClickListener { apply() } }
-        root.addView(title)
+        applyBar = Button(this).apply { text = L.t("Apply environment & window"); isAllCaps = false; setOnClickListener { apply() } }
+        root.addView(titleView)
         root.addView(tabScroll)
         root.addView(content, LinearLayout.LayoutParams(-1, 0, 1f))
         root.addView(applyBar)
@@ -66,7 +70,7 @@ class SettingsActivity : Activity() {
 
         for ((id, label) in TABS) {
             val t = TextView(this).apply {
-                text = label; textSize = 14f; gravity = Gravity.CENTER
+                text = L.t(label); textSize = 14f; gravity = Gravity.CENTER
                 setPadding(ui.dp(14), ui.dp(10), ui.dp(14), ui.dp(10)); tag = id
                 setOnClickListener { show(id) }
             }
@@ -90,6 +94,16 @@ class SettingsActivity : Activity() {
     override fun onStop() {
         super.onStop()
         if (!expectReturn && !pinShowing) AppLock.onLeftForeground()
+    }
+
+    /** Re-applies the translated texts of the fixed parts of the screen (title, tabs, Apply button). */
+    private fun relabel() {
+        titleView.text = L.t(if (old.configured) "Settings" else "Choose how to start")
+        applyBar.text = L.t("Apply environment & window")
+        for (i in 0 until tabBar.childCount) {
+            val v = tabBar.getChildAt(i) as TextView
+            TABS.firstOrNull { it.first == v.tag }?.let { v.text = L.t(it.second) }
+        }
     }
 
     private fun picker(i: Intent, code: Int) { expectReturn = true; startActivityForResult(i, code) }
@@ -141,7 +155,7 @@ class SettingsActivity : Activity() {
         ui.header(p, "Mode")
         val modes = listOf(
             "Normal (persistent)", "Ephemeral (temporary copy, wiped on exit)",
-            if (missingVm.isEmpty()) "VM (QEMU, RAM only)" else "VM (Experimental) — unavailable: ${missingVm.joinToString()}"
+            if (missingVm.isEmpty()) "VM (QEMU, RAM only)" else L.f("VM (Experimental) — unavailable: %s", missingVm.joinToString { L.t(it) })
         )
         ui.radios(p, modes, work.mode.ordinal) {
             if (it == 2 && missingVm.isNotEmpty()) { ui.toast("VM is not available in this build"); show("env") }
@@ -250,12 +264,12 @@ class SettingsActivity : Activity() {
         val p = ui.page()
         ui.header(p, "Systems", 0)
         ui.note(p, "Create, rename, duplicate, delete, import, export, download, snapshot and restore. Each system is stored on its own and never touches the others.")
-        val space = ui.note(p, "Free space: ${fmtBytes(filesDir.usableSpace)} · Systems use: calculating…", 6)
+        val space = ui.note(p, L.f("Free space: %s · Systems use: calculating…", fmtBytes(filesDir.usableSpace)), 6)
         ui.button(p, "New system from the shipped Kyanite") {
             if (busy()) return@button
             ui.prompt("New system", "Name", "Kyanite") { name ->
                 ui.ensureKeyUnlocked {
-                    ui.job("Installing $name", { prog ->
+                    ui.job(L.f("Installing %s", name), { prog ->
                         val s = SystemStore.createFromAsset(name.ifBlank { "Kyanite" }, "system", progress = prog)
                         if (Cfg.activeSystem.isEmpty()) Cfg.activeSystem = s.id
                     }) { show("systems") }
@@ -276,14 +290,14 @@ class SettingsActivity : Activity() {
         val rows = ArrayList<Pair<SysInfo, TextView>>()
         for (s in all) {
             val state = when {
-                !s.installed -> "not installed"
-                s.inUse -> "in use"
-                s.archived -> "at rest" + (if (s.encrypted) ", encrypted" else "") + " (archive)"
-                else -> "plain"
+                !s.installed -> L.t("not installed")
+                s.inUse -> L.t("in use")
+                s.archived -> L.t("at rest") + (if (s.encrypted) L.t(", encrypted") else "") + " " + L.t("(archive)")
+                else -> L.t("plain")
             }
             val star = if (s.id == Cfg.activeSystem) "★ " else ""
             val t = TextView(this).apply {
-                text = "$star${s.name}\n${s.kind} · $state · ${s.snapshots} snapshot(s)"
+                text = L.f("%s%s\n%s · %s · %d snapshot(s)", star, L.t(s.name), L.t(s.kind), state, s.snapshots)
                 setTextColor(ui.text); textSize = 14f
                 setPadding(ui.dp(12), ui.dp(10), ui.dp(12), ui.dp(10))
                 setBackgroundColor(Color.parseColor("#161B22"))
@@ -299,7 +313,7 @@ class SettingsActivity : Activity() {
                 total += sz
                 runOnUiThread { if (currentTab == "systems") tv.text = tv.text.toString().replaceFirst("\n", "\n${fmtBytes(sz)} · ") }
             }
-            runOnUiThread { if (currentTab == "systems") space.text = "Free space: ${fmtBytes(filesDir.usableSpace)} · Systems use: ${fmtBytes(total)}" }
+            runOnUiThread { if (currentTab == "systems") space.text = L.f("Free space: %s · Systems use: %s", fmtBytes(filesDir.usableSpace), fmtBytes(total)) }
         }.start()
         return p
     }
@@ -314,7 +328,7 @@ class SettingsActivity : Activity() {
         }
         if (s.kind == "system" && s.installed) add("Duplicate…") {
             if (busy()) return@add
-            ui.prompt("Duplicate", "Name for the copy", s.name + " copy") { n ->
+            ui.prompt("Duplicate", "Name for the copy", s.name + " " + L.t("copy")) { n ->
                 ui.job("Duplicating", { prog -> SystemStore.duplicate(s.id, n, prog) }) { show("systems") }
             }
         }
@@ -327,10 +341,10 @@ class SettingsActivity : Activity() {
                 }
             }
         }
-        add("Snapshots (${s.snapshots})…") { snapshotsDialog(s) }
+        add(L.f("Snapshots (%d)…", s.snapshots)) { snapshotsDialog(s) }
         add(if (s.kind == "livecd") "Reset LiveCD persistence…" else "Delete…") {
             if (busy()) return@add
-            ui.choose("Delete ${s.name}", listOf("Delete", "Secure wipe (overwrite with random data, slower)")) { m ->
+            ui.choose(L.f("Delete %s", s.name), listOf("Delete", "Secure wipe (overwrite with random data, slower)")) { m ->
                 ui.job("Deleting", { SystemStore.delete(s.id, if (m == 1) WipeMode.RANDOM else WipeMode.NONE) }) { show("systems") }
             }
         }
@@ -338,7 +352,7 @@ class SettingsActivity : Activity() {
     }
 
     private fun exportDialog(s: SysInfo) {
-        ui.choose("Export ${s.name}", listOf("Portable .tar.gz", "Portable .tar.xz (smaller, slower)", "This app's .kya (uses the current compression/encryption)")) { f ->
+        ui.choose(L.f("Export %s", s.name), listOf("Portable .tar.gz", "Portable .tar.xz (smaller, slower)", "This app's .kya (uses the current compression/encryption)")) { f ->
             val fmt = listOf("tgz", "txz", "kya")[f]
             val ext = listOf(".tar.gz", ".tar.xz", ".kya")[f]
             ui.ensureKeyUnlocked {
@@ -352,11 +366,11 @@ class SettingsActivity : Activity() {
     private fun snapshotsDialog(s: SysInfo) {
         val snaps = SystemStore.snapshots(s.id)
         if (snaps.isEmpty()) { ui.toast("No snapshots yet."); return }
-        ui.choose("Snapshots of ${s.name}", snaps.map { SystemStore.snapshotTitle(it) }) { i ->
+        ui.choose(L.f("Snapshots of %s", s.name), snaps.map { SystemStore.snapshotTitle(it) }) { i ->
             val f = snaps[i]
             ui.choose(SystemStore.snapshotTitle(f), listOf("Restore (replaces the current content)", "Delete")) { a ->
                 if (busy()) return@choose
-                if (a == 0) ui.confirm("Restore snapshot", "The current content of ${s.name} will be replaced.", "Restore") {
+                if (a == 0) ui.confirm("Restore snapshot", L.f("The current content of %s will be replaced.", s.name), "Restore") {
                     ui.ensureKeyUnlocked { ui.job("Restoring", { prog -> SystemStore.restoreSnapshot(s.id, f, prog) }) { show("systems") } }
                 } else {
                     ui.job("Deleting", { FsUtil.wipeTree(f, WipeMode.NONE) }) { show("systems") }
@@ -368,18 +382,18 @@ class SettingsActivity : Activity() {
     private fun downloadDialog() {
         if (!Cfg.allowNetwork) { ui.toast("The network is disabled (Network tab)."); return }
         val labels = Downloader.CATALOG.map { it.label } + "Custom URL…"
-        ui.choose("Download a rootfs  (free space: ${fmtBytes(filesDir.usableSpace)})", labels) { i ->
+        ui.choose(L.f("Download a rootfs  (free space: %s)", fmtBytes(filesDir.usableSpace)), labels) { i ->
             if (i == Downloader.CATALOG.size) {
                 val box = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(ui.dp(20), ui.dp(8), ui.dp(20), 0) }
                 val u = EditText(this).apply { hint = "https://…/rootfs.tar.gz" }
-                val h = EditText(this).apply { hint = "SHA-256 (optional but recommended)" }
+                val h = EditText(this).apply { hint = L.t("SHA-256 (optional but recommended)") }
                 box.addView(u); box.addView(h)
-                AlertDialog.Builder(this).setTitle("Custom rootfs URL").setView(box)
-                    .setPositiveButton("Next") { _, _ ->
+                AlertDialog.Builder(this).setTitle(L.t("Custom rootfs URL")).setView(box)
+                    .setPositiveButton(L.t("Next")) { _, _ ->
                         val url = u.text.toString().trim()
-                        if (url.startsWith("http")) confirmDownload("Custom system", url, h.text.toString().trim().ifEmpty { null })
+                        if (url.startsWith("http")) confirmDownload(L.t("Custom system"), url, h.text.toString().trim().ifEmpty { null })
                         else ui.toast("Enter an http(s) URL")
-                    }.setNegativeButton("Cancel", null).show()
+                    }.setNegativeButton(L.t("Cancel"), null).show()
             } else {
                 resolved = null
                 ui.job("Looking up…", { _ -> resolved = Downloader.CATALOG[i].resolve() }) { e ->
@@ -399,11 +413,12 @@ class SettingsActivity : Activity() {
             val est = if (size > 0) size * 3 else -1L   // gz/xz rootfs tarballs typically unpack to ~3x
             val low = est > 0 && free < est + 200L * 1024 * 1024
             ui.confirm(
-                "Download $name",
-                "$url\n\nDownload: ${fmtBytes(size)}\nInstalled (estimate): ${if (est > 0) "≈ " + fmtBytes(est) else "unknown"}\n" +
-                    "Free space: ${fmtBytes(free)}\n" +
-                    (if (sha != null) "SHA-256 will be verified." else "No checksum: the download is not verified.") +
-                    (if (low) "\n\n⚠ There may not be enough free space." else ""),
+                L.f("Download %s", name),
+                url + "\n\n" + L.f("Download: %s", fmtBytes(size)) + "\n" +
+                    L.f("Installed (estimate): %s", if (est > 0) "≈ " + fmtBytes(est) else L.t("unknown")) + "\n" +
+                    L.f("Free space: %s", fmtBytes(free)) + "\n" +
+                    (if (sha != null) L.t("SHA-256 will be verified.") else L.t("No checksum: the download is not verified.")) +
+                    (if (low) "\n\n" + L.t("⚠ There may not be enough free space.") else ""),
                 if (low) "Download anyway" else "Download"
             ) { runDownload(url, sha, name) }
         }
@@ -413,7 +428,7 @@ class SettingsActivity : Activity() {
 
     private fun runDownload(url: String, sha: String?, name: String) {
         ui.ensureKeyUnlocked {
-            ui.job("Downloading $name", { prog ->
+            ui.job(L.f("Downloading %s", name), { prog ->
                 val c = Downloader.open(url)
                 val s = SystemStore.importStream(name, c.inputStream, c.contentLengthLong, sha, prog)
                 if (Cfg.activeSystem.isEmpty()) Cfg.activeSystem = s.id
@@ -424,7 +439,14 @@ class SettingsActivity : Activity() {
     // ---- Appearance
     private fun lookTab(): View {
         val p = ui.page()
-        ui.header(p, "Appearance", 0)
+        ui.header(p, "Language", 0)
+        ui.note(p, "Automatic by default: the system language is used when it is available, otherwise English. Once you pick a language here it is always kept.")
+        ui.spinner(p, L.NAMES, L.CODES.indexOf(L.current()).coerceAtLeast(0)) { i ->
+            L.choose(L.CODES[i])
+            relabel()
+            show("look")
+        }
+        ui.header(p, "Appearance")
         ui.note(p, "Changes apply instantly; the session is not restarted.")
         ui.label(p, "Colour scheme")
         val names = Themes.ALL.map { it.name } + "Custom…"
@@ -462,22 +484,22 @@ class SettingsActivity : Activity() {
         }
         keys.forEachIndexed { i, k ->
             val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; gravity = Gravity.CENTER_VERTICAL }
-            val label = TextView(this).apply { text = k; textSize = 12f }
+            val label = TextView(this).apply { text = L.t(k); textSize = 12f }
             val e = EditText(this).apply { setText(values[i]); textSize = 13f; setSingleLine() }
             fields.add(e)
             row.addView(label, LinearLayout.LayoutParams(ui.dp(96), -2))
             row.addView(e, LinearLayout.LayoutParams(0, -2, 1f))
             box.addView(row)
         }
-        AlertDialog.Builder(this).setTitle("Custom colours (#RRGGBB)").setView(ScrollView(this).apply { addView(box) })
-            .setPositiveButton("Save") { _, _ ->
+        AlertDialog.Builder(this).setTitle(L.t("Custom colours (#RRGGBB)")).setView(ScrollView(this).apply { addView(box) })
+            .setPositiveButton(L.t("Save")) { _, _ ->
                 val v = fields.map { it.text.toString().trim() }
                 if (v.all { runCatching { Color.parseColor(it) }.isSuccess }) {
                     Cfg.customTheme = v.joinToString(",")
                     work = work.copy(themeId = "custom")
                     pushLook(); show("look")
                 } else ui.toast("Invalid colour: use #RRGGBB")
-            }.setNegativeButton("Cancel", null).show()
+            }.setNegativeButton(L.t("Cancel"), null).show()
     }
 
     // ---- Security
@@ -519,7 +541,7 @@ class SettingsActivity : Activity() {
             if (on) enableEncryption() else disableEncryption()
         }
         if (Cfg.encryptAtRest) {
-            ui.note(p, "Key: " + (if (KeyManager.mode() == "passphrase") "your passphrase (asked once per session; the key is forgotten from memory afterwards)" else "generated by the app, stored in the Android Keystore"))
+            ui.note(p, L.t("Key:") + " " + (if (KeyManager.mode() == "passphrase") L.t("your passphrase (asked once per session; the key is forgotten from memory afterwards)") else L.t("generated by the app, stored in the Android Keystore")))
             ui.button(p, "Change key type / passphrase…", 4) { changeKey() }
             ui.button(p, "Rotate the data key (re-encrypt everything)", 4) { rotateKey() }
         }
@@ -553,8 +575,8 @@ class SettingsActivity : Activity() {
             ui.spinner(p, listOf("Never", "3", "5", "10"), tries.indexOf(Cfg.wipeFailedPins).coerceAtLeast(0)) { Cfg.wipeFailedPins = tries[it] }
             ui.check(p, "Wipe when the duress PIN is entered", Cfg.wipeOnDuress) { Cfg.wipeOnDuress = it }
             ui.check(p, "Wipe if USB debugging (ADB) is enabled", Cfg.wipeOnAdb) { Cfg.wipeOnAdb = it }
-            val dl = if (Cfg.wipeDeadline > 0) java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.US).format(java.util.Date(Cfg.wipeDeadline)) else "off"
-            ui.button(p, "Wipe on a date: $dl", 6) { pickDeadline() }
+            val dl = if (Cfg.wipeDeadline > 0) java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.US).format(java.util.Date(Cfg.wipeDeadline)) else L.t("off")
+            ui.button(p, L.f("Wipe on a date: %s", dl), 6) { pickDeadline() }
             ui.header(p, "What to wipe", 10)
             ui.check(p, "Systems", Cfg.wipeSystems) { Cfg.wipeSystems = it }
             ui.check(p, "LiveCD persistence", Cfg.wipeLivecd) { Cfg.wipeLivecd = it }
@@ -583,7 +605,7 @@ class SettingsActivity : Activity() {
                 Cfg.wipeDeadline = cal.timeInMillis; show("sec")
             }, 12, 0, true).show()
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).apply {
-            setButton(AlertDialog.BUTTON_NEUTRAL, "Clear") { _, _ -> Cfg.wipeDeadline = 0L; show("sec") }
+            setButton(AlertDialog.BUTTON_NEUTRAL, L.t("Clear")) { _, _ -> Cfg.wipeDeadline = 0L; show("sec") }
         }.show()
     }
 
@@ -653,10 +675,10 @@ class SettingsActivity : Activity() {
                 if (c != null) picker(c, REQ_VPN) else { Cfg.allowNetwork = false; NetBlockService.apply(this); show("net") }
             }
         }
-        ui.note(p, "Block status: " + when {
-            Cfg.allowNetwork -> "not needed (the network is allowed)"
-            NetBlockService.active -> "ACTIVE"
-            else -> "NOT ACTIVE: sessions refuse to start until it is (fail closed)"
+        ui.note(p, L.t("Block status:") + " " + when {
+            Cfg.allowNetwork -> L.t("not needed (the network is allowed)")
+            NetBlockService.active -> L.t("ACTIVE")
+            else -> L.t("NOT ACTIVE: sessions refuse to start until it is (fail closed)")
         }, 6)
         ui.note(p, "When off: every process of this app, including your Kyanite systems, cannot reach the network (a local VPN with no exit silently drops their traffic; Android asks for VPN consent once). The VM gets no network device. The app itself will not download rootfs, check for updates, or open the browser.")
         ui.note(p, "For a guarantee that survives this app being killed, enable Android's \"Always-on VPN\" and \"Block connections without VPN\" for Kyanite in the system VPN settings.")
@@ -669,14 +691,14 @@ class SettingsActivity : Activity() {
     private fun updatesTab(): View {
         val p = ui.page()
         ui.header(p, "Updates", 0)
-        ui.note(p, "Current version: ${Updater.currentVersion(this)}. Source: github.com/${Updater.REPO} releases.")
+        ui.note(p, L.f("Current version: %s. Source: github.com/%s releases.", Updater.currentVersion(this), Updater.REPO))
         val modes = listOf("none", "manual", "auto")
         ui.radios(p, listOf("No updates (never contacts GitHub)", "Manual (opens the releases page in your browser, nothing else)", "Automatic (check, download and offer to install)"),
             modes.indexOf(Cfg.updateMode).coerceAtLeast(0)) { Cfg.updateMode = modes[it]; show("upd") }
         if (Cfg.updateMode == "auto") {
             ui.label(p, "Check every")
             val hrs = listOf(1, 2, 4, 8, 12, 24, 48, 168)
-            ui.spinner(p, hrs.map { if (it < 24) "$it hours" else "${it / 24} day(s)" }, hrs.indexOf(Cfg.updateHours).let { if (it < 0) 3 else it }) { Cfg.updateHours = hrs[it] }
+            ui.spinner(p, hrs.map { if (it < 24) L.f("%d hours", it) else L.f("%d day(s)", it / 24) }, hrs.indexOf(Cfg.updateHours).let { if (it < 0) 3 else it }) { Cfg.updateHours = hrs[it] }
             ui.button(p, "Check now", 8) { checkNow() }
         }
         if (Cfg.updateMode == "manual") {
@@ -685,7 +707,7 @@ class SettingsActivity : Activity() {
                 else startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Updater.releasesPage())))
             }
         }
-        if (Cfg.lastUpdateInfo.isNotEmpty()) ui.note(p, "Last check: ${Cfg.lastUpdateInfo}", 10)
+        if (Cfg.lastUpdateInfo.isNotEmpty()) ui.note(p, L.f("Last check: %s", L.t(Cfg.lastUpdateInfo)), 10)
         ui.note(p, "Android always asks you to confirm an install and only accepts an APK signed with the same key as the installed app. Debug builds (package …debug) are not updated by release APKs.")
         return p
     }
@@ -698,9 +720,9 @@ class SettingsActivity : Activity() {
             rel = r
             Cfg.lastUpdateCheck = System.currentTimeMillis()
             if (Updater.isNewer(r.tag, Updater.currentVersion(this)) && r.apkUrl != null) {
-                apk = Updater.download(this, r) { prog(it, "Downloading ${r.tag}…") }
-                Cfg.lastUpdateInfo = "Update ${r.tag} downloaded"
-            } else Cfg.lastUpdateInfo = "Up to date (latest ${r.tag})"
+                apk = Updater.download(this, r) { prog(it, L.f("Downloading %s…", r.tag)) }
+                Cfg.lastUpdateInfo = L.f("Update %s downloaded", r.tag)
+            } else Cfg.lastUpdateInfo = L.f("Up to date (latest %s)", r.tag)
         }) { e ->
             if (e == null) {
                 val f = apk
@@ -746,7 +768,7 @@ class SettingsActivity : Activity() {
                 val uri = data?.data
                 if (resultCode == RESULT_OK && uri != null) {
                     val (fn, size) = queryName(uri)
-                    ui.prompt("Import system (file ${fmtBytes(size)}, free ${fmtBytes(filesDir.usableSpace)})", "Name", fn.substringBefore('.')) { name ->
+                    ui.prompt(L.f("Import system (file %s, free %s)", fmtBytes(size), fmtBytes(filesDir.usableSpace)), "Name", fn.substringBefore('.')) { name ->
                         ui.ensureKeyUnlocked {
                             ui.job("Importing", { prog ->
                                 val ins = contentResolver.openInputStream(uri) ?: throw java.io.IOException("cannot open the file")
@@ -761,7 +783,7 @@ class SettingsActivity : Activity() {
                 val uri = data?.data
                 val pe = pendingExport
                 if (resultCode == RESULT_OK && uri != null && pe != null) {
-                    ui.job("Exporting ${pe.first.name}", { prog ->
+                    ui.job(L.f("Exporting %s", pe.first.name), { prog ->
                         prog(50, "Writing…")
                         val os = contentResolver.openOutputStream(uri) ?: throw java.io.IOException("cannot write the file")
                         SystemStore.export(pe.first.id, os, pe.second)

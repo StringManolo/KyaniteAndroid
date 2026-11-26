@@ -31,7 +31,7 @@ class NetBlockService : VpnService() {
         if (fd != null) return
         try {
             val p = Builder()
-                .setSession("Kyanite: network blocked")
+                .setSession(L.t("Kyanite: network blocked"))
                 .addAddress("10.255.0.1", 32)
                 .addAddress("fd00:255::1", 128)
                 .addRoute("0.0.0.0", 0)
@@ -93,8 +93,7 @@ class NetBlockService : VpnService() {
             if (Cfg.allowNetwork || active) return
             if (consentIntent(ctx) != null) {
                 throw IllegalStateException(
-                    "The network is disabled in Settings but the VPN permission is missing, so it cannot be enforced. " +
-                        "Open Settings > Network, enable and disable the network option again, and accept the VPN dialog."
+                    "The network is disabled in Settings but the VPN permission is missing, so it cannot be enforced. Open Settings > Network, enable and disable the network option again, and accept the VPN dialog."
                 )
             }
             apply(ctx)
@@ -102,8 +101,7 @@ class NetBlockService : VpnService() {
             while (!active && System.currentTimeMillis() < end) Thread.sleep(100)
             if (!active) {
                 throw IllegalStateException(
-                    "The network is disabled in Settings but the network block could not be started " +
-                        "(another VPN may be active). Refusing to start the session without it."
+                    "The network is disabled in Settings but the network block could not be started (another VPN may be active). Refusing to start the session without it."
                 )
             }
         }

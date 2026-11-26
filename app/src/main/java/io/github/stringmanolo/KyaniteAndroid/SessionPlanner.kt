@@ -109,7 +109,7 @@ object SessionPlanner {
             Mode.VM -> {
                 val missing = QemuLauncher.missingParts(ctx)
                 if (missing.isNotEmpty()) {
-                    throw IllegalStateException("VM mode is not available in this build (missing: ${missing.joinToString()})")
+                    throw IllegalStateException(L.f("VM mode is not available in this build (missing: %s)", missing.joinToString { L.t(it) }))
                 }
                 val writer: (OutputStream) -> Unit
                 if (cfg.target == Target.SYSTEM) {

@@ -181,7 +181,7 @@ object SystemStore {
             if (hasArchive(id)) archive(id).copyTo(archive(info.id), overwrite = true)
             if (plainReady(id)) {
                 progress(10, "Copying…")
-                FsUtil.copyTree(rootfs(id), rootfs(info.id)) { n -> progress(50, "Copying… $n files") }
+                FsUtil.copyTree(rootfs(id), rootfs(info.id)) { n -> progress(50, L.f("Copying… %d files", n)) }
                 Paths.okMarker(rootfs(info.id)).writeText("1")
                 finalizeAtRest(info.id, progress)
             }
@@ -229,7 +229,7 @@ object SystemStore {
     private fun pack(id: String, progress: Progress) {
         val pol = Policy.current()
         val dek = if (pol.encrypt) KeyManager.dek() else null
-        progress(0, "Protecting system (${if (pol.encrypt) "encrypting" else "compressing"})…")
+        progress(0, if (pol.encrypt) L.t("Protecting system (encrypting)…") else L.t("Protecting system (compressing)…"))
         Archive.write(archive(id), pol.comp, dek) { TarWriter.write(rootfs(id), it) }
         Paths.okMarker(rootfs(id)).delete()   // first: from now on the archive is the truth
         FsUtil.deleteTree(rootfs(id))
@@ -243,7 +243,7 @@ object SystemStore {
     fun extractInto(id: String, dir: File, progress: Progress) {
         if (!isInstalled(id)) throw IllegalStateException("That system is not installed")
         if (plainReady(id)) {
-            FsUtil.copyTree(rootfs(id), dir) { n -> progress(50, "Copying system… $n files") }
+            FsUtil.copyTree(rootfs(id), dir) { n -> progress(50, L.f("Copying system… %d files", n)) }
         } else {
             Archive.openTar(archive(id)) { KeyManager.dek() }.use {
                 RootfsInstaller(ctx).extractTarStream(it, dir, progress, null, 0, false)

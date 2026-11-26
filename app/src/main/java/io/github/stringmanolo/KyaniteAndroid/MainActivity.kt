@@ -26,6 +26,8 @@ import com.termux.view.TerminalView
 
 class MainActivity : Activity(), TerminalService.Listener {
 
+    override fun attachBaseContext(base: Context) { super.attachBaseContext(L.wrap(base)) }
+
     private lateinit var rootView: View
     private lateinit var terminalView: TerminalView
     private lateinit var extraKeys: ExtraKeysView
@@ -144,7 +146,7 @@ class MainActivity : Activity(), TerminalService.Listener {
                 cur != null && cur.isRunning -> s.present(true)
                 s.lastError != null -> onFailed(s.lastError!!)
                 Cfg.autoLaunchBlocked -> showPanel2(
-                    (Cfg.lastEnded.ifEmpty { "The last session failed." }) + "\n\nNot restarting automatically.",
+                    L.t(Cfg.lastEnded.ifEmpty { "The last session failed." }) + "\n\n" + L.t("Not restarting automatically."),
                     "Retry", { retry() }, "Settings", { openSettings() }
                 )
                 else -> {
@@ -171,9 +173,9 @@ class MainActivity : Activity(), TerminalService.Listener {
         installPanel.visibility = View.VISIBLE
         installProgress.progress = pct
         installProgress.visibility = if (actionLabel == null) View.VISIBLE else View.GONE
-        installStatus.text = msg
+        installStatus.text = L.t(msg)
         if (actionLabel != null && action != null) {
-            panelAction.text = actionLabel
+            panelAction.text = L.t(actionLabel)
             panelAction.visibility = View.VISIBLE
             panelAction.setOnClickListener { action() }
         } else {
@@ -185,7 +187,7 @@ class MainActivity : Activity(), TerminalService.Listener {
     /** Panel with two buttons (used when a session ended or failed: the app never closes by itself). */
     private fun showPanel2(msg: String, l1: String, a1: () -> Unit, l2: String, a2: () -> Unit) {
         showPanel(0, msg, l1, a1)
-        panelAction2.text = l2
+        panelAction2.text = L.t(l2)
         panelAction2.visibility = View.VISIBLE
         panelAction2.setOnClickListener { a2() }
     }
@@ -240,27 +242,27 @@ class MainActivity : Activity(), TerminalService.Listener {
 
     private fun askPassphrase() {
         val e = EditText(this)
-        e.hint = "Passphrase"
+        e.hint = L.t("Passphrase")
         e.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        AlertDialog.Builder(this).setTitle("Unlock encryption key").setView(e)
-            .setPositiveButton("Unlock") { _, _ ->
+        AlertDialog.Builder(this).setTitle(L.t("Unlock encryption key")).setView(e)
+            .setPositiveButton(L.t("Unlock")) { _, _ ->
                 if (KeyManager.unlock(e.text.toString().toCharArray())) {
                     showPanel(0, "Preparing…")
                     service?.launch(AppConfig.load(this))
                 } else {
-                    Toast.makeText(this, "Wrong passphrase", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, L.t("Wrong passphrase"), Toast.LENGTH_LONG).show()
                     askPassphrase()
                 }
-            }.setNegativeButton("Cancel", null).show()
+            }.setNegativeButton(L.t("Cancel"), null).show()
     }
 
     override fun onFailed(message: String) {
-        showPanel2("Could not start:\n$message", "Retry", { retry() }, "Settings", { openSettings() })
+        showPanel2(L.f("Could not start:\n%s", L.t(message)), "Retry", { retry() }, "Settings", { openSettings() })
     }
     override fun onScreenChanged() { terminalView.onScreenUpdated() }
     override fun onColorsChanged() { terminalView.invalidate() }
     override fun onSessionEnded(message: String) {
-        showPanel2("$message\n\nThe app stays open so you can restart or change the environment.",
+        showPanel2(L.t(message) + "\n\n" + L.t("The app stays open so you can restart or change the environment."),
             "Restart", { retry() }, "Settings", { openSettings() })
     }
     override fun onExitRequested() { finish() }

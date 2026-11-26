@@ -1,3 +1,5 @@
+🇺🇸 English | [🇪🇸 Español](README.es.md) | [🇷🇺 Русский](README.ru.md) | [🇨🇳 简体中文](README.zh-CN.md)
+
 # KyaniteAndroid
 
 A Termux alternative for advanced users: [**Kyanite**](https://github.com/StringManolo/Kyanite) (a small, memory-safe

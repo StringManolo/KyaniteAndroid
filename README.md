@@ -107,8 +107,3 @@ Push to GitHub. `.github/actions/prepare-assets`:
 Then Gradle builds the APK. Hashes and URLs are uploaded as the `provenance` artifact.
 
 Android 12+ may kill child processes ("phantom process killer"); disable it if sessions die in the background.
-
-## Status
-
-Written without a local toolchain: expect to fix compile/runtime issues from the first Actions logs.
-See `TODO.md`.

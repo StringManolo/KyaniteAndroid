@@ -23,7 +23,7 @@ android {
     // and the Kyanite rootfs binaries live there.
     targetSdk 28
     versionCode 100 + abiCode
-    versionName "1.0.1"
+    versionName "1.0.3"
     ndk { abiFilters targetAbi }
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

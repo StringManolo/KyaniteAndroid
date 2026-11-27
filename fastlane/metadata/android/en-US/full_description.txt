@@ -1,5 +1,24 @@
-A Termux alternative that gives you a small, memory-safe Kyanite userland on Android.
+Kyanite runs a small, private Linux system on your phone, without root. Its core tools (init, shell, coreutils and the kpkg package manager) are written in Rust, and you can install thousands of Debian packages with a single command.
 
-- Kyanite under proot, using the signed Kyanite rootfs release
-- Floating-terminal-friendly UI with ESC/TAB/CTRL/ALT/HOME/END/arrow keys
-- System and LiveCD environments, each in three modes: Normal (persistent), Ephemeral (wiped on exit) and VM (QEMU, RAM only)
+PRIVATE BY DESIGN
+
+Encrypted systems: your systems are stored encrypted with AES-256-GCM, and the app can lock behind a PIN. A duress PIN wipes everything.
+
+Anti-forensic wipe: it can trigger after wrong PINs, a long time without opening the app, when USB debugging is turned on, or on a date you choose. It destroys the key, overwrites the data and deletes everything.
+
+Network kill switch: a local VPN with no exit cuts the internet for the app and everything running inside it. Nothing is routed to any server.
+
+No ads, no analytics, no trackers. The app only uses the network when you ask it to.
+
+FLEXIBLE
+
+Run a system in normal (persistent) mode, in ephemeral mode (a temporary copy, wiped on exit), or as an experimental QEMU virtual machine that lives only in RAM (64-bit builds).
+
+Use it fullscreen or in a floating window you can drag, resize, rotate, pin, make transparent and minimize. A keys bar gives you ESC, TAB, CTRL, ALT, HOME, END, PGUP, PGDN and the arrows.
+
+Keep several systems: import or download Kyanite, Alpine Linux, Ubuntu Base or Arch Linux ARM, duplicate, export, take snapshots and roll back whenever you want.
+
+Available in English, Spanish, Russian and Simplified Chinese. Builds for 64-bit and 32-bit ARM phones.
+
+Source code and documentation: https://github.com/StringManolo/KyaniteAndroid
+Kyanite, the distribution: https://github.com/StringManolo/Kyanite

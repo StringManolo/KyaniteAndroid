@@ -16,6 +16,12 @@
 - Add permissions to install apks, so updates can be installed auto, if not, permissions are asked after download, which forces the user to download the apk 2 times 
 - Swap language live in notificacions?
 
+### Distribution
+- Add fastlanes
 
 ### Web
 - Add alt to images in en,ru,zh
+
+### Security/Privacy
+- Check between stubby vs local VPN to send all traffic trought Tor.
+- Add MITM to use as firewall

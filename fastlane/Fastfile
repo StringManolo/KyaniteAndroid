@@ -1,0 +1,17 @@
+# Google Play lanes (not used while the app cannot be published there; see README).
+# Install fastlane, put your service-account key in the Appfile and run:  fastlane metadata
+default_platform(:android)
+
+platform :android do
+  desc "Upload only the store listing (texts, changelogs, icon, graphics and screenshots)"
+  lane :metadata do
+    upload_to_play_store(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_changelogs: false,
+      skip_upload_metadata: false,
+      skip_upload_images: false,
+      skip_upload_screenshots: false
+    )
+  end
+end

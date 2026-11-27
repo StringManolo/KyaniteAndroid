@@ -1,0 +1,3 @@
+- Novedad: inglés, español, ruso y chino (Ajustes > Apariencia > Idioma)
+- Novedad: versión de 32 bits para móviles antiguos
+- Sistemas cifrados, bloqueo con PIN, borrado antiforense, bloqueo de red y ventana flotante

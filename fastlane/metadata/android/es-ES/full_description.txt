@@ -1,0 +1,24 @@
+Kyanite ejecuta un sistema Linux pequeño y privado en tu móvil, sin root. Sus herramientas principales (init, shell, coreutils y el gestor de paquetes kpkg) están escritas en Rust, y puedes instalar miles de paquetes de Debian con un solo comando.
+
+PRIVADO POR DISEÑO
+
+Sistemas cifrados: tus sistemas se guardan cifrados con AES-256-GCM, y la app puede bloquearse con un PIN. Un PIN de coacción lo borra todo.
+
+Borrado antiforense: puede activarse tras varios PIN fallidos, mucho tiempo sin abrir la app, al activar la depuración USB o en una fecha que elijas. Destruye la clave, sobrescribe los datos y borra todo.
+
+Bloqueo de red: una VPN local sin salida deja sin internet a la app y a todo lo que corre dentro. No se envía nada a ningún servidor.
+
+Sin anuncios, sin analíticas, sin rastreadores. La app solo usa la red cuando se lo pides.
+
+FLEXIBLE
+
+Ejecuta un sistema en modo normal (persistente), en modo efímero (una copia temporal que se borra al salir) o como máquina virtual QEMU experimental que vive solo en la RAM (versiones de 64 bits).
+
+Úsala a pantalla completa o en una ventana flotante que puedes mover, redimensionar, girar, fijar, hacer transparente y minimizar. Una barra de teclas te da ESC, TAB, CTRL, ALT, HOME, END, PGUP, PGDN y las flechas.
+
+Ten varios sistemas: importa o descarga Kyanite, Alpine Linux, Ubuntu Base o Arch Linux ARM, duplícalos, expórtalos, haz instantáneas y vuelve atrás cuando quieras.
+
+Disponible en inglés, español, ruso y chino simplificado. Versiones para móviles ARM de 64 y de 32 bits.
+
+Código fuente y documentación: https://github.com/StringManolo/KyaniteAndroid
+Kyanite, la distribución: https://github.com/StringManolo/Kyanite

@@ -57,7 +57,7 @@ unavailable and shows a diagnostics block.
 
 ## Settings (tabs)
 
-- **Environment**: system / LiveCD, mode (VM is **experimental**), VM RAM and cores, window mode, wake lock (off by default), opt-in access to
+- **Environment**: system / LiveCD, mode VM RAM and cores, window mode, wake lock (off by default), opt-in access to
   shared storage (`/sdcard`, `~/storage/shared`; needs the Android permission, like `termux-setup-storage`, but on demand).
 - **Systems**: several systems at once; create from the shipped Kyanite, import (tar, tar.gz, tar.xz, `.kya`),
   download (Kyanite latest release, Alpine, Ubuntu Base and Arch Linux ARM catalog with checksum verification where upstream publishes one, or any

@@ -1,1 +1,0 @@
-First preview: Kyanite under proot, extra keys bar, System/LiveCD environments with Normal, Ephemeral and VM modes.

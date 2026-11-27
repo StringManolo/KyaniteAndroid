@@ -1,1 +1,1 @@
-Kyanite on Android via proot or a RAM-only QEMU VM. A Termux alternative for advanced users.
+Private Linux on Android: encryption, anti-forensic wipe, network kill switch.

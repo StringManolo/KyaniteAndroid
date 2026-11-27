@@ -1,0 +1,1 @@
+Linux privado en Android: cifrado, borrado antiforense y bloqueo de red.

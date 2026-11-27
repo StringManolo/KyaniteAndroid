@@ -1,0 +1,3 @@
+- New: English, Spanish, Russian and Chinese (Settings > Appearance > Language)
+- New: 32-bit build for older phones
+- Encrypted systems, PIN lock, anti-forensic wipe, network kill switch and floating window

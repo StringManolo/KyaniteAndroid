@@ -1,0 +1,3 @@
+# Only needed for Google Play (fastlane supply). F-Droid and IzzyOnDroid read fastlane/metadata directly.
+package_name("io.github.stringmanolo.KyaniteAndroid")
+# json_key_file("play-service-account.json")   # Google Play API service account key (never commit it)

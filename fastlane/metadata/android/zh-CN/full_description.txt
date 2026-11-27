@@ -1,0 +1,24 @@
+Kyanite 在你的手机上运行一个小巧的私密 Linux 系统，无需 root。它的核心工具（init、shell、coreutils 和 kpkg 包管理器）都用 Rust 编写，只需一条命令就能安装数以千计的 Debian 软件包。
+
+为隐私而设计
+
+加密系统：你的系统以 AES-256-GCM 加密存储，应用还可以用 PIN 码锁定。胁迫 PIN 会清除全部数据。
+
+反取证擦除：可在多次输错 PIN、长时间未打开应用、开启 USB 调试或到达你设定的日期时触发。它会销毁密钥、覆写数据并删除一切。
+
+网络断开：一个没有出口的本地 VPN 会切断应用及其内部所有程序的网络。不会向任何服务器发送任何内容。
+
+没有广告，没有统计分析，没有跟踪器。应用只在你要求时才使用网络。
+
+灵活
+
+可以用普通模式（持久化）、临时模式（临时副本，退出时擦除）运行系统，也可以使用只存在于内存中的实验性 QEMU 虚拟机（64 位版本）。
+
+可以全屏使用，也可以使用悬浮窗口：能拖动、缩放、旋转、固定、调节透明度和最小化。按键栏提供 ESC、TAB、CTRL、ALT、HOME、END、PGUP、PGDN 和方向键。
+
+可以保留多个系统：导入或下载 Kyanite、Alpine Linux、Ubuntu Base 或 Arch Linux ARM，复制、导出、创建快照，并随时回滚。
+
+提供英语、西班牙语、俄语和简体中文界面。有适用于 64 位和 32 位 ARM 手机的版本。
+
+源代码和文档：https://github.com/StringManolo/KyaniteAndroid
+Kyanite 发行版：https://github.com/StringManolo/Kyanite
